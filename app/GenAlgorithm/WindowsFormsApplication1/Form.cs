@@ -60,11 +60,8 @@ namespace GenAlgorithm
                 case "Алгоритм Данцига":
                     individs = algorithm.createPopulation(populationCount, 1);
                     break;
-                case "Жадный алгоритм":
-                    individs = algorithm.createPopulation(populationCount, 2);
-                    break;
                 case "Случайный алгоритм":
-                    individs = algorithm.createPopulation(populationCount, 3);
+                    individs = algorithm.createPopulation(populationCount, 2);
                     break;
             }
             textBox1.Text += " Популяция:    Максимальная цена:";
@@ -180,7 +177,7 @@ namespace GenAlgorithm
                               "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
                               "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
                               "BT","BU"};
-            string[] initialPopulation = { "Алгоритм Данцига", "Жадный алгоритм", "Случайный алгоритм" };
+            string[] initialPopulation = { "Алгоритм Данцига", "Случайный алгоритм" };
             string[] crossover = { "Одноточечный кроссовер", "Двуточечный кроссовер", "Однородный кроссовер" };
             string[] mutation = { "Точечная мутация", "Инверсия", "Транслакация", "Сальтация" };
             string[] selection = { "Бетта-Турнир", "Линейная-Ранговая" };
@@ -192,13 +189,14 @@ namespace GenAlgorithm
                 sheet.Cells[iterationCount + 4, count] = "max";
                 sheet.Cells[iterationCount + 5, count] = "min";
                 sheet.Cells[iterationCount + 6, count] = "i";
-                for (int i = 0; i < 3; i++)
+
+                for (int i = 0; i < initialPopulation.Length; i++)
                 {
-                    for (int j = 0; j < 3; j++)
+                    for (int j = 0; j < crossover.Length; j++)
                     {
-                        for (int k = 0; k < 4; k++)
+                        for (int k = 0; k < mutation.Length; k++)
                         {
-                            for (int g = 0; g < 2; g++)
+                            for (int g = 0; g < selection.Length; g++)
                             {
                                 count++;
                                 individs.Clear();

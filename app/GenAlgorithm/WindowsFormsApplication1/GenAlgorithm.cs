@@ -27,14 +27,10 @@ namespace GenAlgorithm
 
         public override bool Equals(object obj)
         {
-            int k = 0;
             int sum = 0;
-            Individ newIndivid = (Individ)obj; // хэмингово расстояние больше 1.
+            Individ newIndivid = (Individ)obj;
             for (int i = 0; i < INDIVID.Length; i++)
-            {
-                k = INDIVID[i] ^ newIndivid.INDIVID[i];
-                sum += k;
-            }
+                sum += INDIVID[i] ^ newIndivid.INDIVID[i]; 
             return (sum == 0);
         }
     }
@@ -47,7 +43,7 @@ namespace GenAlgorithm
         private int _individSize;
         private int _lim = 0;
        
-       public int LIMIT
+        public int LIMIT
         {
             get { return _lim; }
             set { _lim = value; }
@@ -57,6 +53,16 @@ namespace GenAlgorithm
         {
             get { return _individSize; }
         }
+        
+        public int[] WEIGHT
+        {
+            get { return _data.WEIGHT;  }
+        }
+
+        public int[] COST
+        {
+            get { return _data.COST;  }
+        }
 
         public GenAlgorithm(DataInstances data)
         {
@@ -64,7 +70,7 @@ namespace GenAlgorithm
             _individSize = data.WEIGHT.Length;
         }
         //--------------------------------------------------------------------------------------
-        public Individ danzigAlgorithm() // алгоритм Данцига для  особи из начальной популяции, предметы из точного решения либо берутся, либо нет
+        public Individ danzigAlgorithm() // алгоритм Данцига для  особи из начальной популяции
         {
             Individ ind = new Individ(_individSize);
             List<double> specificCostList = new List<double>();
@@ -92,44 +98,8 @@ namespace GenAlgorithm
             }
             return ind;
         }
-        //-------------------------------------------------------------------------------
-        public Individ greedyAlgorithm()   //жадный алгоритм для особи из начальной популяции,  элемент случайности - предметы либо берутся, либо нет.
-        {
-            Individ ind = new Individ(_individSize);
-            _summaryWeight = 0;
-            List<int> costList = new List<int>();
-            int[] currentCost = new int[_individSize];
-            for (int i = 0; i < _individSize; i++)
-            {
-                currentCost[i] = _data.COST[i];
-                costList.Add(_data.COST[i]);
-            }
-            costList.Sort();
-            costList.Reverse();
-            for (int i = 0; i < _individSize; i++)
-            {
-                for (int j = 0; j < _individSize; j++)
-                {
-                    if (currentCost[j] == costList.ElementAt(i))
-                    {
-                        _summaryWeight += _data.WEIGHT[j];
-                        currentCost[j] = -1;
-                        if (_summaryWeight <= _lim)
-                        {
-                            ind.INDIVID[j] = _rand.Next(2);
-                            if (ind.INDIVID[j] == 0)
-                                _summaryWeight -= _data.WEIGHT[j];
-                        }
-                        else
-                            ind.INDIVID[j] = 0;
-                        break;
-                    }
-                }
-            }
-            return ind;
-        }
         //---------------------------------------------------------------------------------
-        public Individ randomAlgorithm()// случайный алгоритм для особи из начальной популяции, все случайно
+        public Individ randomAlgorithm()// случайный алгоритм для особи из начальной популяции
         {
             Individ ind = new Individ(_individSize);
             _summaryWeight = 0;
@@ -151,7 +121,7 @@ namespace GenAlgorithm
         //-------------------------------------------------------------------------------------------------
         public List<Individ> createPopulation(int n, int k) // для разных особей в популяции
         {
-            List<Individ> population = new List<Individ>();//для множества решений
+            List<Individ> population = new List<Individ>();
             for (int i = 0; i < n; i++)
             {
                 Individ ind = new Individ(_individSize);
@@ -160,10 +130,7 @@ namespace GenAlgorithm
                     case 1:
                         ind = danzigAlgorithm();
                         break;
-                    case 2:    
-                        ind = greedyAlgorithm();
-                        break;
-                    case 3:
+                    case 2:
                         ind = randomAlgorithm();
                         break;
                 }

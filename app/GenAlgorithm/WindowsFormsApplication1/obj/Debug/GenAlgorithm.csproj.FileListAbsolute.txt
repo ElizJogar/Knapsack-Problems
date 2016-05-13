@@ -18,3 +18,13 @@ C:\Users\epronina\Desktop\university\diplom\курсовая работа\EGACur
 C:\Users\epronina\Desktop\university\diplom\курсовая работа\EGACurs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GenAlgorithm.GenAlgorithmView.resources
 C:\Users\epronina\Desktop\university\diplom\курсовая работа\EGACurs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GenAlgorithm.Properties.Resources.resources
 C:\Users\epronina\Desktop\university\diplom\курсовая работа\EGACurs\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\GenAlgorithm.csproj.GenerateResource.Cache
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.csproj.ResolveComReference.cache
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.csprojResolveAssemblyReference.cache
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.GenAlgorithmView.resources
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.Properties.Resources.resources
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.csproj.GenerateResource.Cache
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb

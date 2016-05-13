@@ -64,7 +64,6 @@
             this.startPopulBox.FormattingEnabled = true;
             this.startPopulBox.Items.AddRange(new object[] {
             "Алгоритм Данцига",
-            "Жадный алгоритм",
             "Случайный алгоритм"});
             this.startPopulBox.Location = new System.Drawing.Point(151, 25);
             this.startPopulBox.Name = "startPopulBox";
