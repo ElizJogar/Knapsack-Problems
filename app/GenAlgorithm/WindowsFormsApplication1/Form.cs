@@ -38,76 +38,83 @@ namespace GenAlgorithm
             if (maxWeight == 0) maxWeight = 80;
             switch (dataInstancesBox.Text)
             {
-                case "Без корреляции":
+                case "No correlation":
                     algorithm = new GenAlgorithm(new UncorrDataInstances(15, maxWeight / 2));
                     break;
-                case "Слабая корреляция":
+                case "The weak correlation":
                     algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, maxWeight / 2));
                     break;
-                case "Сильная корреляция":
+                case "The strong correlation":
                     algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, maxWeight / 2));
                     break;
-                case "Подсуммы":
+                case "Subtotals":
                     algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, maxWeight / 2));
                     break;
             }
             algorithm.LIMIT = maxWeight;
-            individs.Clear();
-            textBox1.Text = String.Empty;
-            
+            textBox4.Text = "COST: ";
+            for (int i = 0; i < algorithm.COST.Length; i++)
+                textBox4.Text += algorithm.COST[i] + " ";
+            textBox4.Text += "\r\n";
+
+            textBox4.Text += "WEIGHT: ";
+            for (int i = 0; i < algorithm.WEIGHT.Length; i++)
+                textBox4.Text += algorithm.WEIGHT[i] + " ";
+            textBox4.Text += "\r\n";
+
+           individs.Clear();
             switch (startPopulBox.Text)
             {
-                case "Алгоритм Данцига":
+                case "Danzig algorithm":
                     individs = algorithm.createPopulation(populationCount, 1);
                     break;
-                case "Случайный алгоритм":
+                case "Random algorithm":
                     individs = algorithm.createPopulation(populationCount, 2);
                     break;
             }
-            textBox1.Text += " Популяция:    Максимальная цена:";
+            textBox1.Text = " Population:            Max cost:\r\n";
             for (int i = 0; i < individs.Count; i++)
             {
-                textBox1.Text += " Особь:";
                 for (int j = 0; j < individs.ElementAt(i).SIZE; j++)
                 {
                     textBox1.Text += individs.ElementAt(i).INDIVID[j];
                 }
                 textBox1.Text += "\t" + algorithm.returnMaxCost(individs.ElementAt(i)) + Environment.NewLine;
             }
-            richTextBox1.Clear();
+            richTextBox3.Clear();
 
             for (int x = 0; x < iterationCount; x++)
             {
                 switch (crossoverBox.Text)
                 {
-                    case "Одноточечный кроссовер":
+                    case "Single-point crossover":
                         individs = algorithm.pointCrossover(individs, 1);
                         break;
-                    case "Двуточечный кроссовер":
+                    case "Two-point crossover":
                         individs = algorithm.pointCrossover(individs, 2);
                         break;
-                    case "Однородный кроссовер":
+                    case "Uniform crossover":
                         individs = algorithm.uniformCrossover(individs);
                         break;
                 }
                 switch (mutationBox.Text)
                 {
-                    case "Точечная мутация":
+                    case "Point mutation":
                         individs = algorithm.pointMutation(individs);
                         break;
-                    case "Инверсия":
+                    case "Inversion":
                         individs = algorithm.inversion(individs);
                         break;
-                    case "Транслакация":
+                    case "Translocation":
                         individs = algorithm.translocation(individs);
                         break;
-                    case "Сальтация":
+                    case "Saltation":
                         individs = algorithm.saltation(individs);
                         break;
                 }
                 switch (selectionBox.Text)
                 {
-                    case "Бетта-Турнир":
+                    case "Betta-Tournament":
                         List<Individ> population1 = new List<Individ>();
                         Individ indiv = new Individ(algorithm.INDIVID_SIZE);
                         individs = algorithm.evaluation(individs);
@@ -119,24 +126,22 @@ namespace GenAlgorithm
                         individs.Clear();
                         individs.AddRange(population1);
                         break;
-                    case "Линейная-ранговая":
+                    case "Linear-rank":
                         individs = algorithm.evaluation(individs);
                         individs = algorithm.linearRankSelection(individs, populationCount);
                         break;
                 }
-                richTextBox1.Text += algorithm.returnMaxCostAtGeneration(individs) + "\n";
+                richTextBox3.Text += algorithm.returnMaxCostAtGeneration(individs) + "\n";
             }
 
-            textBox7.Text = String.Empty;
-            textBox7.Text += " Популяция:        Максимальная цена:";
+            textBox2.Text = " Population:            Max cost:\r\n";
             for (int i = 0; i < individs.Count; i++)
             {
-                textBox7.Text += " Особь:";
                 for (int j = 0; j < individs.ElementAt(i).SIZE; j++)
                 {
-                    textBox7.Text += individs.ElementAt(i).INDIVID[j];
+                    textBox2.Text += individs.ElementAt(i).INDIVID[j];
                 }
-                textBox7.Text += "\t" + algorithm.returnMaxCost(individs.ElementAt(i)) + Environment.NewLine;
+                textBox2.Text += "\t" + algorithm.returnMaxCost(individs.ElementAt(i)) + Environment.NewLine;
 
             }
         }
@@ -177,10 +182,10 @@ namespace GenAlgorithm
                               "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
                               "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
                               "BT","BU"};
-            string[] initialPopulation = { "Алгоритм Данцига", "Случайный алгоритм" };
-            string[] crossover = { "Одноточечный кроссовер", "Двуточечный кроссовер", "Однородный кроссовер" };
-            string[] mutation = { "Точечная мутация", "Инверсия", "Транслакация", "Сальтация" };
-            string[] selection = { "Бетта-Турнир", "Линейная-Ранговая" };
+            string[] initialPopulation = { "Danzig algorithm", "Random algorithm" };
+            string[] crossover = { "Single-point crossover", "Two-point crossover", "Uniform crossover" };
+            string[] mutation = { "Point mutation", "Inversion", "Translocation", "Saltation" };
+            string[] selection = { "Betta-Tournament", "Linear-rank" };
 
             for (int s = 0; s < startsCount; s++)
             {
@@ -290,7 +295,7 @@ namespace GenAlgorithm
                             sheet.Cells[4, number].Formula = convergence;
                             sheet.Cells[5, number].Formula = average;
                         }
-            MessageBox.Show(@"Отчет успешно создан!");
+            MessageBox.Show(@"Report created successfully!");
             excel.Visible = true;
         }
         string getAFormula(string formula, int count, int number, int startsCount, string[] vsS)
