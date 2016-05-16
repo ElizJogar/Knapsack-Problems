@@ -37,6 +37,7 @@ namespace GenAlgorithm
 
    public class GenAlgorithm
     {
+        private Logger log = new Logger("en-GB");
         private DataInstances _data;
         private Random _rand = new Random(System.DateTime.Now.Millisecond);
         private int _summaryWeight = 0;
@@ -64,6 +65,15 @@ namespace GenAlgorithm
         {
             _data = data;
             _individSize = data.WEIGHT.Length;
+            log.Debug("Genetic algorithm created.");
+             String text = "COST: ";
+            for (int i = 0; i < data.COST.Length; i++)
+                text += data.COST[i] + " ";
+            log.Debug(text);
+            text = "WEIGHT: ";
+            for (int i = 0; i < data.WEIGHT.Length; i++)
+                text += data.WEIGHT[i] + " ";
+            log.Debug(text);
         }
 
         public int getCost(Individ indiv)
@@ -99,6 +109,7 @@ namespace GenAlgorithm
 
         public Individ danzigAlgorithm() // Danzig algorithm: to generate an initial population of individuals
         {
+            log.Debug("called Danzig algorithm.");
             Individ ind = new Individ(_individSize);
             List<double> specificCostList = new List<double>();
             double[] specificCost = new double[_individSize];
@@ -130,11 +141,16 @@ namespace GenAlgorithm
                     }
                 }
             }
-                return ind;
+            string text = "";
+            for (int i = 0; i < ind.SIZE; i++)
+                text +=  ind.INDIVID[i];
+            log.Debug(text);
+            return ind;
         }
 
         public Individ randomAlgorithm()// Random algorithm: to generate an initial population of individuals
         {
+            log.Debug("called random algorithm.");
             Individ ind = new Individ(_individSize);
             _summaryWeight = 0;
             for (int i = 0; i < _individSize; i++)
@@ -150,10 +166,15 @@ namespace GenAlgorithm
                     ind.INDIVID[i] = 0;
             }
             return ind;
+            string text = "";
+            for (int i = 0; i < ind.SIZE; i++)
+                text += ind.INDIVID[i];
+            log.Debug(text);
         }
 
         public List<Individ> createPopulation(int n, int k) //  Сreating population: to generate an initial population of individuals with different
         {
+            log.Debug("called createPopulation function.");
             List<Individ> population = new List<Individ>();
             for (int i = 0; i < n; i++)
             {
@@ -177,6 +198,7 @@ namespace GenAlgorithm
 
         public List<Individ> pointCrossover(List<Individ> individs, int l)// Point crossover: single-point and two-point crossovers
         {
+            log.Debug("called point crossover.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             int r = 0;
@@ -212,11 +234,20 @@ namespace GenAlgorithm
                 }
             }
             population.AddRange(individs);
-            return population;
+            string text = "";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                log.Debug(text);
+            }
+             return population;
         }
 
         public List<Individ> uniformCrossover(List<Individ> individs)//Uniform crossover
         {
+            log.Debug("called uniform crossover.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             for (int i = 0; i < individs.Count; i++)
@@ -239,12 +270,22 @@ namespace GenAlgorithm
                 }
             }
             population.AddRange(individs);
+
+            string text = "";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                log.Debug(text);
+            }
             return population;
         }
 
         //mutations: point mutation, inversion, translocation, saltation
         public List<Individ> pointMutation(List<Individ> individs)
         {
+            log.Debug("called point mutation.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             int r = 0;
@@ -268,11 +309,21 @@ namespace GenAlgorithm
             }
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs.ElementAt(i));
+
+            string text = "";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                log.Debug(text);
+            }
             return population;
         }
 
         public List<Individ> inversion(List<Individ> individs)
         {
+            log.Debug("called inversion.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             int r = 0;
@@ -297,11 +348,21 @@ namespace GenAlgorithm
             }
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs.ElementAt(i));
+
+            string text = "";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                log.Debug(text);
+            }
             return population;
         }
 
         public List<Individ> translocation(List<Individ> individs)
         {
+            log.Debug("called translocation.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             int r = 0;
@@ -328,11 +389,21 @@ namespace GenAlgorithm
             }
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs.ElementAt(i));
+
+            string text = "";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                log.Debug(text);
+            }
             return population;
         }
 
         public List<Individ> saltation(List<Individ> individs)
         {
+            log.Debug("called saltation.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             int r = 0;
@@ -359,12 +430,22 @@ namespace GenAlgorithm
             }
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs.ElementAt(i));
+
+            string text = "";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                log.Debug(text);
+            }
             return population;
         }
 
         private void evaluation(List<Individ> individs)// Penalty function method
         {
             //new
+            log.Debug("called evaluation.");
             _scalledFitnessFunctions = new int[individs.Count];
             int maxCost = getMaxCost(individs);
             int averageCost = 0;
@@ -381,7 +462,8 @@ namespace GenAlgorithm
 
             double coeffA = (C - 1) * averageCost / delta;
             double coeffB = averageCost * (maxCost - C * averageCost) / delta;
-
+            log.Debug("scalled fitness functions");
+            string text = "";
             for (int i = 0; i < individs.Count; i++)
             {
                 _summaryWeight = 0;
@@ -389,10 +471,17 @@ namespace GenAlgorithm
                     if (individs.ElementAt(i).INDIVID[g] == 1)
                         _summaryWeight += _data.WEIGHT[g];
                 if (_summaryWeight <= _lim)
+                {
                     _scalledFitnessFunctions[i] = getCost(individs[i]);
+                    text += "|n/s: " + _scalledFitnessFunctions[i];
+                }
                 else
+                {
                     _scalledFitnessFunctions[i] = 0;// Convert.ToInt32(coeffA * getCost(individs[i]) + coeffB);
+                    text += "|s: " + _scalledFitnessFunctions[i];
+                }
             }
+            log.Debug(text);
         }
 
         public List<Individ> bettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
