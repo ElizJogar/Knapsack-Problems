@@ -79,7 +79,7 @@ namespace GenAlgorithm
                 {
                     textBox1.Text += individs.ElementAt(i).INDIVID[j];
                 }
-                textBox1.Text += "\t" + algorithm.returnMaxCost(individs.ElementAt(i)) + Environment.NewLine;
+                textBox1.Text += "\t" + algorithm.getCost(individs.ElementAt(i)) + Environment.NewLine;
             }
             richTextBox3.Clear();
 
@@ -116,22 +116,13 @@ namespace GenAlgorithm
                 {
                     case "Betta-Tournament":
                         List<Individ> population1 = new List<Individ>();
-                        Individ indiv = new Individ(algorithm.INDIVID_SIZE);
-                        individs = algorithm.evaluation(individs);
-                        for (int i = 0; i < populationCount; i++)
-                        {
-                            indiv = algorithm.selection(individs, Convert.ToInt32(bettaBox.Text));
-                            population1.Add(indiv);
-                        }
-                        individs.Clear();
-                        individs.AddRange(population1);
+                        individs = algorithm.bettaTournamentSelection(individs, populationCount, Convert.ToInt32(bettaBox.Text));
                         break;
                     case "Linear-rank":
-                        individs = algorithm.evaluation(individs);
                         individs = algorithm.linearRankSelection(individs, populationCount);
                         break;
                 }
-                richTextBox3.Text += algorithm.returnMaxCostAtGeneration(individs) + "\n";
+                richTextBox3.Text += algorithm.getMaxScalledCost(individs) + "\n";
             }
 
             textBox2.Text = " Population:            Max cost:\r\n";
@@ -141,7 +132,7 @@ namespace GenAlgorithm
                 {
                     textBox2.Text += individs.ElementAt(i).INDIVID[j];
                 }
-                textBox2.Text += "\t" + algorithm.returnMaxCost(individs.ElementAt(i)) + Environment.NewLine;
+                textBox2.Text += "\t" + algorithm.getCost(individs.ElementAt(i)) + Environment.NewLine;
 
             }
         }
@@ -240,22 +231,13 @@ namespace GenAlgorithm
                                     {
                                         case 0:
                                             List<Individ> population = new List<Individ>();
-                                            Individ indiv = new Individ(algorithm.INDIVID_SIZE);
-                                            individs = algorithm.evaluation(individs);
-                                            for (int h = 0; h < populationCount; h++)
-                                            {
-                                                indiv = algorithm.selection(individs, betta);
-                                                population.Add(indiv);
-                                            }
-                                            individs.Clear();
-                                            individs.AddRange(population);
+                                            individs = algorithm.bettaTournamentSelection(individs, populationCount, betta);
                                             break;
                                         case 1:
-                                            individs = algorithm.evaluation(individs);
                                             individs = algorithm.linearRankSelection(individs, populationCount);
                                             break;
                                     }
-                                    sheet.Cells[x + 2, count] = algorithm.returnMaxCostAtGeneration(individs);
+                                    sheet.Cells[x + 2, count] = algorithm.getMaxScalledCost(individs);
                                 }
                                 sheet.Cells[1, count] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
                                 sheet.Cells[iterationCount + 4, count].Formula = "= MAX(" + vsS[count - 1] + 2 + ":" + vsS[count - 1] + (iterationCount + 1) + ")";

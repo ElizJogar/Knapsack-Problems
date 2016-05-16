@@ -42,6 +42,7 @@ namespace GenAlgorithm
         private int _summaryWeight = 0;
         private int _individSize;
         private int _lim = 0;
+        private int[] _scalledFitnessFunctions;
        
         public int LIMIT
         {
@@ -49,11 +50,6 @@ namespace GenAlgorithm
             set { _lim = value; }
         }
 
-        public int INDIVID_SIZE
-        {
-            get { return _individSize; }
-        }
-        
         public int[] WEIGHT
         {
             get { return _data.WEIGHT;  }
@@ -69,8 +65,39 @@ namespace GenAlgorithm
             _data = data;
             _individSize = data.WEIGHT.Length;
         }
-        //--------------------------------------------------------------------------------------
-        public Individ danzigAlgorithm() // алгоритм Данцига для  особи из начальной популяции
+
+        public int getCost(Individ indiv)
+        {
+            int summaryCost = 0;
+            for (int i = 0; i < _individSize; i++)
+                if (indiv.INDIVID[i] == 1)
+                    summaryCost += _data.COST[i];
+            return summaryCost;
+        }
+
+        public int getMaxCost(List<Individ> individs)
+        {
+            int maxCost = 0;
+            for (int i = 0; i < individs.Count(); i++)
+            {
+                int cost = getCost(individs[i]);
+                maxCost = (cost > maxCost) ? cost : maxCost;
+            }
+            return maxCost;
+        }
+
+        public int getMaxScalledCost(List<Individ> individs)
+        {
+            int maxCost = 0;
+            for (int i = 0; i < individs.Count(); i++)
+            {
+                int cost = _scalledFitnessFunctions[i];
+                maxCost = (cost > maxCost) ? cost : maxCost;
+            }
+            return maxCost;
+        }
+
+        public Individ danzigAlgorithm() // Danzig algorithm: to generate an initial population of individuals
         {
             Individ ind = new Individ(_individSize);
             List<double> specificCostList = new List<double>();
@@ -105,8 +132,8 @@ namespace GenAlgorithm
             }
                 return ind;
         }
-        //---------------------------------------------------------------------------------
-        public Individ randomAlgorithm()// случайный алгоритм для особи из начальной популяции
+
+        public Individ randomAlgorithm()// Random algorithm: to generate an initial population of individuals
         {
             Individ ind = new Individ(_individSize);
             _summaryWeight = 0;
@@ -125,8 +152,7 @@ namespace GenAlgorithm
             return ind;
         }
 
-        //-------------------------------------------------------------------------------------------------
-        public List<Individ> createPopulation(int n, int k) // для разных особей в популяции
+        public List<Individ> createPopulation(int n, int k) //  Сreating population: to generate an initial population of individuals with different
         {
             List<Individ> population = new List<Individ>();
             for (int i = 0; i < n; i++)
@@ -148,8 +174,8 @@ namespace GenAlgorithm
             }
             return population;
         }
-        //-------------------------------------------------------------------------------------------
-        public List<Individ> pointCrossover(List<Individ> individs, int l)// для кроссоверов одноточечного и двуточечного
+
+        public List<Individ> pointCrossover(List<Individ> individs, int l)// Point crossover: single-point and two-point crossovers
         {
             List<Individ> population = new List<Individ>();
             int k = 0;
@@ -188,8 +214,8 @@ namespace GenAlgorithm
             population.AddRange(individs);
             return population;
         }
-        //------------------------------------------------------------
-        public List<Individ> uniformCrossover(List<Individ> individs)//для однородного кроссовера
+
+        public List<Individ> uniformCrossover(List<Individ> individs)//Uniform crossover
         {
             List<Individ> population = new List<Individ>();
             int k = 0;
@@ -216,8 +242,7 @@ namespace GenAlgorithm
             return population;
         }
 
-        //----------------------------------------------------------------------------
-       //мутация точечная, инверсия, транслокация, сальтация
+        //mutations: point mutation, inversion, translocation, saltation
         public List<Individ> pointMutation(List<Individ> individs)
         {
             List<Individ> population = new List<Individ>();
@@ -336,10 +361,32 @@ namespace GenAlgorithm
                 population.Add(individs.ElementAt(i));
             return population;
         }
-        //--------------------------------------------------------
-        public List<Individ> evaluation(List<Individ> individs)// для отбора особей, подходящих под ограничение
+
+        private void evaluation(List<Individ> individs)// Penalty function method
         {
-            List<Individ> population = new List<Individ>();
+            //new
+            _scalledFitnessFunctions = new int[individs.Count];
+            int maxCost = getMaxCost(individs);
+            Console.WriteLine("maxCost - " + maxCost);
+            int averageCost = 0;
+            for (int i = 0; i < individs.Count; i++)
+                averageCost += getCost(individs[i]);
+            averageCost /= individs.Count;
+
+            Console.WriteLine("averageCost - " + averageCost);
+
+            double C = _rand.NextDouble()*(2.0 - 1.2) + 1.2;
+
+            Console.WriteLine("C - " + C);
+
+            double delta = (maxCost - averageCost);
+            delta = (delta == 0) ? 0.00001 : delta; //?????
+
+            double coeffA = (C - 1) * averageCost / delta;
+            double coeffB = averageCost * (maxCost - C * averageCost) / delta;
+            Console.WriteLine("coeffA - " + coeffA);
+            Console.WriteLine("coeffB - " + coeffB);
+
             for (int i = 0; i < individs.Count; i++)
             {
                 _summaryWeight = 0;
@@ -347,88 +394,88 @@ namespace GenAlgorithm
                     if (individs.ElementAt(i).INDIVID[g] == 1)
                         _summaryWeight += _data.WEIGHT[g];
                 if (_summaryWeight <= _lim)
-                    population.Add(individs.ElementAt(i));
+                    _scalledFitnessFunctions[i] = getCost(individs[i]);
+                else
+                    _scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * getCost(individs[i]) + coeffB);
+            }
+        }
+
+        public List<Individ> bettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
+        {
+            evaluation();
+            List<Individ> population = new List<Individ>();
+            for (int j = 0; j < populationCount; j++)
+            {
+                int c = 0;
+                int count = 0;
+                List<int> costList = new List<int>();
+                List<int> number = new List<int>();
+                for (int i = 0; i < individs.Count; i++)
+                {
+                    c = _rand.Next(2);
+                    if (c == 1 && count < beta && !number.Contains(i))
+                    {
+                        costList.Add(_scalledFitnessFunctions[i]/*getCost(individs[i])*/);
+                        number.Add(i);
+                        count++;
+                    }
+                    if (i == individs.Count - 1 && count < beta)
+                        i = -1;
+                }
+                int maxCost = 0;
+                Individ individ = new Individ(_individSize);
+                for (int i = 0; i < beta; i++)
+                {
+                    if (costList.ElementAt(i) > maxCost)
+                    {
+                        maxCost = costList.ElementAt(i);
+                        individ = individs.ElementAt(number.ElementAt(i));
+                    }
+                    else
+                        costList[i] = maxCost;
+                }
+                population.Add(individ);
             }
             return population;
         }
-        //---------------------------------------------------------------------------------------------------------------------------
-        public Individ selection(List<Individ> population, int beta) //селекция бета-турнир
-        {
-            int c = 0;
-            int count = 0;
-            int summaryCost;
-            List<int> costList = new List<int>();
-            List<int> number = new List<int>();
-            for (int i = 0; i < population.Count; i++)
-            {
-                c = _rand.Next(2);
-                summaryCost = 0;
-                if (c == 1 && count < beta && !number.Contains(i))
-                {
-                    for (int g = 0; g < _individSize; g++)
-                        if (population.ElementAt(i).INDIVID[g] == 1)
-                            summaryCost += _data.COST[g];
-                    costList.Add(summaryCost);
-                    count++;
-                    number.Add(i);
-                }
-                if (i == population.Count - 1 && count < beta)
-                    i = -1;
-            }
-            int maxCost = 0;
-            Individ individ = new Individ(_individSize);
-            for (int i = 0; i < beta; i++)
-            {
-                if (costList.ElementAt(i) > maxCost)
-                {
-                    maxCost = costList.ElementAt(i);
-                    individ = population.ElementAt(number.ElementAt(i));
-                }
-                else
-                    costList[i] = maxCost;
-            }
-            return individ;
-        }
-        //-------------------------------------------------------------
 
-        public List<Individ> linearRankSelection(List<Individ> population, int c)// линейная ранговая схема селекции
+        public List<Individ> linearRankSelection(List<Individ> individs, int c)//Linear rank selection
         {
+            evaluation();
             List<Individ> population1 = new List<Individ>();
             List<Individ> population2 = new List<Individ>();
-            int[] sumcost = new int[population.Count];
+            int[] sumcost = new int[individs.Count];
             List<int> sumcost1 = new List<int>();
-            int[] rang = new int[population.Count]; //для рангов
-            double[] n = new double[population.Count]; // для всех ожид чисел 
-            n[population.Count - 1] = _rand.NextDouble() + 1.1;
-            n[0] = 2 - n[population.Count - 1];
-            for (int i = 0; i < population.Count; i++)
+            int[] rang = new int[individs.Count];
+            double[] n = new double[individs.Count]; // expected numbers
+            n[individs.Count - 1] = _rand.NextDouble() + 1.1;
+            n[0] = 2 - n[individs.Count - 1];
+            for (int i = 0; i < individs.Count; i++)
             {
-                for (int g = 0; g < _individSize; g++)
-                    if (population.ElementAt(i).INDIVID[g] == 1)
-                        sumcost[i] += _data.COST[g];
+                sumcost[i] = _scalledFitnessFunctions[i]/*getCost(individs[i])*/;
                 sumcost1.Add(sumcost[i]);
             }
             sumcost1.Sort();
-            for (int i = 0; i < population.Count; i++)
+            for (int i = 0; i < individs.Count; i++)
             {
-                for (int j = 0; j < population.Count; j++)
+                for (int j = 0; j < individs.Count; j++)
                 {
                     if (sumcost[j] != -1)
                     {
                         if (sumcost[j] == sumcost1.ElementAt(i))
                         {
                             sumcost[j] = -1;
-                            population1.Add(population.ElementAt(j));
+                            population1.Add(individs.ElementAt(j));
                             break;
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < population.Count; i++)
+            for (int i = 0; i < individs.Count; i++)
             {
                 rang[i] = i + 1;
-                n[i] = n[0] + (n[population.Count - 1] - n[0]) * (rang[i] - 1) / (population.Count - 1);
+                n[i] = n[0] + (n[individs.Count - 1] - n[0]) * (rang[i] - 1) / (individs.Count - 1);
                 if (n[i] >= 1)
                     population2.Add(population1[i]);
             }
@@ -436,7 +483,7 @@ namespace GenAlgorithm
             {
                 if (population2.Count < c)
                 {
-                    for (int j = 0; j < population.Count; j++)
+                    for (int j = 0; j < individs.Count; j++)
                         if (n[j] > 1 && _rand.Next((int)(n[j] - 1) * 100) == 0 || n[j] < 1 && _rand.Next((int)(n[j] * 100)) == 0)
                             population2.Add(population1[j]);
                     i++;
@@ -452,31 +499,7 @@ namespace GenAlgorithm
                     population1.Add(population2.ElementAt(k));
                 }
             }
-            if (population2.Count > c)
-                return (population1);
-            else
-                return population2;
-        }
-        //-----------------------------------------------------------
-        public int returnMaxCost(Individ indiv)
-        {
-            int summaryCost = 0;
-            for (int i = 0; i < _individSize; i++)
-                if (indiv.INDIVID[i] == 1)
-                    summaryCost += _data.COST[i];
-            return summaryCost;
-
-        }  // для вывода функции приспособленности
-        //----------------------------------------------------------
-        public int returnMaxCostAtGeneration(List<Individ> indiv)
-        {
-            int maxCost = 0;
-            for (int i = 0; i < indiv.Count(); i++)
-            {
-                int cost = returnMaxCost(indiv[i]);
-                maxCost = (cost > maxCost) ? cost : maxCost;
-            }
-            return maxCost;
+            return (population2.Count > c) ? population1 : population2;
         }
     }
 }
