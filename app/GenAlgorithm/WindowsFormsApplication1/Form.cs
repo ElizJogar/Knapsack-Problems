@@ -13,6 +13,7 @@ namespace GenAlgorithm
 {
     public partial class GenAlgorithmView : Form
     {
+        Logger log;
         GenAlgorithm algorithm;
         List<Individ> individs = new List<Individ>();//для множества решений
         int iterationCount = 0;
