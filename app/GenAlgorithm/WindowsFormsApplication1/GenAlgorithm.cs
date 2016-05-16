@@ -83,20 +83,27 @@ namespace GenAlgorithm
             }
             specificCostList.Sort();
             specificCostList.Reverse();
+
             for (int i = 0; i < _individSize; i++)
             {
-                int spCostIndex = specificCostList.IndexOf(specificCost[i]);
-                _summaryWeight += _data.WEIGHT[i];
-                if (_summaryWeight <= _lim)
+                for( int j = 0; j < _individSize; j++)
                 {
-                    ind.INDIVID[spCostIndex] = _rand.Next(2);
-                    if(ind.INDIVID[spCostIndex] == 0)
-                        _summaryWeight -= _data.WEIGHT[i];
+                    if (specificCostList.ElementAt(i) == specificCost[j])
+                    {
+                        _summaryWeight += _data.WEIGHT[j];
+                         if (_summaryWeight <= _lim)
+                         {
+                             ind.INDIVID[j] = _rand.Next(2);
+                             if (ind.INDIVID[j] == 0)
+                                 _summaryWeight -= _data.WEIGHT[j];
+                         }
+                         else
+                             ind.INDIVID[j] = 0;
+                         break;
+                    }
                 }
-                else
-                    ind.INDIVID[spCostIndex] = 0;
             }
-            return ind;
+                return ind;
         }
         //---------------------------------------------------------------------------------
         public Individ randomAlgorithm()// случайный алгоритм для особи из начальной популяции
@@ -454,22 +461,22 @@ namespace GenAlgorithm
         public int returnMaxCost(Individ indiv)
         {
             int summaryCost = 0;
-            for (int g = 0; g < _individSize; g++)
-                if (indiv.INDIVID[g] == 1)
-                    summaryCost += _data.COST[g];
+            for (int i = 0; i < _individSize; i++)
+                if (indiv.INDIVID[i] == 1)
+                    summaryCost += _data.COST[i];
             return summaryCost;
 
         }  // для вывода функции приспособленности
         //----------------------------------------------------------
         public int returnMaxCostAtGeneration(List<Individ> indiv)
         {
-            int summaryCost = 0;
+            int maxCost = 0;
             for (int i = 0; i < indiv.Count(); i++)
             {
-                if (returnMaxCost(indiv[i]) > summaryCost)
-                    summaryCost = returnMaxCost(indiv[i]);
+                int cost = returnMaxCost(indiv[i]);
+                maxCost = (cost > maxCost) ? cost : maxCost;
             }
-            return summaryCost;
+            return maxCost;
         }
     }
 }
