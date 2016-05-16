@@ -367,13 +367,10 @@ namespace GenAlgorithm
             //new
             _scalledFitnessFunctions = new int[individs.Count];
             int maxCost = getMaxCost(individs);
-            Console.WriteLine("maxCost - " + maxCost);
             int averageCost = 0;
             for (int i = 0; i < individs.Count; i++)
                 averageCost += getCost(individs[i]);
             averageCost /= individs.Count;
-
-            Console.WriteLine("averageCost - " + averageCost);
 
             double C = _rand.NextDouble()*(2.0 - 1.2) + 1.2;
 
@@ -384,8 +381,6 @@ namespace GenAlgorithm
 
             double coeffA = (C - 1) * averageCost / delta;
             double coeffB = averageCost * (maxCost - C * averageCost) / delta;
-            Console.WriteLine("coeffA - " + coeffA);
-            Console.WriteLine("coeffB - " + coeffB);
 
             for (int i = 0; i < individs.Count; i++)
             {
@@ -396,13 +391,13 @@ namespace GenAlgorithm
                 if (_summaryWeight <= _lim)
                     _scalledFitnessFunctions[i] = getCost(individs[i]);
                 else
-                    _scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * getCost(individs[i]) + coeffB);
+                    _scalledFitnessFunctions[i] = 0;// Convert.ToInt32(coeffA * getCost(individs[i]) + coeffB);
             }
         }
 
         public List<Individ> bettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
         {
-            evaluation();
+            evaluation(individs);
             List<Individ> population = new List<Individ>();
             for (int j = 0; j < populationCount; j++)
             {
@@ -431,8 +426,6 @@ namespace GenAlgorithm
                         maxCost = costList.ElementAt(i);
                         individ = individs.ElementAt(number.ElementAt(i));
                     }
-                    else
-                        costList[i] = maxCost;
                 }
                 population.Add(individ);
             }
@@ -441,7 +434,7 @@ namespace GenAlgorithm
 
         public List<Individ> linearRankSelection(List<Individ> individs, int c)//Linear rank selection
         {
-            evaluation();
+            evaluation(individs);
             List<Individ> population1 = new List<Individ>();
             List<Individ> population2 = new List<Individ>();
             int[] sumcost = new int[individs.Count];
