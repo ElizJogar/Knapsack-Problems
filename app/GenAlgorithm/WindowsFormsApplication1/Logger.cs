@@ -52,14 +52,14 @@ namespace GenAlgorithm
                 _writeFile.WriteLine("INFO:\t\t " + _localDate.ToString(_culture) + ": " + text);
         }
 
-        public void WARNING(string text)
+        public void Warning(string text)
         {
             _localDate = DateTime.Now;
             using (_writeFile = new StreamWriter(_dir.FullName + @"\gen_algorithm_log.log", true))
                 _writeFile.WriteLine("WARNING:\t\t " + _localDate.ToString(_culture) + ": " + text);
         }
 
-        public void ERROR(string text)
+        public void Error(string text)
         {
             _localDate = DateTime.Now;
             using (_writeFile = new StreamWriter(_dir.FullName + @"\gen_algorithm_log.log", true))
