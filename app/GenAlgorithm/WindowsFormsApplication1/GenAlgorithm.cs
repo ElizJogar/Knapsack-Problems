@@ -107,7 +107,6 @@ namespace GenAlgorithm
 
         public Individ danzigAlgorithm() // Danzig algorithm: to generate an initial population of individuals
         {
-            Logger.Get().Debug("called Danzig algorithm.");
             Individ ind = new Individ(_individSize);
             List<double> specificCostList = new List<double>();
             double[] specificCost = new double[_individSize];
@@ -139,16 +138,11 @@ namespace GenAlgorithm
                     }
                 }
             }
-            string text = "";
-            for (int i = 0; i < ind.SIZE; i++)
-                text +=  ind.INDIVID[i];
-            Logger.Get().Debug(text);
             return ind;
         }
 
         public Individ randomAlgorithm()// Random algorithm: to generate an initial population of individuals
         {
-            Logger.Get().Debug("called random algorithm.");
             Individ ind = new Individ(_individSize);
             int summaryWeight = 0;
             for (int i = 0; i < _individSize; i++)
@@ -163,10 +157,6 @@ namespace GenAlgorithm
                 else
                     ind.INDIVID[i] = 0;
             }
-            string text = "";
-            for (int i = 0; i < ind.SIZE; i++)
-                text += ind.INDIVID[i];
-            Logger.Get().Debug(text);
             return ind;
         }
 
@@ -181,15 +171,25 @@ namespace GenAlgorithm
                 {
                     case 1:
                         ind = danzigAlgorithm();
+                        Logger.Get().Debug("Danzig algorithm");
                         break;
                     case 2:
                         ind = randomAlgorithm();
+                        Logger.Get().Debug("Random algorithm");
                         break;
                 }
 
                 if (!population.Contains(ind))
                     population.Add(ind);
                 else  n++;
+            }
+            string text = "Initial population";
+            for (int i = 0; i < population.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < population[i].SIZE; j++)
+                    text += population[i].INDIVID[j];
+                Logger.Get().Debug(text);
             }
             return population;
         }
@@ -232,14 +232,14 @@ namespace GenAlgorithm
                 }
             }
             population.AddRange(individs);
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                Logger.Get().Debug(text);
-            }
+            //string text = "";
+            //for (int i = 0; i < population.Count; i++)
+            //{
+            //    text = "";
+            //    for (int j = 0; j < population[i].SIZE; j++)
+            //        text += population[i].INDIVID[j];
+            //    Logger.Get().Debug(text);
+            //}
              return population;
         }
 
@@ -269,14 +269,14 @@ namespace GenAlgorithm
             }
             population.AddRange(individs);
 
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                Logger.Get().Debug(text);
-            }
+            //string text = "";
+            //for (int i = 0; i < population.Count; i++)
+            //{
+            //    text = "";
+            //    for (int j = 0; j < population[i].SIZE; j++)
+            //        text += population[i].INDIVID[j];
+            //    Logger.Get().Debug(text);
+            //}
             return population;
         }
 
@@ -308,14 +308,14 @@ namespace GenAlgorithm
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs[i]);
 
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                Logger.Get().Debug(text);
-            }
+            //string text = "";
+            //for (int i = 0; i < population.Count; i++)
+            //{
+            //    text = "";
+            //    for (int j = 0; j < population[i].SIZE; j++)
+            //        text += population[i].INDIVID[j];
+            //    Logger.Get().Debug(text);
+            //}
             return population;
         }
 
@@ -347,14 +347,14 @@ namespace GenAlgorithm
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs[i]);
 
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                Logger.Get().Debug(text);
-            }
+            //string text = "";
+            //for (int i = 0; i < population.Count; i++)
+            //{
+            //    text = "";
+            //    for (int j = 0; j < population[i].SIZE; j++)
+            //        text += population[i].INDIVID[j];
+            //    Logger.Get().Debug(text);
+            //}
             return population;
         }
 
@@ -388,14 +388,14 @@ namespace GenAlgorithm
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs[i]);
 
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                Logger.Get().Debug(text);
-            }
+            //string text = "";
+            //for (int i = 0; i < population.Count; i++)
+            //{
+            //    text = "";
+            //    for (int j = 0; j < population[i].SIZE; j++)
+            //        text += population[i].INDIVID[j];
+            //    Logger.Get().Debug(text);
+            //}
             return population;
         }
 
@@ -429,14 +429,14 @@ namespace GenAlgorithm
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs[i]);
 
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                Logger.Get().Debug(text);
-            }
+            //string text = "";
+            //for (int i = 0; i < population.Count; i++)
+            //{
+            //    text = "";
+            //    for (int j = 0; j < population[i].SIZE; j++)
+            //        text += population[i].INDIVID[j];
+            //    Logger.Get().Debug(text);
+            //}
             return population;
         }
 
@@ -452,6 +452,13 @@ namespace GenAlgorithm
             double coeffB = 0;
             int weight = 0;
             int cost = 0;
+            int maxInvalidWeight = 0;
+            for(int i = 0; i < individs.Count; i++)
+            {
+                weight = getWeight(individs[i]);
+                if(weight > LIMIT)
+                    maxInvalidWeight = (weight > maxInvalidWeight) ? weight : maxInvalidWeight;
+            }
             for (int i = 0; i < individs.Count; i++)
             {
                 cost = getCost(individs[i]);
@@ -460,17 +467,18 @@ namespace GenAlgorithm
                 {
                     Logger.Get().Debug("NORMAL COST - " + cost);
                     scalledFitnessFunctions[i] = cost;
-
                 }
                 else
                 {
-                    int result = (int)Math.Pow(weight - LIMIT, 2);
-                    scalledFitnessFunctions[i] = cost - result;
+                    if (weight == maxInvalidWeight)
+                        scalledFitnessFunctions[i] = 0;
+                    else
+                        scalledFitnessFunctions[i] = cost - (int)Math.Pow(weight - LIMIT, 2);
                     string individStr = "";
                     for (int j = 0; j < individs[i].SIZE; j++)
                         individStr += individs[i].INDIVID[j];
                     Logger.Get().Debug("individ - " + individStr);
-                    Logger.Get().Debug("cost -" + cost + " weight - " + weight + " maxWeight - " + LIMIT + " result - " + result + " penalty function - " + scalledFitnessFunctions[i]);
+                    Logger.Get().Debug("cost -" + cost + " weight - " + weight + " maxWeight - " + LIMIT  + " penalty function - " + scalledFitnessFunctions[i]);
                 }
                 if (scalledFitnessFunctions[i] > 0)
                  {
@@ -534,7 +542,10 @@ namespace GenAlgorithm
                 for (int j = 0; j < population[i].SIZE; j++)
                     text += population[i].INDIVID[j];
                 text += " COST: " + getCost(population[i]);
+                int weight = getWeight(population[i]);
                 Logger.Get().Debug(text);
+                if (weight > LIMIT)
+                    Logger.Get().Warning("Weight is invalid. - " + weight);
             }
             return population;
         }
@@ -605,6 +616,9 @@ namespace GenAlgorithm
                     text += population[i].INDIVID[j];
                 text += " COST: " + getCost(population[i]);
                 Logger.Get().Debug(text);
+                int weight = getWeight(population[i]);
+                if (weight > LIMIT)
+                    Logger.Get().Warning("Weight is invalid. - " + weight);
             }
             return population;
         }
