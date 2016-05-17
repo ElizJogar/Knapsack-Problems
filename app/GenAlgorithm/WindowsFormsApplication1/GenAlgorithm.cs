@@ -530,7 +530,7 @@ namespace GenAlgorithm
         public List<Individ> linearRankSelection(List<Individ> individs, int c)//Linear rank selection
         {
             evaluation(individs);
-            Logger.Get()>Debug("called linear rank selection.");
+            Logger.Get().Debug("called linear rank selection.");
             List<Individ> population1 = new List<Individ>();
             List<Individ> population2 = new List<Individ>();
             int[] sumCost = new int[individs.Count];
