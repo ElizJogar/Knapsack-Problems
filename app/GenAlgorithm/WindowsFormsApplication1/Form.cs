@@ -34,25 +34,23 @@ namespace GenAlgorithm
                 populationCount = Convert.ToInt32(numberOfPopulationBox.Text);
             else
                 populationCount = 20;
-  
-            int maxWeight = Convert.ToInt32(maxWeightBox.Text);
-            if (maxWeight == 0) maxWeight = 80;
+ 
             switch (dataInstancesBox.Text)
             {
                 case "No correlation":
-                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
                     break;
                 case "The weak correlation":
-                    algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, 100));
                     break;
                 case "The strong correlation":
-                    algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, 100));
                     break;
                 case "Subtotals":
-                    algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, 100));
                     break;
             }
-            algorithm.LIMIT = maxWeight;
+            
             textBox4.Text = "COST: ";
             for (int i = 0; i < algorithm.COST.Length; i++)
                 textBox4.Text += algorithm.COST[i] + " ";
@@ -62,7 +60,7 @@ namespace GenAlgorithm
             for (int i = 0; i < algorithm.WEIGHT.Length; i++)
                 textBox4.Text += algorithm.WEIGHT[i] + " ";
             textBox4.Text += "\r\n";
-
+            textBox4.Text += "WEIGHT LIMIT: " + algorithm.LIMIT + "\r\n";
            individs.Clear();
             switch (startPopulBox.Text)
             {
@@ -155,24 +153,23 @@ namespace GenAlgorithm
                 iterationCount = Convert.ToInt32(numberOfIterationBox.Text);
             else
                 iterationCount = 20;
-            int maxWeight = Convert.ToInt32(maxWeightBox.Text);
-            if (maxWeight == 0) maxWeight = 80;
+  
             switch (dataInstancesBox.Text)
             {
                 case "No correlation":
-                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
                     break;
                 case "The weak correlation":
-                    algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, 100));
                     break;
                 case "The strong correlation":
-                    algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, 100));
                     break;
                 case "Subtotals":
-                    algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, maxWeight / 2));
+                    algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, 100));
                     break;
             }
-            algorithm.LIMIT = maxWeight;
+
             int startsCount = Convert.ToInt32(startsNumber.Text);
             Excel.Application excel = new Excel.Application();
             excel.Visible = false;

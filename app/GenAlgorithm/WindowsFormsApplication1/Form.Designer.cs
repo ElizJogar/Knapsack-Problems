@@ -48,8 +48,6 @@
             this.iterationCountLabel = new System.Windows.Forms.Label();
             this.bettaBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.maxWeightBox = new System.Windows.Forms.TextBox();
-            this.weightLimitLabel = new System.Windows.Forms.Label();
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.maxCostLabel = new System.Windows.Forms.Label();
             this.report = new System.Windows.Forms.Button();
@@ -265,25 +263,6 @@
             this.label9.TabIndex = 26;
             this.label9.Text = "β :";
             // 
-            // maxWeightBox
-            // 
-            this.maxWeightBox.Location = new System.Drawing.Point(664, 83);
-            this.maxWeightBox.Name = "maxWeightBox";
-            this.maxWeightBox.Size = new System.Drawing.Size(100, 20);
-            this.maxWeightBox.TabIndex = 27;
-            this.maxWeightBox.Text = "80";
-            // 
-            // weightLimitLabel
-            // 
-            this.weightLimitLabel.AutoSize = true;
-            this.weightLimitLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.weightLimitLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.weightLimitLabel.Location = new System.Drawing.Point(549, 86);
-            this.weightLimitLabel.Name = "weightLimitLabel";
-            this.weightLimitLabel.Size = new System.Drawing.Size(80, 18);
-            this.weightLimitLabel.TabIndex = 28;
-            this.weightLimitLabel.Text = "Weight limit:";
-            // 
             // richTextBox3
             // 
             this.richTextBox3.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -440,8 +419,6 @@
             this.Controls.Add(this.report);
             this.Controls.Add(this.maxCostLabel);
             this.Controls.Add(this.richTextBox3);
-            this.Controls.Add(this.weightLimitLabel);
-            this.Controls.Add(this.maxWeightBox);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.bettaBox);
             this.Controls.Add(this.iterationCountLabel);
@@ -490,8 +467,6 @@
         private System.Windows.Forms.Label iterationCountLabel;
         private System.Windows.Forms.TextBox bettaBox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox maxWeightBox;
-        private System.Windows.Forms.Label weightLimitLabel;
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Label maxCostLabel;
         private System.Windows.Forms.Button report;

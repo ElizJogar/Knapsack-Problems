@@ -39,15 +39,12 @@ namespace GenAlgorithm
     {
         private DataInstances _data;
         private Random _rand = new Random(System.DateTime.Now.Millisecond);
-        private int _summaryWeight = 0;
         private int _individSize;
-        private int _lim = 0;
         private int[] _scalledFitnessFunctions;
        
         public int LIMIT
         {
-            get { return _lim; }
-            set { _lim = value; }
+            get { return _data.MAX_WEIGHT; }
         }
 
         public int[] WEIGHT
@@ -78,21 +75,19 @@ namespace GenAlgorithm
         public int getCost(Individ indiv)
         {
             int summaryCost = 0;
-            for (int i = 0; i < _individSize; i++)
+            for (int i = 0; i < indiv.SIZE; i++)
                 if (indiv.INDIVID[i] == 1)
                     summaryCost += _data.COST[i];
             return summaryCost;
         }
 
-        public int getMaxCost(List<Individ> individs)
+        public int getWeight(Individ indiv)
         {
-            int maxCost = 0;
-            for (int i = 0; i < individs.Count(); i++)
-            {
-                int cost = getCost(individs[i]);
-                maxCost = (cost > maxCost) ? cost : maxCost;
-            }
-            return maxCost;
+            int summaryWeight = 0;
+            for (int i = 0; i < indiv.SIZE; i++)
+                if (indiv.INDIVID[i] == 1)
+                    summaryWeight += _data.WEIGHT[i];
+            return summaryWeight;
         }
 
         public int getMaxScalledCost(List<Individ> individs)
@@ -112,7 +107,7 @@ namespace GenAlgorithm
             Individ ind = new Individ(_individSize);
             List<double> specificCostList = new List<double>();
             double[] specificCost = new double[_individSize];
-            _summaryWeight = 0;
+            int summaryWeight = 0;
             for (int i = 0; i < _individSize; i++)
             {
                 specificCost[i] = (double)_data.COST[i] / _data.WEIGHT[i];
@@ -125,14 +120,14 @@ namespace GenAlgorithm
             {
                 for( int j = 0; j < _individSize; j++)
                 {
-                    if (specificCostList.ElementAt(i) == specificCost[j])
+                    if (specificCostList[i] == specificCost[j])
                     {
-                        _summaryWeight += _data.WEIGHT[j];
-                         if (_summaryWeight <= _lim)
+                        summaryWeight += _data.WEIGHT[j];
+                        if (summaryWeight <= LIMIT)
                          {
                              ind.INDIVID[j] = _rand.Next(2);
                              if (ind.INDIVID[j] == 0)
-                                 _summaryWeight -= _data.WEIGHT[j];
+                                 summaryWeight -= _data.WEIGHT[j];
                          }
                          else
                              ind.INDIVID[j] = 0;
@@ -151,15 +146,15 @@ namespace GenAlgorithm
         {
             Logger.Get().Debug("called random algorithm.");
             Individ ind = new Individ(_individSize);
-            _summaryWeight = 0;
+            int summaryWeight = 0;
             for (int i = 0; i < _individSize; i++)
             {
-                _summaryWeight += _data.WEIGHT[i];
-                if (_summaryWeight <= _lim)
+                summaryWeight += _data.WEIGHT[i];
+                if (summaryWeight <= LIMIT)
                 {
                     ind.INDIVID[i] = _rand.Next(2);
                     if (ind.INDIVID[i] == 0)
-                        _summaryWeight -= _data.WEIGHT[i];
+                        summaryWeight -= _data.WEIGHT[i];
                 }
                 else
                     ind.INDIVID[i] = 0;
@@ -215,18 +210,18 @@ namespace GenAlgorithm
                         if (l == 1)
                         {
                             for (int s = 0; s < k; s++)
-                                ind.INDIVID[s] = individs.ElementAt(j).INDIVID[s];
+                                ind.INDIVID[s] = individs[j].INDIVID[s];
                             for (int s = k; s < _individSize; s++)
-                                ind.INDIVID[s] = individs.ElementAt(i).INDIVID[s];
+                                ind.INDIVID[s] = individs[i].INDIVID[s];
                         }
                         if (l == 2)
                         {
                             for (int s = 0; s < k; s++)
-                                ind.INDIVID[s] = individs.ElementAt(j).INDIVID[s];
+                                ind.INDIVID[s] = individs[j].INDIVID[s];
                             for (int s = k; s < r; s++)
-                                ind.INDIVID[s] = individs.ElementAt(i).INDIVID[s];
+                                ind.INDIVID[s] = individs[i].INDIVID[s];
                             for (int s = r; s < _individSize; s++)
-                                ind.INDIVID[s] = individs.ElementAt(j).INDIVID[s];
+                                ind.INDIVID[s] = individs[j].INDIVID[s];
                         }
                         population.Add(ind);
                     }
@@ -260,9 +255,9 @@ namespace GenAlgorithm
                         {
                             k = _rand.Next(10);
                             if (k > 5)
-                                ind.INDIVID[s] = individs.ElementAt(j).INDIVID[s];
+                                ind.INDIVID[s] = individs[j].INDIVID[s];
                             else
-                                ind.INDIVID[s] = individs.ElementAt(i).INDIVID[s];
+                                ind.INDIVID[s] = individs[i].INDIVID[s];
                         }
                         population.Add(ind);
                     }
@@ -294,9 +289,9 @@ namespace GenAlgorithm
                 k = _rand.Next(_individSize - 2);
                 r = _rand.Next(k + 1, _individSize - 1);
                 Individ ind = new Individ(_individSize);
-                ind = individs.ElementAt(i);
+                ind = individs[i];
                 if (_rand.Next(100) == 1)
-                   ind.INDIVID[k] = (individs.ElementAt(i).INDIVID[k] == 0) ? 1 : 0;
+                   ind.INDIVID[k] = (individs[i].INDIVID[k] == 0) ? 1 : 0;
                 int nullCount = 0;
                 for (int j = 0; j < _individSize; j++)
                 {
@@ -307,7 +302,7 @@ namespace GenAlgorithm
                     population.Add(ind);
             }
             for (int i = s; i < individs.Count; i++)
-                population.Add(individs.ElementAt(i));
+                population.Add(individs[i]);
 
             string text = "";
             for (int i = 0; i < population.Count; i++)
@@ -332,10 +327,10 @@ namespace GenAlgorithm
                 k = _rand.Next(_individSize - 2);
                 r = _rand.Next(k + 1, _individSize - 1);
                 Individ ind = new Individ(_individSize);
-                ind = individs.ElementAt(i);
+                ind = individs[i];
                 if (_rand.Next(100) == 1)
                    for (int j = k; j <= r; j++)
-                       ind.INDIVID[j] = (individs.ElementAt(i).INDIVID[j] == 0) ? 1 : 0;
+                       ind.INDIVID[j] = (individs[i].INDIVID[j] == 0) ? 1 : 0;
                 int nullCount = 0;
                 for (int j = 0; j < _individSize; j++)
                 {
@@ -346,7 +341,7 @@ namespace GenAlgorithm
                     population.Add(ind);
             }
             for (int i = s; i < individs.Count; i++)
-                population.Add(individs.ElementAt(i));
+                population.Add(individs[i]);
 
             string text = "";
             for (int i = 0; i < population.Count; i++)
@@ -371,13 +366,13 @@ namespace GenAlgorithm
                 k = _rand.Next(_individSize - 2);
                 r = _rand.Next(k + 1, _individSize - 1);
                 Individ ind = new Individ(_individSize);
-                ind = individs.ElementAt(i);
+                ind = individs[i];
                 if (_rand.Next(100) == 1)
                 {
                     for (int j = 0; j <= k; j++)
-                        ind.INDIVID[j] = (individs.ElementAt(i).INDIVID[j] == 0) ? 1 : 0;
+                        ind.INDIVID[j] = (individs[i].INDIVID[j] == 0) ? 1 : 0;
                     for (int j = r; j < _individSize; j++)
-                        ind.INDIVID[j] = (individs.ElementAt(i).INDIVID[j] == 0) ? 1 : 0;
+                        ind.INDIVID[j] = (individs[i].INDIVID[j] == 0) ? 1 : 0;
                 }
                 int nullCount = 0;
                 for (int j = 0; j < _individSize; j++)
@@ -387,7 +382,7 @@ namespace GenAlgorithm
                     population.Add(ind);
             }
             for (int i = s; i < individs.Count; i++)
-                population.Add(individs.ElementAt(i));
+                population.Add(individs[i]);
 
             string text = "";
             for (int i = 0; i < population.Count; i++)
@@ -412,11 +407,11 @@ namespace GenAlgorithm
                 k = _rand.Next(_individSize - 2);
                 r = _rand.Next(k + 1, _individSize - 1);
                 Individ ind = new Individ(_individSize);
-                ind = individs.ElementAt(i);
+                ind = individs[i];
                 if (_rand.Next(100) == 1)
                 {      
-                    ind.INDIVID[r] = individs.ElementAt(i).INDIVID[k];
-                    ind.INDIVID[k] = individs.ElementAt(i).INDIVID[r];
+                    ind.INDIVID[r] = individs[i].INDIVID[k];
+                    ind.INDIVID[k] = individs[i].INDIVID[r];
                 }
                 int nullCount = 0;
                 for (int j = 0; j < _individSize; j++)
@@ -428,7 +423,7 @@ namespace GenAlgorithm
                     population.Add(ind);
             }
             for (int i = s; i < individs.Count; i++)
-                population.Add(individs.ElementAt(i));
+                population.Add(individs[i]);
 
             string text = "";
             for (int i = 0; i < population.Count; i++)
@@ -446,39 +441,51 @@ namespace GenAlgorithm
             //new
             Logger.Get().Debug("called evaluation.");
             _scalledFitnessFunctions = new int[individs.Count];
-            int maxCost = getMaxCost(individs);
             int averageCost = 0;
             for (int i = 0; i < individs.Count; i++)
                 averageCost += getCost(individs[i]);
             averageCost /= individs.Count;
-
-            double C = _rand.NextDouble()*(2.0 - 1.2) + 1.2;
-
-            double delta = (maxCost - averageCost);
-            delta = (delta == 0) ? 0.00001 : delta; //?????
-            double coeffA = (C - 1) * averageCost / delta;
-            double coeffB = averageCost * (maxCost - C * averageCost) / delta;
-            Logger.Get().Debug("const C - " + C + ", coefficient A - " + coeffA + ", coefficient B - " + coeffB);
-            Logger.Get().Debug("scalled fitness functions");
-            string text = "";
+            double coeffA = 0;
+            double coeffB = 0;
+            int weight = 0;
+            int cost = 0;
             for (int i = 0; i < individs.Count; i++)
             {
-                _summaryWeight = 0;
-                for (int g = 0; g < _individSize; g++)
-                    if (individs.ElementAt(i).INDIVID[g] == 1)
-                        _summaryWeight += _data.WEIGHT[g];
-                if (_summaryWeight <= _lim)
+                cost = getCost(individs[i]);
+                weight = getWeight(individs[i]);
+                if (weight <= LIMIT)
                 {
-                    _scalledFitnessFunctions[i] = getCost(individs[i]);
-                    text += "|n/s: " + _scalledFitnessFunctions[i];
+                    Logger.Get().Debug("NORMAL COST - " + cost);
+                    _scalledFitnessFunctions[i] = cost;
+
                 }
                 else
                 {
-                    _scalledFitnessFunctions[i] = 0;// Convert.ToInt32(coeffA * getCost(individs[i]) + coeffB);
-                    text += "|s: " + _scalledFitnessFunctions[i];
+                    int result = (int)Math.Pow(weight - LIMIT, 2);
+                    _scalledFitnessFunctions[i] = cost - result;
+                    string individStr = "";
+                    for (int j = 0; j < individs[i].SIZE; j++)
+                        individStr += individs[i].INDIVID[j];
+                    Logger.Get().Debug("individ - " + individStr);
+                    Logger.Get().Debug("cost -" + cost + " weight - " + weight + " maxWeight - " + LIMIT + " result - " + result + " penalty function - " + _scalledFitnessFunctions[i]);
                 }
-            }
-            Logger.Get().Debug(text);
+                 if (_scalledFitnessFunctions[i] > 0)
+                 {
+                   if(weight <= LIMIT)
+                       Logger.Get().Debug("|normal " + _scalledFitnessFunctions[i]);
+                   else
+                       Logger.Get().Debug("|p (positive) " + _scalledFitnessFunctions[i]);
+                 }
+                 else
+                 {
+                     Logger.Get().Debug("|p (negative) " + _scalledFitnessFunctions[i]);
+                     cost = _scalledFitnessFunctions[i];
+                     coeffA = averageCost / (cost - averageCost);
+                     coeffB = averageCost * cost / (cost - averageCost);
+                     _scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * _scalledFitnessFunctions[i] + coeffB);
+                     Logger.Get().Debug("avarage - " + averageCost + " cost -  " + cost + " coefficient A - " + coeffA + ", coefficient B - " + coeffB + "|scalled - " + _scalledFitnessFunctions[i]);
+                 }
+            } 
         }
 
         public List<Individ> bettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
@@ -497,7 +504,7 @@ namespace GenAlgorithm
                     c = _rand.Next(2);
                     if (c == 1 && count < beta && !number.Contains(i))
                     {
-                        costList.Add(_scalledFitnessFunctions[i]/*getCost(individs[i])*/);
+                        costList.Add(_scalledFitnessFunctions[i]);
                         number.Add(i);
                         count++;
                     }
@@ -508,10 +515,10 @@ namespace GenAlgorithm
                 Individ individ = new Individ(_individSize);
                 for (int i = 0; i < beta; i++)
                 {
-                    if (costList.ElementAt(i) > maxCost)
+                    if (costList[i] > maxCost)
                     {
-                        maxCost = costList.ElementAt(i);
-                        individ = individs.ElementAt(number.ElementAt(i));
+                        maxCost = costList[i];
+                        individ = individs.ElementAt(number[i]);
                     }
                 }
                 population.Add(individ);
@@ -541,7 +548,7 @@ namespace GenAlgorithm
             n[0] = 2 - n[individs.Count - 1];
             for (int i = 0; i < individs.Count; i++)
             {
-                sumCost[i] = _scalledFitnessFunctions[i]/*getCost(individs[i])*/;
+                sumCost[i] = _scalledFitnessFunctions[i];
                 sumCostList.Add(sumCost[i]);
             }
             sumCostList.Sort();
@@ -551,10 +558,10 @@ namespace GenAlgorithm
                 {
                     if (sumCost[j] != -1)
                     {
-                        if (sumCost[j] == sumCostList.ElementAt(i))
+                        if (sumCost[j] == sumCostList[i])
                         {
                             sumCost[j] = -1;
-                            population1.Add(individs.ElementAt(j));
+                            population1.Add(individs[j]);
                             break;
                         }
                     }
@@ -585,7 +592,7 @@ namespace GenAlgorithm
                 for (int i = 0; i < c; i++)
                 {
                     k = _rand.Next(population2.Count);
-                    population1.Add(population2.ElementAt(k));
+                    population1.Add(population2[k]);
                 }
             }
             List<Individ> population = (population2.Count > c) ? population1 : population2;

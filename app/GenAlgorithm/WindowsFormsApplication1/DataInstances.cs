@@ -12,6 +12,7 @@ namespace GenAlgorithm
         protected int[] _weight;
         protected int _range;
         protected Random _rand;
+        public int  _maxWeight;
 
         public int[] COST
         {
@@ -23,6 +24,11 @@ namespace GenAlgorithm
         {
             get { return _weight; }
             set { _weight = value; }
+        }
+
+        public int MAX_WEIGHT
+        {
+            get { return _maxWeight; }    
         }
 
         public DataInstances(int size,int range)
@@ -43,11 +49,14 @@ namespace GenAlgorithm
        
         public override void fill()
         {
+            int summaryWeight = 0;
             for( int i = 0; i < _weight.Length; i++)
             {
                 _weight[i] = _rand.Next(1, _range);
                 _cost[i] = _rand.Next(1, _range);
-            } 
+                summaryWeight += _weight[i];
+            }
+            _maxWeight = (int)(summaryWeight * 0.8); 
         }
     }
 
@@ -65,11 +74,14 @@ namespace GenAlgorithm
 
         public override void fill()
         {
+            int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
             {
                 _weight[i] = _rand.Next(1, _range);
                 _cost[i] = getCost(_weight[i]);
+                summaryWeight += _weight[i];
             }
+            _maxWeight = (int)(summaryWeight * 0.8); 
         }
     }
 
@@ -79,11 +91,14 @@ namespace GenAlgorithm
        
         public override void fill()
         {
+            int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
             {
                 _weight[i] = _rand.Next(1, _range);
                 _cost[i] = _weight[i] + 10;
+                summaryWeight += _weight[i];
             }
+            _maxWeight = (int)(summaryWeight * 0.8);
         }
     }
 
@@ -92,11 +107,14 @@ namespace GenAlgorithm
         public SubsetSumDataInstances(int size, int range) : base(size, range) {}
         public override void fill()
         {
+            int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
             {
                 _weight[i] = _rand.Next(1, _range);
                 _cost[i] = _weight[i];
+                summaryWeight += _weight[i];
             }
+            _maxWeight = (int)(summaryWeight * 0.8);
         }
     }
 }
