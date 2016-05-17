@@ -294,6 +294,7 @@
             // 
             this.dataInstancesBox.FormattingEnabled = true;
             this.dataInstancesBox.Items.AddRange(new object[] {
+            "Test",
             "No correlation",
             "The weak correlation",
             "The strong correlation",

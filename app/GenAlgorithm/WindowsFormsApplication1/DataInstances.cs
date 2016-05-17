@@ -48,14 +48,11 @@ namespace GenAlgorithm
        
         public override void fill()
         {
-            int summaryWeight = 0;
-            for( int i = 0; i < _weight.Length; i++)
-            {
-                _weight[i] = _rand.Next(1, _range);
-                _cost[i] = _rand.Next(1, _range);
-                summaryWeight += _weight[i];
-            }
-            _maxWeight = (int)(summaryWeight * 0.8); 
+            int[] tmpCost =  { 21, 19, 27, 3, 24, 30, 6, 13, 2, 21, 26, 26, 24, 1, 10 };
+            int[] tmpWeight = { 2, 26, 23, 6, 19, 9, 8, 20, 11, 1, 17, 21, 7, 20, 11 };
+            _cost = tmpCost;
+            _weight = tmpWeight;
+            _maxWeight = 80; 
         }
     }
 

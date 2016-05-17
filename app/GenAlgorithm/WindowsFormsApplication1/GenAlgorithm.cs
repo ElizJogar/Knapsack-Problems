@@ -33,6 +33,11 @@ namespace GenAlgorithm
                 sum += INDIVID[i] ^ newIndivid.INDIVID[i]; 
             return (sum == 0);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 
    public class GenAlgorithm
@@ -40,7 +45,6 @@ namespace GenAlgorithm
         private DataInstances _data;
         private Random _rand = new Random(System.DateTime.Now.Millisecond);
         private int _individSize;
-        private int[] _scalledFitnessFunctions;
        
         public int LIMIT
         {
@@ -90,7 +94,7 @@ namespace GenAlgorithm
             return summaryWeight;
         }
 
-        public int getMaxScalledCost(List<Individ> individs)
+        public int getMaxCost(List<Individ> individs)
         {
             int maxCost = 0;
             for (int i = 0; i < individs.Count(); i++)
@@ -436,11 +440,10 @@ namespace GenAlgorithm
             return population;
         }
 
-        private void evaluation(List<Individ> individs)// Penalty function method
+        private int[] penaltyFunctionMethod(List<Individ> individs)// Penalty function method
         {
-            //new
-            Logger.Get().Debug("called evaluation.");
-            _scalledFitnessFunctions = new int[individs.Count];
+            Logger.Get().Debug("called penalty function method.");
+            int [] scalledFitnessFunctions = new int[individs.Count];
             int averageCost = 0;
             for (int i = 0; i < individs.Count; i++)
                 averageCost += getCost(individs[i]);
@@ -456,41 +459,42 @@ namespace GenAlgorithm
                 if (weight <= LIMIT)
                 {
                     Logger.Get().Debug("NORMAL COST - " + cost);
-                    _scalledFitnessFunctions[i] = cost;
+                    scalledFitnessFunctions[i] = cost;
 
                 }
                 else
                 {
                     int result = (int)Math.Pow(weight - LIMIT, 2);
-                    _scalledFitnessFunctions[i] = cost - result;
+                    scalledFitnessFunctions[i] = cost - result;
                     string individStr = "";
                     for (int j = 0; j < individs[i].SIZE; j++)
                         individStr += individs[i].INDIVID[j];
                     Logger.Get().Debug("individ - " + individStr);
-                    Logger.Get().Debug("cost -" + cost + " weight - " + weight + " maxWeight - " + LIMIT + " result - " + result + " penalty function - " + _scalledFitnessFunctions[i]);
+                    Logger.Get().Debug("cost -" + cost + " weight - " + weight + " maxWeight - " + LIMIT + " result - " + result + " penalty function - " + scalledFitnessFunctions[i]);
                 }
-                 if (_scalledFitnessFunctions[i] > 0)
+                if (scalledFitnessFunctions[i] > 0)
                  {
                    if(weight <= LIMIT)
-                       Logger.Get().Debug("|normal " + _scalledFitnessFunctions[i]);
+                       Logger.Get().Debug("|normal " + scalledFitnessFunctions[i]);
                    else
-                       Logger.Get().Debug("|p (positive) " + _scalledFitnessFunctions[i]);
+                       Logger.Get().Debug("|p (positive) " + scalledFitnessFunctions[i]);
                  }
                  else
                  {
-                     Logger.Get().Debug("|p (negative) " + _scalledFitnessFunctions[i]);
-                     cost = _scalledFitnessFunctions[i];
+                     Logger.Get().Debug("|p (negative) " + scalledFitnessFunctions[i]);
+                     cost = scalledFitnessFunctions[i];
                      coeffA = averageCost / (cost - averageCost);
                      coeffB = averageCost * cost / (cost - averageCost);
-                     _scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * _scalledFitnessFunctions[i] + coeffB);
-                     Logger.Get().Debug("avarage - " + averageCost + " cost -  " + cost + " coefficient A - " + coeffA + ", coefficient B - " + coeffB + "|scalled - " + _scalledFitnessFunctions[i]);
+                     scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * scalledFitnessFunctions[i] + coeffB);
+                     Logger.Get().Debug("avarage - " + averageCost + " cost -  " + cost + " coefficient A - " + coeffA + ", coefficient B - " + coeffB + "|scalled - " + scalledFitnessFunctions[i]);
                  }
-            } 
+            }
+            return scalledFitnessFunctions;
         }
 
         public List<Individ> bettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
         {
-            evaluation(individs);
+            int[] costs = penaltyFunctionMethod(individs);
             Logger.Get().Debug("called betta - tournament selection.");
             List<Individ> population = new List<Individ>();
             for (int j = 0; j < populationCount; j++)
@@ -504,7 +508,7 @@ namespace GenAlgorithm
                     c = _rand.Next(2);
                     if (c == 1 && count < beta && !number.Contains(i))
                     {
-                        costList.Add(_scalledFitnessFunctions[i]);
+                        costList.Add(costs[i]);
                         number.Add(i);
                         count++;
                     }
@@ -529,6 +533,7 @@ namespace GenAlgorithm
                 text = "";
                 for (int j = 0; j < population[i].SIZE; j++)
                     text += population[i].INDIVID[j];
+                text += " COST: " + getCost(population[i]);
                 Logger.Get().Debug(text);
             }
             return population;
@@ -536,31 +541,27 @@ namespace GenAlgorithm
 
         public List<Individ> linearRankSelection(List<Individ> individs, int c)//Linear rank selection
         {
-            evaluation(individs);
+            int[] costs = penaltyFunctionMethod(individs);
             Logger.Get().Debug("called linear rank selection.");
             List<Individ> population1 = new List<Individ>();
             List<Individ> population2 = new List<Individ>();
-            int[] sumCost = new int[individs.Count];
-            List<int> sumCostList = new List<int>();
+            List<int> costList = new List<int>();
             int[] rang = new int[individs.Count];
             double[] n = new double[individs.Count]; // expected numbers
             n[individs.Count - 1] = _rand.NextDouble() + 1.1;
             n[0] = 2 - n[individs.Count - 1];
             for (int i = 0; i < individs.Count; i++)
-            {
-                sumCost[i] = _scalledFitnessFunctions[i];
-                sumCostList.Add(sumCost[i]);
-            }
-            sumCostList.Sort();
+                costList.Add(costs[i]);
+            costList.Sort();
             for (int i = 0; i < individs.Count; i++)
             {
                 for (int j = 0; j < individs.Count; j++)
                 {
-                    if (sumCost[j] != -1)
+                    if (costs[j] != -1)
                     {
-                        if (sumCost[j] == sumCostList[i])
+                        if (costs[j] == costList[i])
                         {
-                            sumCost[j] = -1;
+                            costs[j] = -1;
                             population1.Add(individs[j]);
                             break;
                         }
@@ -602,6 +603,7 @@ namespace GenAlgorithm
                 text = "";
                 for (int j = 0; j < population[i].SIZE; j++)
                     text += population[i].INDIVID[j];
+                text += " COST: " + getCost(population[i]);
                 Logger.Get().Debug(text);
             }
             return population;

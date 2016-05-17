@@ -15,7 +15,7 @@ namespace GenAlgorithm
     {
         Logger log;
         GenAlgorithm algorithm;
-        List<Individ> individs = new List<Individ>();//для множества решений
+        List<Individ> individs = new List<Individ>();
         int iterationCount = 0;
         int populationCount = 0;
         public GenAlgorithmView()
@@ -37,6 +37,9 @@ namespace GenAlgorithm
  
             switch (dataInstancesBox.Text)
             {
+                case "Test":
+                    algorithm = new GenAlgorithm(new TestDataInstances(15, 100));
+                    break;
                 case "No correlation":
                     algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
                     break;
@@ -120,7 +123,7 @@ namespace GenAlgorithm
                         individs = algorithm.linearRankSelection(individs, populationCount);
                         break;
                 }
-                textBox2.Text +=  algorithm.getMaxScalledCost(individs) + Environment.NewLine;
+                textBox2.Text +=  algorithm.getMaxCost(individs) + Environment.NewLine;
             }
  
         }
@@ -237,7 +240,7 @@ namespace GenAlgorithm
                                             individs = algorithm.linearRankSelection(individs, populationCount);
                                             break;
                                     }
-                                    sheet.Cells[x + 2, count] = algorithm.getMaxScalledCost(individs);
+                                    sheet.Cells[x + 2, count] = algorithm.getMaxCost(individs);
                                 }
                                 sheet.Cells[1, count] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
                                 sheet.Cells[iterationCount + 4, count].Formula = "= MAX(" + vsS[count - 1] + 2 + ":" + vsS[count - 1] + (iterationCount + 1) + ")";
@@ -254,7 +257,7 @@ namespace GenAlgorithm
             sheet.Cells[2, number] = "max";
             sheet.Cells[3, number] = "min";
             sheet.Cells[4, number] = "i";
-            sheet.Cells[5, number] = "i(среднее)";
+            sheet.Cells[5, number] = "i(average)";
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
                     for (int k = 0; k < 4; k++)
