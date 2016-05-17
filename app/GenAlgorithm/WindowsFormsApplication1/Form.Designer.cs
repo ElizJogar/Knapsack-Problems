@@ -43,12 +43,10 @@
             this.selectionBox = new System.Windows.Forms.ComboBox();
             this.selectionLabel = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.numberOfIterationBox = new System.Windows.Forms.TextBox();
             this.iterationCountLabel = new System.Windows.Forms.Label();
             this.bettaBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.maxCostLabel = new System.Windows.Forms.Label();
             this.report = new System.Windows.Forms.Button();
             this.startsNumber = new System.Windows.Forms.TextBox();
@@ -59,8 +57,8 @@
             this.mutationLabel = new System.Windows.Forms.Label();
             this.InitialPopulLabel2 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.latestGeneration = new System.Windows.Forms.Label();
             this.DataLabel = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // startPopulBox
@@ -212,19 +210,6 @@
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 0;
             // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.textBox2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.textBox2.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.textBox2.Location = new System.Drawing.Point(270, 322);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(223, 445);
-            this.textBox2.TabIndex = 22;
-            // 
             // numberOfIterationBox
             // 
             this.numberOfIterationBox.Location = new System.Drawing.Point(664, 57);
@@ -263,22 +248,12 @@
             this.label9.TabIndex = 26;
             this.label9.Text = "β :";
             // 
-            // richTextBox3
-            // 
-            this.richTextBox3.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.richTextBox3.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.richTextBox3.Location = new System.Drawing.Point(521, 322);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(56, 445);
-            this.richTextBox3.TabIndex = 29;
-            this.richTextBox3.Text = "";
-            // 
             // maxCostLabel
             // 
             this.maxCostLabel.AutoSize = true;
             this.maxCostLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.maxCostLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.maxCostLabel.Location = new System.Drawing.Point(430, 296);
+            this.maxCostLabel.Location = new System.Drawing.Point(325, 296);
             this.maxCostLabel.Name = "maxCostLabel";
             this.maxCostLabel.Size = new System.Drawing.Size(199, 23);
             this.maxCostLabel.TabIndex = 30;
@@ -346,7 +321,7 @@
             this.textBox4.Location = new System.Drawing.Point(30, 213);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(547, 57);
+            this.textBox4.Size = new System.Drawing.Size(494, 57);
             this.textBox4.TabIndex = 37;
             // 
             // mutationLabel
@@ -365,7 +340,7 @@
             this.InitialPopulLabel2.AutoSize = true;
             this.InitialPopulLabel2.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.InitialPopulLabel2.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.InitialPopulLabel2.Location = new System.Drawing.Point(27, 301);
+            this.InitialPopulLabel2.Location = new System.Drawing.Point(27, 296);
             this.InitialPopulLabel2.Name = "InitialPopulLabel2";
             this.InitialPopulLabel2.Size = new System.Drawing.Size(105, 18);
             this.InitialPopulLabel2.TabIndex = 40;
@@ -378,17 +353,6 @@
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 0;
             // 
-            // latestGeneration
-            // 
-            this.latestGeneration.AutoSize = true;
-            this.latestGeneration.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.latestGeneration.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.latestGeneration.Location = new System.Drawing.Point(267, 301);
-            this.latestGeneration.Name = "latestGeneration";
-            this.latestGeneration.Size = new System.Drawing.Size(112, 18);
-            this.latestGeneration.TabIndex = 41;
-            this.latestGeneration.Text = "Latest generation:";
-            // 
             // DataLabel
             // 
             this.DataLabel.AutoSize = true;
@@ -400,14 +364,25 @@
             this.DataLabel.TabIndex = 42;
             this.DataLabel.Text = "Data:";
             // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.textBox2.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox2.Location = new System.Drawing.Point(371, 322);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox2.Size = new System.Drawing.Size(91, 445);
+            this.textBox2.TabIndex = 43;
+            // 
             // GenAlgorithmView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(807, 801);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.DataLabel);
-            this.Controls.Add(this.latestGeneration);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.InitialPopulLabel2);
             this.Controls.Add(this.mutationLabel);
@@ -418,12 +393,10 @@
             this.Controls.Add(this.startsNumber);
             this.Controls.Add(this.report);
             this.Controls.Add(this.maxCostLabel);
-            this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.bettaBox);
             this.Controls.Add(this.iterationCountLabel);
             this.Controls.Add(this.numberOfIterationBox);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.selectionLabel);
             this.Controls.Add(this.selectionBox);
             this.Controls.Add(this.mutationBox);
@@ -462,12 +435,10 @@
         private System.Windows.Forms.ComboBox selectionBox;
         private System.Windows.Forms.Label selectionLabel;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox numberOfIterationBox;
         private System.Windows.Forms.Label iterationCountLabel;
         private System.Windows.Forms.TextBox bettaBox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Label maxCostLabel;
         private System.Windows.Forms.Button report;
         private System.Windows.Forms.TextBox startsNumber;
@@ -478,8 +449,8 @@
         private System.Windows.Forms.Label mutationLabel;
         private System.Windows.Forms.Label InitialPopulLabel2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label latestGeneration;
         private System.Windows.Forms.Label DataLabel;
+        private System.Windows.Forms.TextBox textBox2;
 
  
     }

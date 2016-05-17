@@ -42,6 +42,22 @@ namespace GenAlgorithm
 
         public abstract void fill();
     }
+    public class TestDataInstances : DataInstances
+    {
+        public TestDataInstances(int size, int range) : base(size, range) { }
+       
+        public override void fill()
+        {
+            int summaryWeight = 0;
+            for( int i = 0; i < _weight.Length; i++)
+            {
+                _weight[i] = _rand.Next(1, _range);
+                _cost[i] = _rand.Next(1, _range);
+                summaryWeight += _weight[i];
+            }
+            _maxWeight = (int)(summaryWeight * 0.8); 
+        }
+    }
 
     public class UncorrDataInstances : DataInstances
     {

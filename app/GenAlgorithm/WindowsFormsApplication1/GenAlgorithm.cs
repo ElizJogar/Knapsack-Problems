@@ -95,7 +95,7 @@ namespace GenAlgorithm
             int maxCost = 0;
             for (int i = 0; i < individs.Count(); i++)
             {
-                int cost = _scalledFitnessFunctions[i];
+                int cost = getCost(individs[i]);
                 maxCost = (cost > maxCost) ? cost : maxCost;
             }
             return maxCost;

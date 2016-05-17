@@ -71,7 +71,7 @@ namespace GenAlgorithm
                     individs = algorithm.createPopulation(populationCount, 2);
                     break;
             }
-            textBox1.Text = " Population:            Max cost:\r\n";
+            textBox1.Text = " Individ:            Cost:\r\n";
             for (int i = 0; i < individs.Count; i++)
             {
                 for (int j = 0; j < individs.ElementAt(i).SIZE; j++)
@@ -80,7 +80,7 @@ namespace GenAlgorithm
                 }
                 textBox1.Text += "\t" + algorithm.getCost(individs.ElementAt(i)) + Environment.NewLine;
             }
-            richTextBox3.Clear();
+            textBox2.Clear();
 
             for (int x = 0; x < iterationCount; x++)
             {
@@ -120,19 +120,9 @@ namespace GenAlgorithm
                         individs = algorithm.linearRankSelection(individs, populationCount);
                         break;
                 }
-                richTextBox3.Text += algorithm.getMaxScalledCost(individs) + "\n";
+                textBox2.Text +=  algorithm.getMaxScalledCost(individs) + Environment.NewLine;
             }
-
-            textBox2.Text = " Population:            Max cost:\r\n";
-            for (int i = 0; i < individs.Count; i++)
-            {
-                for (int j = 0; j < individs.ElementAt(i).SIZE; j++)
-                {
-                    textBox2.Text += individs.ElementAt(i).INDIVID[j];
-                }
-                textBox2.Text += "\t"/* + algorithm.getCost(individs.ElementAt(i))*/ + Environment.NewLine;
-
-            }
+ 
         }
 
         private void report_Click(object sender, EventArgs e)
@@ -172,7 +162,7 @@ namespace GenAlgorithm
 
             int startsCount = Convert.ToInt32(startsNumber.Text);
             Excel.Application excel = new Excel.Application();
-            excel.Visible = false;
+            //excel.Visible = false;
 
             excel.SheetsInNewWorkbook = startsCount + 1;
             excel.Workbooks.Add(Type.Missing);
@@ -279,9 +269,9 @@ namespace GenAlgorithm
 
                             for (int v = 1; v < startsCount; v++)
                             {
-                                convergence += "IF(" + vsS[number - 1] + 2 + "=Лист" + v + "!" + vsS[number - 1] + (iterationCount + 4) + "," + "Лист" + v + "!" + vsS[number - 1] + (iterationCount + 6) + "," + 100 + ")" + ",";
+                                convergence += "IF(" + vsS[number - 1] + 2 + "=Sheet" + v + "!" + vsS[number - 1] + (iterationCount + 4) + "," + "Sheet" + v + "!" + vsS[number - 1] + (iterationCount + 6) + "," + 100 + ")" + ",";
                             }
-                            convergence += "IF(" + vsS[number - 1] + 2 + "=Лист" + startsCount + "!" + vsS[number - 1] + (iterationCount + 4) + "," + "Лист" + startsCount + "!" + vsS[number - 1] + (iterationCount + 6) + "," + 100 + "))";
+                            convergence += "IF(" + vsS[number - 1] + 2 + "=Sheet" + startsCount + "!" + vsS[number - 1] + (iterationCount + 4) + "," + "Sheet" + startsCount + "!" + vsS[number - 1] + (iterationCount + 6) + "," + 100 + "))";
                             sheet.Cells[2, number].Formula = max;
                             sheet.Cells[3, number].Formula = min;
                             sheet.Cells[4, number].Formula = convergence;
@@ -294,8 +284,8 @@ namespace GenAlgorithm
         {
             string tmp = formula;
             for (int d = 1; d < startsCount; d++)
-                tmp += "Лист" + d + "!" + vsS[number - 1] + (iterationCount + count) + ",";
-            tmp += "Лист" + startsCount + "!" + vsS[number - 1] + (iterationCount + count) + ")";
+                tmp += "Sheet" + d + "!" + vsS[number - 1] + (iterationCount + count) + ",";
+            tmp += "Sheet" + startsCount + "!" + vsS[number - 1] + (iterationCount + count) + ")";
             return tmp;
         }
     }
