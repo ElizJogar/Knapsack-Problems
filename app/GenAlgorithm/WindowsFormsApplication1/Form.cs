@@ -116,7 +116,6 @@ namespace GenAlgorithm
                 switch (selectionBox.Text)
                 {
                     case "Betta-Tournament":
-                        List<Individ> population1 = new List<Individ>();
                         individs = algorithm.bettaTournamentSelection(individs, populationCount, Convert.ToInt32(bettaBox.Text));
                         break;
                     case "Linear-rank":
@@ -133,7 +132,7 @@ namespace GenAlgorithm
                 {
                     textBox2.Text += individs.ElementAt(i).INDIVID[j];
                 }
-                textBox2.Text += "\t" + algorithm.getCost(individs.ElementAt(i)) + Environment.NewLine;
+                textBox2.Text += "\t"/* + algorithm.getCost(individs.ElementAt(i))*/ + Environment.NewLine;
 
             }
         }
@@ -156,11 +155,24 @@ namespace GenAlgorithm
                 iterationCount = Convert.ToInt32(numberOfIterationBox.Text);
             else
                 iterationCount = 20;
-
-            if (maxWeightBox.Text.Length != 0)
-                algorithm.LIMIT = Convert.ToInt32(maxWeightBox.Text);
-            else
-                algorithm.LIMIT = 80;
+            int maxWeight = Convert.ToInt32(maxWeightBox.Text);
+            if (maxWeight == 0) maxWeight = 80;
+            switch (dataInstancesBox.Text)
+            {
+                case "No correlation":
+                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, maxWeight / 2));
+                    break;
+                case "The weak correlation":
+                    algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, maxWeight / 2));
+                    break;
+                case "The strong correlation":
+                    algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, maxWeight / 2));
+                    break;
+                case "Subtotals":
+                    algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, maxWeight / 2));
+                    break;
+            }
+            algorithm.LIMIT = maxWeight;
             int startsCount = Convert.ToInt32(startsNumber.Text);
             Excel.Application excel = new Excel.Application();
             excel.Visible = false;

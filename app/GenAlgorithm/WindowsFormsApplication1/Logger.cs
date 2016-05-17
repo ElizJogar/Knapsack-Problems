@@ -31,7 +31,7 @@ namespace GenAlgorithm
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             _dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_log");
             _dir.Create();
-            using(_writeFile = new StreamWriter(_dir.FullName + @"\gen_algorithm_log.log",true))
+            using(_writeFile = new StreamWriter(_dir.FullName + @"\gen_algorithm_log.log",false))
                 _writeFile.WriteLine("__________________________ Log Started. " + _localDate.ToString(_culture) + " __________________________");
         }
 
