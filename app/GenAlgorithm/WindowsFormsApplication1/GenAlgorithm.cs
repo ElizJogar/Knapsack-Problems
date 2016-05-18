@@ -475,8 +475,8 @@ namespace GenAlgorithm
                     if (costList[i] > maxCost)
                     {
                         maxCost = costList[i];
-                        text += "maxCost - " + maxCost + "individ - " + individ.convertToString();
                         individ = individs[number[i]];
+                        text += "maxCost - " + maxCost + "individ - " + individ.convertToString();
                     }
                 }
                 population.Add(individ);
