@@ -68,10 +68,10 @@ namespace GenAlgorithm
             switch (startPopulBox.Text)
             {
                 case "Danzig algorithm":
-                    individs = algorithm.createPopulation(populationCount, 1);
+                    individs = algorithm.CreatePopulation(populationCount, 0);
                     break;
                 case "Random algorithm":
-                    individs = algorithm.createPopulation(populationCount, 2);
+                    individs = algorithm.CreatePopulation(populationCount, 1);
                     break;
             }
             textBox1.Text = " Individ:            Cost:\r\n";
@@ -81,7 +81,7 @@ namespace GenAlgorithm
                 {
                     textBox1.Text += individs.ElementAt(i).INDIVID[j];
                 }
-                textBox1.Text += "\t" + algorithm.getCost(individs.ElementAt(i)) + Environment.NewLine;
+                textBox1.Text += "\t" + algorithm.GetCost(individs.ElementAt(i)) + Environment.NewLine;
             }
             textBox2.Clear();
 
@@ -90,40 +90,40 @@ namespace GenAlgorithm
                 switch (crossoverBox.Text)
                 {
                     case "Single-point crossover":
-                        individs = algorithm.pointCrossover(individs, 1);
+                        individs = algorithm.PointCrossover(individs, 1);
                         break;
                     case "Two-point crossover":
-                        individs = algorithm.pointCrossover(individs, 2);
+                        individs = algorithm.PointCrossover(individs, 2);
                         break;
                     case "Uniform crossover":
-                        individs = algorithm.uniformCrossover(individs);
+                        individs = algorithm.UniformCrossover(individs);
                         break;
                 }
                 switch (mutationBox.Text)
                 {
                     case "Point mutation":
-                        individs = algorithm.pointMutation(individs);
+                        individs = algorithm.PointMutation(individs);
                         break;
                     case "Inversion":
-                        individs = algorithm.inversion(individs);
+                        individs = algorithm.Inversion(individs);
                         break;
                     case "Translocation":
-                        individs = algorithm.translocation(individs);
+                        individs = algorithm.Translocation(individs);
                         break;
                     case "Saltation":
-                        individs = algorithm.saltation(individs);
+                        individs = algorithm.Saltation(individs);
                         break;
                 }
                 switch (selectionBox.Text)
                 {
                     case "Betta-Tournament":
-                        individs = algorithm.bettaTournamentSelection(individs, populationCount, Convert.ToInt32(bettaBox.Text));
+                        individs = algorithm.BettaTournamentSelection(individs, populationCount, Convert.ToInt32(bettaBox.Text));
                         break;
                     case "Linear-rank":
-                        individs = algorithm.linearRankSelection(individs, populationCount);
+                        individs = algorithm.LinearRankSelection(individs, populationCount);
                         break;
                 }
-                textBox2.Text +=  algorithm.getMaxCost(individs) + Environment.NewLine;
+                textBox2.Text +=  algorithm.GetMaxCost(individs) + Environment.NewLine;
             }
  
         }
@@ -149,6 +149,9 @@ namespace GenAlgorithm
   
             switch (dataInstancesBox.Text)
             {
+                case "Test":
+                    algorithm = new GenAlgorithm(new TestDataInstances(15, 100));
+                    break;
                 case "No correlation":
                     algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
                     break;
@@ -199,7 +202,7 @@ namespace GenAlgorithm
                             {
                                 count++;
                                 individs.Clear();
-                                individs = algorithm.createPopulation(populationCount, i + 1);
+                                individs = algorithm.CreatePopulation(populationCount, i);
 
                                 for (int x = 0; x < iterationCount; x++)
                                 {
@@ -207,26 +210,26 @@ namespace GenAlgorithm
                                     {
                                         case 0:
                                         case 1:
-                                            individs = algorithm.pointCrossover(individs, j + 1);
+                                            individs = algorithm.PointCrossover(individs, j + 1);
                                             break;
 
                                         case 2:
-                                            individs = algorithm.uniformCrossover(individs);
+                                            individs = algorithm.UniformCrossover(individs);
                                             break;
                                     }
                                     switch(k)
                                     {
                                         case 0:
-                                            individs = algorithm.pointMutation(individs);
+                                            individs = algorithm.PointMutation(individs);
                                             break;
                                         case 1:
-                                            individs = algorithm.inversion(individs);
+                                            individs = algorithm.Inversion(individs);
                                             break;
                                         case 2:
-                                            individs = algorithm.translocation(individs);
+                                            individs = algorithm.Translocation(individs);
                                             break;
                                         case 3:
-                                            individs = algorithm.saltation(individs);
+                                            individs = algorithm.Saltation(individs);
                                             break;
 
                                     }
@@ -234,13 +237,13 @@ namespace GenAlgorithm
                                     {
                                         case 0:
                                             List<Individ> population = new List<Individ>();
-                                            individs = algorithm.bettaTournamentSelection(individs, populationCount, betta);
+                                            individs = algorithm.BettaTournamentSelection(individs, populationCount, betta);
                                             break;
                                         case 1:
-                                            individs = algorithm.linearRankSelection(individs, populationCount);
+                                            individs = algorithm.LinearRankSelection(individs, populationCount);
                                             break;
                                     }
-                                    sheet.Cells[x + 2, count] = algorithm.getMaxCost(individs);
+                                    sheet.Cells[x + 2, count] = algorithm.GetMaxCost(individs);
                                 }
                                 sheet.Cells[1, count] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
                                 sheet.Cells[iterationCount + 4, count].Formula = "= MAX(" + vsS[count - 1] + 2 + ":" + vsS[count - 1] + (iterationCount + 1) + ")";
@@ -258,10 +261,10 @@ namespace GenAlgorithm
             sheet.Cells[3, number] = "min";
             sheet.Cells[4, number] = "i";
             sheet.Cells[5, number] = "i(average)";
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 3; j++)
-                    for (int k = 0; k < 4; k++)
-                        for (int g = 0; g < 2; g++)
+            for (int i = 0; i < initialPopulation.Length; i++)
+                for (int j = 0; j < crossover.Length; j++)
+                    for (int k = 0; k < mutation.Length; k++)
+                        for (int g = 0; g < selection.Length; g++)
                         {
                             number++;
                             sheet.Cells[1, number] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
