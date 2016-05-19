@@ -445,10 +445,10 @@ namespace GenAlgorithm
 
         public List<Individ> BettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
         {
+            string text = "";
             int[] costs = PenaltyFunctionMethod(individs);
             Logger.Get().Debug("called betta - tournament selection.");
             List<Individ> population = new List<Individ>();
-            string text = "";
             for (int j = 0; j < populationCount; j++)
             {
                 int c = 0;
@@ -458,7 +458,6 @@ namespace GenAlgorithm
                 for (int i = 0; i < individs.Count; i++)
                 {
                     c = _rand.Next(2);
-                    text += " c - " + c;
                     if (c == 1 && count < beta && !number.Contains(i))
                     {
                         costList.Add(costs[i]);
@@ -476,13 +475,10 @@ namespace GenAlgorithm
                     {
                         maxCost = costList[i];
                         individ = individs[number[i]];
-                        text += "maxCost - " + maxCost + "individ - " + individ.ConvertToString();
                     }
                 }
                 population.Add(individ);
             }
-            Logger.Get().Debug(text);
-            text = "";
             for (int i = 0; i < population.Count; i++)
             {
                 text = "";
@@ -497,16 +493,18 @@ namespace GenAlgorithm
             return population;
         }
 
-        public List<Individ> LinearRankSelection(List<Individ> individs, int c)//Linear rank selection
+        public List<Individ> LinearRankSelection(List<Individ> individs, int populationCount)//Linear rank selection
         {
+            string text = "";
             int[] costs = PenaltyFunctionMethod(individs);
             Logger.Get().Debug("called linear rank selection.");
-            List<Individ> population1 = new List<Individ>();
-            List<Individ> population2 = new List<Individ>();
+            List<Individ> sortedPopulation = new List<Individ>();
+            List<Individ> generation = new List<Individ>();
             List<int> costList = new List<int>();
             int[] rang = new int[individs.Count];
             double[] n = new double[individs.Count]; // expected numbers
             n[individs.Count - 1] = _rand.NextDouble() + 1.1;
+            n[individs.Count - 1] = (n[individs.Count - 1] > 2) ? 2 : n[individs.Count - 1];
             n[0] = 2 - n[individs.Count - 1];
             for (int i = 0; i < individs.Count; i++)
                 costList.Add(costs[i]);
@@ -520,7 +518,7 @@ namespace GenAlgorithm
                         if (costs[j] == costList[i])
                         {
                             costs[j] = -1;
-                            population1.Add(individs[j]);
+                            sortedPopulation.Add(individs[j]);
                             break;
                         }
                     }
@@ -532,42 +530,42 @@ namespace GenAlgorithm
                 rang[i] = i + 1;
                 n[i] = n[0] + (n[individs.Count - 1] - n[0]) * (rang[i] - 1) / (individs.Count - 1);
                 if (n[i] >= 1)
-                    population2.Add(population1[i]);
+                    generation.Add(sortedPopulation[i]);
             }
-            for (int i = 0; i < 1; i++)
+
+            if (generation.Count < populationCount)
             {
-                if (population2.Count < c)
-                {
-                    for (int j = 0; j < individs.Count; j++)
-                        if (n[j] > 1 && _rand.Next((int)(n[j] - 1) * 100) == 0 || n[j] < 1 && _rand.Next((int)(n[j] * 100)) == 0)
-                            population2.Add(population1[j]);
-                    i++;
-                }
+                for (int j = 0; j < individs.Count; j++)
+                    if (n[j] > 1 && _rand.Next((int)(n[j] - 1) * 100) == 0 || n[j] < 1 && _rand.Next((int)(n[j] * 100)) == 0)
+                         generation.Add(sortedPopulation[j]);
+                   
             }
-            if (population2.Count > c)
+
+            if (generation.Count > populationCount)
             {
-                population1.Clear();
+                sortedPopulation.Clear();
                 int k = 0;
-                for (int i = 0; i < c; i++)
+                for (int i = 0; i < populationCount; i++)
                 {
-                    k = _rand.Next(population2.Count);
-                    population1.Add(population2[k]);
+                    k = _rand.Next(generation.Count);
+                    sortedPopulation.Add(generation[k]);
                 }
             }
-            List<Individ> population = (population2.Count > c) ? population1 : population2;
-            string text = "";
-            for (int i = 0; i < population.Count; i++)
+
+            individs.Clear();
+            individs = (generation.Count > populationCount) ? sortedPopulation : generation;
+            for (int i = 0; i < individs.Count; i++)
             {
                 text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                text += " COST: " + GetCost(population[i]);
+                for (int j = 0; j < individs[i].SIZE; j++)
+                    text += individs[i].INDIVID[j];
+                text += " COST: " + GetCost(individs[i]);
                 Logger.Get().Debug(text);
-                int weight = GetWeight(population[i]);
+                int weight = GetWeight(individs[i]);
                 if (weight > LIMIT)
                     Logger.Get().Warning("Weight is invalid. - " + weight);
             }
-            return population;
+            return individs;
         }
     }
 }

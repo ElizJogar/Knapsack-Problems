@@ -67,7 +67,7 @@
             this.startPopulBox.Items.AddRange(new object[] {
             "Danzig algorithm",
             "Random algorithm"});
-            this.startPopulBox.Location = new System.Drawing.Point(151, 25);
+            this.startPopulBox.Location = new System.Drawing.Point(151, 74);
             this.startPopulBox.Name = "startPopulBox";
             this.startPopulBox.Size = new System.Drawing.Size(159, 21);
             this.startPopulBox.TabIndex = 0;
@@ -77,7 +77,7 @@
             this.initialPopulationLabel.AutoSize = true;
             this.initialPopulationLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.initialPopulationLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.initialPopulationLabel.Location = new System.Drawing.Point(27, 32);
+            this.initialPopulationLabel.Location = new System.Drawing.Point(27, 77);
             this.initialPopulationLabel.Name = "initialPopulationLabel";
             this.initialPopulationLabel.Size = new System.Drawing.Size(105, 18);
             this.initialPopulationLabel.TabIndex = 1;
@@ -86,7 +86,7 @@
             // run
             // 
             this.run.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.run.Location = new System.Drawing.Point(664, 128);
+            this.run.Location = new System.Drawing.Point(578, 104);
             this.run.Name = "run";
             this.run.Size = new System.Drawing.Size(100, 49);
             this.run.TabIndex = 3;
@@ -102,7 +102,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(225, 445);
+            this.textBox1.Size = new System.Drawing.Size(225, 410);
             this.textBox1.TabIndex = 4;
             // 
             // crossoverBox
@@ -112,7 +112,7 @@
             "Single-point crossover",
             "Two-point crossover",
             "Uniform crossover"});
-            this.crossoverBox.Location = new System.Drawing.Point(151, 53);
+            this.crossoverBox.Location = new System.Drawing.Point(151, 101);
             this.crossoverBox.Name = "crossoverBox";
             this.crossoverBox.Size = new System.Drawing.Size(159, 21);
             this.crossoverBox.TabIndex = 5;
@@ -122,7 +122,7 @@
             this.crossoverLabel.AutoSize = true;
             this.crossoverLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.crossoverLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.crossoverLabel.Location = new System.Drawing.Point(27, 60);
+            this.crossoverLabel.Location = new System.Drawing.Point(27, 104);
             this.crossoverLabel.Name = "crossoverLabel";
             this.crossoverLabel.Size = new System.Drawing.Size(71, 18);
             this.crossoverLabel.TabIndex = 6;
@@ -137,7 +137,7 @@
             // 
             // numberOfPopulationBox
             // 
-            this.numberOfPopulationBox.Location = new System.Drawing.Point(664, 28);
+            this.numberOfPopulationBox.Location = new System.Drawing.Point(578, 32);
             this.numberOfPopulationBox.Name = "numberOfPopulationBox";
             this.numberOfPopulationBox.Size = new System.Drawing.Size(100, 20);
             this.numberOfPopulationBox.TabIndex = 9;
@@ -148,7 +148,7 @@
             this.populationCountLabel.AutoSize = true;
             this.populationCountLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.populationCountLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.populationCountLabel.Location = new System.Drawing.Point(549, 32);
+            this.populationCountLabel.Location = new System.Drawing.Point(431, 35);
             this.populationCountLabel.Name = "populationCountLabel";
             this.populationCountLabel.Size = new System.Drawing.Size(109, 18);
             this.populationCountLabel.TabIndex = 10;
@@ -169,7 +169,7 @@
             "Inversion",
             "Translocation",
             "Saltation"});
-            this.mutationBox.Location = new System.Drawing.Point(151, 80);
+            this.mutationBox.Location = new System.Drawing.Point(151, 129);
             this.mutationBox.Name = "mutationBox";
             this.mutationBox.Size = new System.Drawing.Size(159, 21);
             this.mutationBox.TabIndex = 14;
@@ -187,7 +187,7 @@
             this.selectionBox.Items.AddRange(new object[] {
             "Betta-Tournament",
             "Linear-rank"});
-            this.selectionBox.Location = new System.Drawing.Point(151, 107);
+            this.selectionBox.Location = new System.Drawing.Point(151, 156);
             this.selectionBox.Name = "selectionBox";
             this.selectionBox.Size = new System.Drawing.Size(159, 21);
             this.selectionBox.TabIndex = 19;
@@ -197,7 +197,7 @@
             this.selectionLabel.AutoSize = true;
             this.selectionLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.selectionLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.selectionLabel.Location = new System.Drawing.Point(27, 111);
+            this.selectionLabel.Location = new System.Drawing.Point(27, 159);
             this.selectionLabel.Name = "selectionLabel";
             this.selectionLabel.Size = new System.Drawing.Size(66, 18);
             this.selectionLabel.TabIndex = 20;
@@ -212,7 +212,7 @@
             // 
             // numberOfIterationBox
             // 
-            this.numberOfIterationBox.Location = new System.Drawing.Point(664, 57);
+            this.numberOfIterationBox.Location = new System.Drawing.Point(578, 59);
             this.numberOfIterationBox.Name = "numberOfIterationBox";
             this.numberOfIterationBox.Size = new System.Drawing.Size(100, 20);
             this.numberOfIterationBox.TabIndex = 23;
@@ -223,7 +223,7 @@
             this.iterationCountLabel.AutoSize = true;
             this.iterationCountLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.iterationCountLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.iterationCountLabel.Location = new System.Drawing.Point(549, 59);
+            this.iterationCountLabel.Location = new System.Drawing.Point(431, 59);
             this.iterationCountLabel.Name = "iterationCountLabel";
             this.iterationCountLabel.Size = new System.Drawing.Size(94, 18);
             this.iterationCountLabel.TabIndex = 24;
@@ -231,7 +231,7 @@
             // 
             // bettaBox
             // 
-            this.bettaBox.Location = new System.Drawing.Point(341, 108);
+            this.bettaBox.Location = new System.Drawing.Point(346, 157);
             this.bettaBox.Name = "bettaBox";
             this.bettaBox.Size = new System.Drawing.Size(73, 20);
             this.bettaBox.TabIndex = 25;
@@ -242,7 +242,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label9.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label9.Location = new System.Drawing.Point(316, 111);
+            this.label9.Location = new System.Drawing.Point(317, 159);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(23, 18);
             this.label9.TabIndex = 26;
@@ -253,7 +253,7 @@
             this.maxCostLabel.AutoSize = true;
             this.maxCostLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.maxCostLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.maxCostLabel.Location = new System.Drawing.Point(325, 296);
+            this.maxCostLabel.Location = new System.Drawing.Point(188, 296);
             this.maxCostLabel.Name = "maxCostLabel";
             this.maxCostLabel.Size = new System.Drawing.Size(199, 23);
             this.maxCostLabel.TabIndex = 30;
@@ -263,7 +263,7 @@
             // report
             // 
             this.report.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.report.Location = new System.Drawing.Point(664, 313);
+            this.report.Location = new System.Drawing.Point(579, 322);
             this.report.Name = "report";
             this.report.Size = new System.Drawing.Size(100, 60);
             this.report.TabIndex = 31;
@@ -273,7 +273,7 @@
             // 
             // startsNumber
             // 
-            this.startsNumber.Location = new System.Drawing.Point(664, 250);
+            this.startsNumber.Location = new System.Drawing.Point(578, 250);
             this.startsNumber.Name = "startsNumber";
             this.startsNumber.Size = new System.Drawing.Size(100, 20);
             this.startsNumber.TabIndex = 32;
@@ -284,7 +284,7 @@
             this.reportLabel.AllowDrop = true;
             this.reportLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.reportLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.reportLabel.Location = new System.Drawing.Point(661, 198);
+            this.reportLabel.Location = new System.Drawing.Point(576, 180);
             this.reportLabel.Name = "reportLabel";
             this.reportLabel.Size = new System.Drawing.Size(102, 45);
             this.reportLabel.TabIndex = 34;
@@ -299,7 +299,7 @@
             "The weak correlation",
             "The strong correlation",
             "Subtotals"});
-            this.dataInstancesBox.Location = new System.Drawing.Point(151, 156);
+            this.dataInstancesBox.Location = new System.Drawing.Point(151, 32);
             this.dataInstancesBox.Name = "dataInstancesBox";
             this.dataInstancesBox.Size = new System.Drawing.Size(159, 21);
             this.dataInstancesBox.TabIndex = 35;
@@ -309,7 +309,7 @@
             this.dataInstancesLabel.AutoSize = true;
             this.dataInstancesLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dataInstancesLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.dataInstancesLabel.Location = new System.Drawing.Point(27, 156);
+            this.dataInstancesLabel.Location = new System.Drawing.Point(27, 35);
             this.dataInstancesLabel.Name = "dataInstancesLabel";
             this.dataInstancesLabel.Size = new System.Drawing.Size(99, 18);
             this.dataInstancesLabel.TabIndex = 36;
@@ -330,7 +330,7 @@
             this.mutationLabel.AutoSize = true;
             this.mutationLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.mutationLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.mutationLabel.Location = new System.Drawing.Point(27, 86);
+            this.mutationLabel.Location = new System.Drawing.Point(27, 132);
             this.mutationLabel.Name = "mutationLabel";
             this.mutationLabel.Size = new System.Drawing.Size(62, 18);
             this.mutationLabel.TabIndex = 39;
@@ -369,11 +369,11 @@
             // 
             this.textBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.textBox2.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(371, 322);
+            this.textBox2.Location = new System.Drawing.Point(296, 322);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(91, 445);
+            this.textBox2.Size = new System.Drawing.Size(91, 410);
             this.textBox2.TabIndex = 43;
             // 
             // GenAlgorithmView
@@ -381,7 +381,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(807, 801);
+            this.ClientSize = new System.Drawing.Size(707, 744);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.DataLabel);
             this.Controls.Add(this.label2);

@@ -42,17 +42,17 @@ namespace GenAlgorithm
 
         public abstract void fill();
     }
-    public class TestDataInstances : DataInstances
+    public class TestDataInstances : DataInstances //204
     {
         public TestDataInstances(int size, int range) : base(size, range) { }
        
         public override void fill()
         {
-            int[] tmpCost =  { 21, 19, 27, 3, 24, 30, 6, 13, 2, 21, 26, 26, 24, 1, 10 };
-            int[] tmpWeight = { 2, 26, 23, 6, 19, 9, 8, 20, 11, 1, 17, 21, 7, 20, 11 };
+            int[] tmpCost = { 18, 24, 14, 22, 13, 18, 16, 30, 25, 4, 27, 12, 19, 24, 22 };
+            int[] tmpWeight = { 1, 11, 16, 6, 25, 16, 25, 9, 14, 13, 13, 4, 20, 5, 9 };
             _cost = tmpCost;
             _weight = tmpWeight;
-            _maxWeight = 80; 
+            _maxWeight = 74; 
         }
     }
 
