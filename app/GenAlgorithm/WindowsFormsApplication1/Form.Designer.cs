@@ -49,7 +49,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.maxCostLabel = new System.Windows.Forms.Label();
             this.report = new System.Windows.Forms.Button();
-            this.startsNumber = new System.Windows.Forms.TextBox();
+            this.startsNumberBox = new System.Windows.Forms.TextBox();
             this.reportLabel = new System.Windows.Forms.Label();
             this.dataInstancesBox = new System.Windows.Forms.ComboBox();
             this.dataInstancesLabel = new System.Windows.Forms.Label();
@@ -269,15 +269,15 @@
             this.report.TabIndex = 31;
             this.report.Text = "Create reports";
             this.report.UseVisualStyleBackColor = true;
-            this.report.Click += new System.EventHandler(this.report_Click);
+            this.report.Click += new System.EventHandler(this.reportClick);
             // 
-            // startsNumber
+            // startsNumberBox
             // 
-            this.startsNumber.Location = new System.Drawing.Point(578, 250);
-            this.startsNumber.Name = "startsNumber";
-            this.startsNumber.Size = new System.Drawing.Size(100, 20);
-            this.startsNumber.TabIndex = 32;
-            this.startsNumber.Text = "2";
+            this.startsNumberBox.Location = new System.Drawing.Point(578, 250);
+            this.startsNumberBox.Name = "startsNumberBox";
+            this.startsNumberBox.Size = new System.Drawing.Size(100, 20);
+            this.startsNumberBox.TabIndex = 32;
+            this.startsNumberBox.Text = "2";
             // 
             // reportLabel
             // 
@@ -391,7 +391,7 @@
             this.Controls.Add(this.dataInstancesLabel);
             this.Controls.Add(this.dataInstancesBox);
             this.Controls.Add(this.reportLabel);
-            this.Controls.Add(this.startsNumber);
+            this.Controls.Add(this.startsNumberBox);
             this.Controls.Add(this.report);
             this.Controls.Add(this.maxCostLabel);
             this.Controls.Add(this.label9);
@@ -442,7 +442,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label maxCostLabel;
         private System.Windows.Forms.Button report;
-        private System.Windows.Forms.TextBox startsNumber;
+        private System.Windows.Forms.TextBox startsNumberBox;
         private System.Windows.Forms.Label reportLabel;
         private System.Windows.Forms.ComboBox dataInstancesBox;
         private System.Windows.Forms.Label dataInstancesLabel;

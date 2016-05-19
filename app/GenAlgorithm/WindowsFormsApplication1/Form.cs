@@ -128,25 +128,13 @@ namespace GenAlgorithm
  
         }
 
-        private void report_Click(object sender, EventArgs e)
+        private void reportClick(object sender, EventArgs e)
         {
 
-            int betta = 2;
-            if (bettaBox.Text.Length != 0)
-                betta = Convert.ToInt32(bettaBox.Text);
-            else
-                betta = 2;
-
-            if (numberOfPopulationBox.Text.Length != 0)
-                populationCount = Convert.ToInt32(numberOfPopulationBox.Text);
-            else
-                populationCount = 20;
-
-            if (numberOfIterationBox.Text.Length != 0)
-                iterationCount = Convert.ToInt32(numberOfIterationBox.Text);
-            else
-                iterationCount = 20;
-  
+            int betta = (bettaBox.Text.Length != 0) ? Convert.ToInt32(bettaBox.Text) : 2;
+            int startCount = (startsNumberBox.Text.Length != 0) ? Convert.ToInt32(startsNumberBox.Text) : 1;
+            populationCount = (numberOfPopulationBox.Text.Length != 0) ? Convert.ToInt32(numberOfPopulationBox.Text) : 30;
+            iterationCount = (numberOfIterationBox.Text.Length != 0) ? Convert.ToInt32(numberOfIterationBox.Text) : 20;
             switch (dataInstancesBox.Text)
             {
                 case "Test":
@@ -165,135 +153,8 @@ namespace GenAlgorithm
                     algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, 100));
                     break;
             }
-
-            int startsCount = Convert.ToInt32(startsNumber.Text);
-            Excel.Application excel = new Excel.Application();
-            //excel.Visible = false;
-
-            excel.SheetsInNewWorkbook = startsCount + 1;
-            excel.Workbooks.Add(Type.Missing);
-            Excel.Workbook workbook = excel.Workbooks[1]; //получам ссылку на первую открытую книгу
-            Excel.Worksheet sheet = workbook.Worksheets.get_Item(1);
-            string[] vsS ={ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
-                              "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", 
-                              "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
-                              "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
-                              "BT","BU"};
-            string[] initialPopulation = { "Danzig algorithm", "Random algorithm" };
-            string[] crossover = { "Single-point crossover", "Two-point crossover", "Uniform crossover" };
-            string[] mutation = { "Point mutation", "Inversion", "Translocation", "Saltation" };
-            string[] selection = { "Betta-Tournament", "Linear-rank" };
-
-            for (int s = 0; s < startsCount; s++)
-            {
-                int count = 1;
-                sheet = workbook.Worksheets.get_Item(s + 1);
-                sheet.Cells[iterationCount + 4, count] = "max";
-                sheet.Cells[iterationCount + 5, count] = "min";
-                sheet.Cells[iterationCount + 6, count] = "i";
-
-                for (int i = 0; i < initialPopulation.Length; i++)
-                {
-                    for (int j = 0; j < crossover.Length; j++)
-                    {
-                        for (int k = 0; k < mutation.Length; k++)
-                        {
-                            for (int g = 0; g < selection.Length; g++)
-                            {
-                                count++;
-                                individs.Clear();
-                                individs = algorithm.CreatePopulation(populationCount, i);
-
-                                for (int x = 0; x < iterationCount; x++)
-                                {
-                                    switch (j)
-                                    {
-                                        case 0:
-                                            individs = algorithm.SinglePointCrossover(individs);
-                                            break;
-                                        case 1:
-                                            individs = algorithm.TwoPointCrossover(individs);
-                                            break;
-                                        case 2:
-                                            individs = algorithm.UniformCrossover(individs);
-                                            break;
-                                    }
-                                    switch(k)
-                                    {
-                                        case 0:
-                                            individs = algorithm.PointMutation(individs);
-                                            break;
-                                        case 1:
-                                            individs = algorithm.Inversion(individs);
-                                            break;
-                                        case 2:
-                                            individs = algorithm.Translocation(individs);
-                                            break;
-                                        case 3:
-                                            individs = algorithm.Saltation(individs);
-                                            break;
-
-                                    }
-                                    switch (g)
-                                    {
-                                        case 0:
-                                            List<Individ> population = new List<Individ>();
-                                            individs = algorithm.BettaTournamentSelection(individs, populationCount, betta);
-                                            break;
-                                        case 1:
-                                            individs = algorithm.LinearRankSelection(individs, populationCount);
-                                            break;
-                                    }
-                                    sheet.Cells[x + 2, count] = algorithm.GetMaxCost(individs);
-                                }
-                                sheet.Cells[1, count] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
-                                sheet.Cells[iterationCount + 4, count].Formula = "= MAX(" + vsS[count - 1] + 2 + ":" + vsS[count - 1] + (iterationCount + 1) + ")";
-                                sheet.Cells[iterationCount + 5, count].Formula = "= MIN(" + vsS[count - 1] + 2 + ":" + vsS[count - 1] + (iterationCount + 1) + ")";
-                                sheet.Cells[iterationCount + 6, count].Formula = "= MATCH(" + vsS[count - 1] + (iterationCount + 4) + "," + vsS[count - 1] + 2 + ":" + vsS[count - 1] + (iterationCount + 1) + "," + 0 + ")";
-                            }
-                        }
-                    }
-                }
-            }
-
-            sheet = workbook.Worksheets.get_Item(startsCount + 1);
-            int number = 1;
-            sheet.Cells[2, number] = "max";
-            sheet.Cells[3, number] = "min";
-            sheet.Cells[4, number] = "i";
-            sheet.Cells[5, number] = "i(average)";
-            for (int i = 0; i < initialPopulation.Length; i++)
-                for (int j = 0; j < crossover.Length; j++)
-                    for (int k = 0; k < mutation.Length; k++)
-                        for (int g = 0; g < selection.Length; g++)
-                        {
-                            number++;
-                            sheet.Cells[1, number] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
-                            string max = getAFormula("= MAX(", 4, number, startsCount, vsS);
-                            string min = getAFormula("= MIN(", 5, number, startsCount, vsS);
-                            string average = getAFormula("= AVERAGE(", 6, number, startsCount, vsS);
-                            string convergence = "=MIN(";
-
-                            for (int v = 1; v < startsCount; v++)
-                            {
-                                convergence += "IF(" + vsS[number - 1] + 2 + "=Sheet" + v + "!" + vsS[number - 1] + (iterationCount + 4) + "," + "Sheet" + v + "!" + vsS[number - 1] + (iterationCount + 6) + "," + 100 + ")" + ",";
-                            }
-                            convergence += "IF(" + vsS[number - 1] + 2 + "=Sheet" + startsCount + "!" + vsS[number - 1] + (iterationCount + 4) + "," + "Sheet" + startsCount + "!" + vsS[number - 1] + (iterationCount + 6) + "," + 100 + "))";
-                            sheet.Cells[2, number].Formula = max;
-                            sheet.Cells[3, number].Formula = min;
-                            sheet.Cells[4, number].Formula = convergence;
-                            sheet.Cells[5, number].Formula = average;
-                        }
-            MessageBox.Show(@"Report created successfully!");
-            excel.Visible = true;
-        }
-        string getAFormula(string formula, int count, int number, int startsCount, string[] vsS)
-        {
-            string tmp = formula;
-            for (int d = 1; d < startsCount; d++)
-                tmp += "Sheet" + d + "!" + vsS[number - 1] + (iterationCount + count) + ",";
-            tmp += "Sheet" + startsCount + "!" + vsS[number - 1] + (iterationCount + count) + ")";
-            return tmp;
+            AExcelReport report = new CombinationOfStepsExcelReport(iterationCount, populationCount, betta, startCount, algorithm);
+            report.Create();
         }
     }
 }

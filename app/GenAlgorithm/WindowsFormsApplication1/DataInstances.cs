@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GenAlgorithm
 {
-    public abstract class DataInstances
+    public abstract class ADataInstances
     {
         protected int[] _cost;
         protected int[] _weight;
@@ -31,22 +31,22 @@ namespace GenAlgorithm
             get { return _maxWeight; }    
         }
 
-        public DataInstances(int size,int range)
+        public ADataInstances(int size,int range)
         {
             _range = range;
             _cost = new int[size];
             _weight = new int[size];
             _rand = new Random(System.DateTime.Now.Millisecond);
-            fill();
+            Fill();
         }
 
-        public abstract void fill();
+        public abstract void Fill();
     }
-    public class TestDataInstances : DataInstances //204
+    public class TestDataInstances : ADataInstances //204
     {
         public TestDataInstances(int size, int range) : base(size, range) { }
        
-        public override void fill()
+        public override void Fill()
         {
             int[] tmpCost = { 18, 24, 14, 22, 13, 18, 16, 30, 25, 4, 27, 12, 19, 24, 22 };
             int[] tmpWeight = { 1, 11, 16, 6, 25, 16, 25, 9, 14, 13, 13, 4, 20, 5, 9 };
@@ -56,11 +56,11 @@ namespace GenAlgorithm
         }
     }
 
-    public class UncorrDataInstances : DataInstances
+    public class UncorrDataInstances : ADataInstances
     {
         public UncorrDataInstances(int size, int range) : base(size, range) {}
        
-        public override void fill()
+        public override void Fill()
         {
             int summaryWeight = 0;
             for( int i = 0; i < _weight.Length; i++)
@@ -73,7 +73,7 @@ namespace GenAlgorithm
         }
     }
 
-    public class WeaklyCorrDataInstances : DataInstances
+    public class WeaklyCorrDataInstances : ADataInstances
     {
         public WeaklyCorrDataInstances(int size, int range) : base(size, range) { }
 
@@ -85,7 +85,7 @@ namespace GenAlgorithm
             return cost;
         }
 
-        public override void fill()
+        public override void Fill()
         {
             int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
@@ -98,11 +98,11 @@ namespace GenAlgorithm
         }
     }
 
-    public class StronglyCorrDataInstances : DataInstances
+    public class StronglyCorrDataInstances : ADataInstances
     {
         public StronglyCorrDataInstances(int size, int range) : base(size, range) {}
        
-        public override void fill()
+        public override void Fill()
         {
             int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
@@ -115,10 +115,10 @@ namespace GenAlgorithm
         }
     }
 
-    public class SubsetSumDataInstances : DataInstances
+    public class SubsetSumDataInstances : ADataInstances
     {
         public SubsetSumDataInstances(int size, int range) : base(size, range) {}
-        public override void fill()
+        public override void Fill()
         {
             int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
