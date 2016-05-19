@@ -202,42 +202,69 @@ namespace GenAlgorithm
             Logger.Get().Debug(text);
             return population;
         }
-
-        public List<Individ> PointCrossover(List<Individ> individs, int l)// Point crossover: single-point and two-point crossovers
+        public List<Individ> SinglePointCrossover(List<Individ> individs)// Single - point crossover
         {
-            Logger.Get().Debug("called point crossover.");
+            Logger.Get().Debug("called single point crossover.");
+            List<Individ> population = new List<Individ>();
+            int k = 0;
+            for (int i = 0; i < individs.Count; i++)
+            {
+                for (int j = i+1; j < individs.Count; j++)
+                {
+                     k = _rand.Next(_individSize - 1);
+                     Individ descendant1 = new Individ(_individSize);
+                     Individ descendant2 = new Individ(_individSize);
+                     for (int s = 0; s < k; s++)
+                     {
+                         descendant1.INDIVID[s] = individs[j].INDIVID[s];
+                         descendant2.INDIVID[s] = individs[i].INDIVID[s];
+                     }
+                     for (int s = k; s < _individSize; s++)
+                     {
+                         descendant1.INDIVID[s] = individs[i].INDIVID[s];
+                         descendant2.INDIVID[s] = individs[j].INDIVID[s];
+                     }
+                     population.Add(descendant1);
+                     population.Add(descendant2);
+                }
+            }
+            population.AddRange(individs);
+            Logger.Get().Debug("population count after crossover - " + population.Count);
+            return population;
+        }
+
+        public List<Individ> TwoPointCrossover(List<Individ> individs)// Two - point crossover 
+        {
+            Logger.Get().Debug("called two-point crossover.");
             List<Individ> population = new List<Individ>();
             int k = 0;
             int r = 0;
 
             for (int i = 0; i < individs.Count; i++)
             {
-                for (int j = 0; j < individs.Count; j++)
+                for (int j = i + 1; j < individs.Count; j++)
                 {
-                    if (i != j)
+                    k = _rand.Next(_individSize/2);
+                    r = _rand.Next(k + 1, _individSize - 1);
+                    Individ descendant1 = new Individ(_individSize);
+                    Individ descendant2 = new Individ(_individSize);
+                    for (int s = 0; s < k; s++)
                     {
-                        k = _rand.Next(_individSize - 2);
-                        r = _rand.Next(k + 1, _individSize - 1);
-                        Individ ind = new Individ(_individSize);
-
-                        if (l == 1)
-                        {
-                            for (int s = 0; s < k; s++)
-                                ind.INDIVID[s] = individs[j].INDIVID[s];
-                            for (int s = k; s < _individSize; s++)
-                                ind.INDIVID[s] = individs[i].INDIVID[s];
-                        }
-                        if (l == 2)
-                        {
-                            for (int s = 0; s < k; s++)
-                                ind.INDIVID[s] = individs[j].INDIVID[s];
-                            for (int s = k; s < r; s++)
-                                ind.INDIVID[s] = individs[i].INDIVID[s];
-                            for (int s = r; s < _individSize; s++)
-                                ind.INDIVID[s] = individs[j].INDIVID[s];
-                        }
-                        population.Add(ind);
+                        descendant1.INDIVID[s] = individs[j].INDIVID[s];
+                        descendant2.INDIVID[s] = individs[i].INDIVID[s];
                     }
+                    for (int s = k; s < r; s++)
+                    {
+                        descendant1.INDIVID[s] = individs[i].INDIVID[s];
+                        descendant2.INDIVID[s] = individs[j].INDIVID[s];
+                    }
+                    for (int s = r; s < _individSize; s++)
+                    {
+                        descendant1.INDIVID[s] = individs[j].INDIVID[s];
+                        descendant2.INDIVID[s] = individs[i].INDIVID[s];
+                    }
+                    population.Add(descendant1);
+                    population.Add(descendant2);
                 }
             }
             population.AddRange(individs);
@@ -255,16 +282,16 @@ namespace GenAlgorithm
                 {
                     if (i != j)
                     {
-                        Individ ind = new Individ(_individSize);
+                        Individ individ = new Individ(_individSize);
                         for (int s = 0; s < _individSize; s++)
                         {
                             k = _rand.Next(10);
                             if (k > 5)
-                                ind.INDIVID[s] = individs[j].INDIVID[s];
+                                individ.INDIVID[s] = individs[j].INDIVID[s];
                             else
-                                ind.INDIVID[s] = individs[i].INDIVID[s];
+                                individ.INDIVID[s] = individs[i].INDIVID[s];
                         }
-                        population.Add(ind);
+                        population.Add(individ);
                     }
                 }
             }
@@ -272,30 +299,27 @@ namespace GenAlgorithm
             return population;
         }
 
-        //mutations: point mutation, Inversion, Translocation, Saltation
-        public List<Individ> PointMutation(List<Individ> individs)
+        public List<Individ> PointMutation(List<Individ> individs) //point mutation
         {
             Logger.Get().Debug("called point mutation.");
             List<Individ> population = new List<Individ>();
             int k = 0;
-            int r = 0;
             int s = (int)(individs.Count - Math.Sqrt(individs.Count));
             for (int i = 0; i < s; i++)
             {
-                k = _rand.Next(_individSize - 2);
-                r = _rand.Next(k + 1, _individSize - 1);
-                Individ ind = new Individ(_individSize);
-                ind = individs[i];
+                k = _rand.Next(_individSize);
+                Individ individ = new Individ(_individSize);
+                individ = individs[i];
                 if (_rand.Next(100) == 1)
-                   ind.INDIVID[k] = (individs[i].INDIVID[k] == 0) ? 1 : 0;
+                    individ.INDIVID[k] = (individs[i].INDIVID[k] == 0) ? 1 : 0;
                 int nullCount = 0;
                 for (int j = 0; j < _individSize; j++)
                 {
-                    if (ind.INDIVID[j] == 0)
+                    if (individ.INDIVID[j] == 0)
                         nullCount++;
                 }
                 if (nullCount != _individSize)
-                    population.Add(ind);
+                    population.Add(individ);
             }
             for (int i = s; i < individs.Count; i++)
                 population.Add(individs[i]);
@@ -373,8 +397,8 @@ namespace GenAlgorithm
             int s = (int)(individs.Count - Math.Sqrt(individs.Count));
             for (int i = 0; i < s; i++)
             {
-                k = _rand.Next(_individSize - 2);
-                r = _rand.Next(k + 1, _individSize - 1);
+                k = _rand.Next(_individSize/2);
+                r = _rand.Next(k + 1, _individSize);
                 Individ ind = new Individ(_individSize);
                 ind = individs[i];
                 if (_rand.Next(100) == 1)

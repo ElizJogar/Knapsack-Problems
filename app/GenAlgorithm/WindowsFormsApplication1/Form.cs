@@ -90,10 +90,10 @@ namespace GenAlgorithm
                 switch (crossoverBox.Text)
                 {
                     case "Single-point crossover":
-                        individs = algorithm.PointCrossover(individs, 1);
+                        individs = algorithm.SinglePointCrossover(individs);
                         break;
                     case "Two-point crossover":
-                        individs = algorithm.PointCrossover(individs, 2);
+                        individs = algorithm.TwoPointCrossover(individs);
                         break;
                     case "Uniform crossover":
                         individs = algorithm.UniformCrossover(individs);
@@ -209,10 +209,11 @@ namespace GenAlgorithm
                                     switch (j)
                                     {
                                         case 0:
-                                        case 1:
-                                            individs = algorithm.PointCrossover(individs, j + 1);
+                                            individs = algorithm.SinglePointCrossover(individs);
                                             break;
-
+                                        case 1:
+                                            individs = algorithm.TwoPointCrossover(individs);
+                                            break;
                                         case 2:
                                             individs = algorithm.UniformCrossover(individs);
                                             break;
