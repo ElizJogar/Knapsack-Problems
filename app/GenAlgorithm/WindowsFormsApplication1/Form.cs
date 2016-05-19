@@ -13,7 +13,6 @@ namespace GenAlgorithm
 {
     public partial class GenAlgorithmView : Form
     {
-        Logger log;
         GenAlgorithm algorithm;
         List<Individ> individs = new List<Individ>();
         int iterationCount = 0;
@@ -25,16 +24,12 @@ namespace GenAlgorithm
 
         private void runClick(object sender, EventArgs e)
         {
-            if (numberOfIterationBox.Text.Length != 0)
-                iterationCount = Convert.ToInt32(numberOfIterationBox.Text);
-            else
-                iterationCount = 20;
-
-            if (numberOfPopulationBox.Text.Length != 0)
-                populationCount = Convert.ToInt32(numberOfPopulationBox.Text);
-            else
-                populationCount = 20;
- 
+            int betta = (bettaBox.Text.Length != 0) ? Convert.ToInt32(bettaBox.Text) : 2;
+            populationCount = (numberOfPopulationBox.Text.Length != 0) ? Convert.ToInt32(numberOfPopulationBox.Text) : 30;
+            iterationCount = (numberOfIterationBox.Text.Length != 0) ? Convert.ToInt32(numberOfIterationBox.Text) : 20;
+            int crossoverType = -1;
+            int mutationType = -1;
+            int selectionType = -1;
             switch (dataInstancesBox.Text)
             {
                 case "Test":
@@ -58,72 +53,71 @@ namespace GenAlgorithm
             for (int i = 0; i < algorithm.COST.Length; i++)
                 textBox4.Text += algorithm.COST[i] + " ";
             textBox4.Text += "\r\n";
-
             textBox4.Text += "WEIGHT: ";
             for (int i = 0; i < algorithm.WEIGHT.Length; i++)
                 textBox4.Text += algorithm.WEIGHT[i] + " ";
             textBox4.Text += "\r\n";
             textBox4.Text += "WEIGHT LIMIT: " + algorithm.LIMIT + "\r\n";
-           individs.Clear();
+         
+            individs.Clear();
             switch (startPopulBox.Text)
             {
                 case "Danzig algorithm":
-                    individs = algorithm.CreatePopulation(populationCount, 0);
+                    individs = algorithm.CreatePopulation(populationCount, algorithm.DANZIG_ALGORITHM);
                     break;
                 case "Random algorithm":
-                    individs = algorithm.CreatePopulation(populationCount, 1);
+                    individs = algorithm.CreatePopulation(populationCount, algorithm.RANDOM_ALGORITHM);
                     break;
             }
-            textBox1.Text = " Individ:            Cost:\r\n";
+            InitialPopulation.Text = " Individ:            Cost:\r\n";
             for (int i = 0; i < individs.Count; i++)
             {
                 for (int j = 0; j < individs.ElementAt(i).SIZE; j++)
-                {
-                    textBox1.Text += individs.ElementAt(i).INDIVID[j];
-                }
-                textBox1.Text += "\t" + algorithm.GetCost(individs.ElementAt(i)) + Environment.NewLine;
+                    InitialPopulation.Text += individs.ElementAt(i).INDIVID[j];
+                InitialPopulation.Text += "\t" + algorithm.GetCost(individs.ElementAt(i)) + Environment.NewLine;
             }
-            textBox2.Clear();
+            MaxCost.Clear();
 
             for (int x = 0; x < iterationCount; x++)
             {
                 switch (crossoverBox.Text)
                 {
                     case "Single-point crossover":
-                        individs = algorithm.SinglePointCrossover(individs);
+                        crossoverType = algorithm.SINGLE_POINT_CROSSOVER;
                         break;
                     case "Two-point crossover":
-                        individs = algorithm.TwoPointCrossover(individs);
+                        crossoverType = algorithm.TWO_POINT_CROSSOVER;
                         break;
                     case "Uniform crossover":
-                        individs = algorithm.UniformCrossover(individs);
+                        crossoverType = algorithm.UNIFORM_CROSSOVER;
                         break;
                 }
                 switch (mutationBox.Text)
                 {
                     case "Point mutation":
-                        individs = algorithm.PointMutation(individs);
+                        mutationType = algorithm.POINT_MUTATION;
                         break;
                     case "Inversion":
-                        individs = algorithm.Inversion(individs);
+                        mutationType = algorithm.INVERSION;
                         break;
                     case "Translocation":
-                        individs = algorithm.Translocation(individs);
+                        mutationType = algorithm.TRANSLOCATION;
                         break;
                     case "Saltation":
-                        individs = algorithm.Saltation(individs);
+                        mutationType = algorithm.SALTATION;
                         break;
                 }
                 switch (selectionBox.Text)
                 {
                     case "Betta-Tournament":
-                        individs = algorithm.BettaTournamentSelection(individs, populationCount, Convert.ToInt32(bettaBox.Text));
+                        selectionType = algorithm.BETTA_TOURNAMENT;
                         break;
                     case "Linear-rank":
-                        individs = algorithm.LinearRankSelection(individs, populationCount);
+                        selectionType = algorithm.LINEAR_RANK_SELECTION;
                         break;
                 }
-                textBox2.Text +=  algorithm.GetMaxCost(individs) + Environment.NewLine;
+                individs = algorithm.Run(iterationCount, populationCount, individs, crossoverType, mutationType, selectionType, betta);
+                MaxCost.Text +=  algorithm.GetMaxCost(individs) + Environment.NewLine;
             }
  
         }

@@ -54,20 +54,72 @@ namespace GenAlgorithm
         private ADataInstances _data;
         private Random _rand = new Random(System.DateTime.Now.Millisecond);
         private int _individSize;
-        private List<Individ> _initialPopulation;
-        private int[] _maxCostAtGeneration;
+        private const int _DANZIG_ALGORITHM = 0;
+        private const int _RANDOM_ALGORITHM = 1;
+        private const int _SINGLE_POINT_CROSSOVER = 2;
+        private const int _TWO_POINT_CROSSOVER = 3;
+        private const int _UNIFORM_CROSSOVER = 4;
+        private const int _POINT_MUTATION = 5;
+        private const int _INVERSION = 6;
+        private const int _SALTATION = 7;
+        private const int _TRANSLOCATION = 8;
+        private const int _BETTA_TOURNAMENT = 9;
+        private const int _LINEAR_RANK_SELECTION = 10;
 
-        public const int DANZIG_ALGORITHM = 0;
-        public const int RANDOM_ALGORITHM = 1;
-        public const int SINGLE_POINT_CROSSOVER = 2;
-        public const int TWO_POINT_CROSSOVER = 3;
-        public const int UNIFORM_CROSSOVER = 4;
-        public const int POINT_MUTATION = 5;
-        public const int INVERSION = 6;
-        public const int SALTATION = 7;
-        public const int TRANSLOCATION = 8;
-        public const int BETTA_TOURNAMENT = 9;
-        public const int LINEAR_RANK_SELECTION = 10; 
+        public int DANZIG_ALGORITHM      
+        {
+            get { return _DANZIG_ALGORITHM; }
+        }
+
+        public int RANDOM_ALGORITHM 
+        {
+            get { return _RANDOM_ALGORITHM; }
+        }
+
+        public int SINGLE_POINT_CROSSOVER
+        {
+            get { return _SINGLE_POINT_CROSSOVER; }
+        }
+
+        public int TWO_POINT_CROSSOVER
+        {
+            get { return _TWO_POINT_CROSSOVER; }
+        }
+
+        public int UNIFORM_CROSSOVER
+        {
+            get { return _UNIFORM_CROSSOVER; }
+        }
+
+        public int POINT_MUTATION
+        {
+            get { return _POINT_MUTATION; }
+        }
+
+        public int INVERSION
+        {
+            get { return _INVERSION; }
+        }
+
+        public int SALTATION
+        {
+            get { return _SALTATION; }
+        }
+
+        public int TRANSLOCATION
+        {
+            get { return _TRANSLOCATION; }
+        }
+
+        public int BETTA_TOURNAMENT
+        {
+            get { return _BETTA_TOURNAMENT; }
+        }
+
+        public int LINEAR_RANK_SELECTION 
+        {
+            get { return 10; }
+        } 
 
         public int LIMIT
         {
@@ -82,16 +134,6 @@ namespace GenAlgorithm
         public int[] COST
         {
             get { return _data.COST;  }
-        }
-
-        public List<Individ> INITIAL_POPULATION
-        {
-            get { return _initialPopulation; }
-        }
-
-        public int[] RESULT_COSTS
-        {
-            get { return _maxCostAtGeneration; }
         }
 
        public GenAlgorithm(ADataInstances data)
@@ -202,10 +244,10 @@ namespace GenAlgorithm
                 Individ ind = new Individ(_individSize);
                 switch (type)
                 {
-                    case DANZIG_ALGORITHM:
+                    case _DANZIG_ALGORITHM:
                         ind = DanzigAlgorithm();
                         break;
-                    case RANDOM_ALGORITHM:
+                    case _RANDOM_ALGORITHM:
                         ind = RandomAlgorithm();
                         break;
                 }
@@ -224,10 +266,6 @@ namespace GenAlgorithm
             //temp
             }
             Logger.Get().Debug(text);
-            //new
-            _initialPopulation.Clear();
-            foreach (Individ ind in population)
-                _initialPopulation.Add(ind);
             return population;
         }
         public List<Individ> SinglePointCrossover(List<Individ> individs)// Single - point crossover
@@ -620,52 +658,46 @@ namespace GenAlgorithm
             return individs;
         }
 
-        public void Run(int iterationCount, int populationCount, int initialPopulationType, int crossoverType,
+        public List<Individ> Run(int iterationCount, int populationCount, List<Individ> individs, int crossoverType,
             int mutationType, int selectionType, int betta)
         {
-            List<Individ> individs = new List<Individ>();
-            individs = CreatePopulation(populationCount,initialPopulationType);
-
-            for (int x = 0; x < iterationCount; x++)
-            {
                 switch (crossoverType)
                 {
-                    case SINGLE_POINT_CROSSOVER:
+                    case _SINGLE_POINT_CROSSOVER:
                         individs = SinglePointCrossover(individs);
                         break;
-                    case TWO_POINT_CROSSOVER:
+                    case _TWO_POINT_CROSSOVER:
                         individs = TwoPointCrossover(individs);
                         break;
-                    case UNIFORM_CROSSOVER:
+                    case _UNIFORM_CROSSOVER:
                         individs = UniformCrossover(individs);
                         break;
                 }
                 switch (mutationType)
                 {
-                    case POINT_MUTATION:
+                    case _POINT_MUTATION:
                         individs = PointMutation(individs);
                         break;
-                    case INVERSION:
+                    case _INVERSION:
                         individs = Inversion(individs);
                         break;
-                    case TRANSLOCATION:
+                    case _TRANSLOCATION:
                         individs = Translocation(individs);
                         break;
-                    case SALTATION:
+                    case _SALTATION:
                         individs = Saltation(individs);
                         break;
                 }
                 switch (selectionType)
                 {
-                    case BETTA_TOURNAMENT:
+                    case _BETTA_TOURNAMENT:
                         individs = BettaTournamentSelection(individs, populationCount, betta);
                         break;
-                    case LINEAR_RANK_SELECTION:
+                    case _LINEAR_RANK_SELECTION:
                         individs = LinearRankSelection(individs, populationCount);
                         break;
                 }
-                _maxCostAtGeneration[x] = GetMaxCost(individs);
-            }
+                return individs;
         }
     }
 }

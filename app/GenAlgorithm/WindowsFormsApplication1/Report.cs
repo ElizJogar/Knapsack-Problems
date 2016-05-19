@@ -112,7 +112,6 @@ namespace GenAlgorithm
                                     switch (g)
                                     {
                                         case 0:
-                                            List<Individ> population = new List<Individ>();
                                             _individs = _algorithm.BettaTournamentSelection(_individs, _populationCount, _betta);
                                             break;
                                         case 1:

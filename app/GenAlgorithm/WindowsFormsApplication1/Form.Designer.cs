@@ -31,7 +31,7 @@
             this.startPopulBox = new System.Windows.Forms.ComboBox();
             this.initialPopulationLabel = new System.Windows.Forms.Label();
             this.run = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.InitialPopulation = new System.Windows.Forms.TextBox();
             this.crossoverBox = new System.Windows.Forms.ComboBox();
             this.crossoverLabel = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -58,7 +58,7 @@
             this.InitialPopulLabel2 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.DataLabel = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.MaxCost = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // startPopulBox
@@ -94,16 +94,16 @@
             this.run.UseVisualStyleBackColor = true;
             this.run.Click += new System.EventHandler(this.runClick);
             // 
-            // textBox1
+            // InitialPopulation
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.textBox1.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(30, 322);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(225, 410);
-            this.textBox1.TabIndex = 4;
+            this.InitialPopulation.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.InitialPopulation.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.InitialPopulation.Location = new System.Drawing.Point(30, 322);
+            this.InitialPopulation.Multiline = true;
+            this.InitialPopulation.Name = "InitialPopulation";
+            this.InitialPopulation.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.InitialPopulation.Size = new System.Drawing.Size(225, 410);
+            this.InitialPopulation.TabIndex = 4;
             // 
             // crossoverBox
             // 
@@ -365,16 +365,16 @@
             this.DataLabel.TabIndex = 42;
             this.DataLabel.Text = "Data:";
             // 
-            // textBox2
+            // MaxCost
             // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.textBox2.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(296, 322);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(91, 410);
-            this.textBox2.TabIndex = 43;
+            this.MaxCost.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.MaxCost.Font = new System.Drawing.Font("Arial Unicode MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.MaxCost.Location = new System.Drawing.Point(296, 322);
+            this.MaxCost.Multiline = true;
+            this.MaxCost.Name = "MaxCost";
+            this.MaxCost.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.MaxCost.Size = new System.Drawing.Size(91, 410);
+            this.MaxCost.TabIndex = 43;
             // 
             // GenAlgorithmView
             // 
@@ -382,7 +382,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(707, 744);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.MaxCost);
             this.Controls.Add(this.DataLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.InitialPopulLabel2);
@@ -406,7 +406,7 @@
             this.Controls.Add(this.numberOfPopulationBox);
             this.Controls.Add(this.crossoverLabel);
             this.Controls.Add(this.crossoverBox);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.InitialPopulation);
             this.Controls.Add(this.run);
             this.Controls.Add(this.initialPopulationLabel);
             this.Controls.Add(this.startPopulBox);
@@ -424,7 +424,7 @@
         private System.Windows.Forms.ComboBox startPopulBox;
         private System.Windows.Forms.Label initialPopulationLabel;
         private System.Windows.Forms.Button run;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox InitialPopulation;
         private System.Windows.Forms.ComboBox crossoverBox;
         private System.Windows.Forms.Label crossoverLabel;
         private System.Windows.Forms.Button button2;
@@ -451,7 +451,7 @@
         private System.Windows.Forms.Label InitialPopulLabel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label DataLabel;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox MaxCost;
 
  
     }
