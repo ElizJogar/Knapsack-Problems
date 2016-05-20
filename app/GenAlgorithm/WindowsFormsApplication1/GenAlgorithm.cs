@@ -580,6 +580,7 @@ namespace GenAlgorithm
                 if (weight > LIMIT)
                     Logger.Get().Warning("Weight is invalid. - " + weight);
             }
+            population = GenerationModificaton(population);
             return population;
         }
 
@@ -654,6 +655,56 @@ namespace GenAlgorithm
                 int weight = GetWeight(individs[i]);
                 if (weight > LIMIT)
                     Logger.Get().Warning("Weight is invalid. - " + weight);
+            }
+            individs = GenerationModificaton(individs);
+            return individs;
+        }
+
+        private List<Individ> GenerationModificaton(List<Individ> individs)
+        {
+            Logger.Get().Debug("called linear generation modification.");
+            Dictionary<int, double> dictionary = new Dictionary<int, double>();
+            int permissibleIndividCount = 0;
+            List<Individ> permissibleIndivids = new List<Individ>();
+            for (int i = 0; i < individs.Count; i++)
+                if (GetWeight(individs[i]) > LIMIT)
+                {
+                    permissibleIndividCount++;
+                    permissibleIndivids.Add(individs[i]);
+                    individs.RemoveAt(i);
+                }
+            if ( permissibleIndividCount >= individs.Count / 3)
+            {
+                foreach (Individ individ in permissibleIndivids)
+                {
+                    dictionary.Clear();
+                    for (int i = 0; i < _individSize; i++)
+                        if (individ.INDIVID[i] == 1)
+                            dictionary.Add(i, (double)_data.COST[i] / _data.WEIGHT[i]);
+
+                    dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+                    Console.WriteLine("_______________________");
+                    while(GetWeight(individ) > LIMIT)
+                        foreach (var item in dictionary)
+                        {
+                            if (GetWeight(individ) > LIMIT)
+                            {
+                                if(_rand.Next(10) <= 5)
+                                individ.INDIVID[item.Key] = 0;
+                            }
+                            else break;
+                        }
+                }
+            }
+            individs.AddRange(permissibleIndivids);
+            string text = "Generation \r\n";
+            for (int i = 0; i < individs.Count; i++)
+            {
+                text = "";
+                for (int j = 0; j < individs[i].SIZE; j++)
+                    text += individs[i].INDIVID[j];
+                text += " COST: " + GetCost(individs[i]) +" WEIGHT: " + GetWeight(individs[i]);
+                Logger.Get().Debug(text);
             }
             return individs;
         }
