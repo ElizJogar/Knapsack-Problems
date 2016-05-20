@@ -683,7 +683,6 @@ namespace GenAlgorithm
                             dictionary.Add(i, (double)_data.COST[i] / _data.WEIGHT[i]);
 
                     dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-                    Console.WriteLine("_______________________");
                     while(GetWeight(individ) > LIMIT)
                         foreach (var item in dictionary)
                         {
