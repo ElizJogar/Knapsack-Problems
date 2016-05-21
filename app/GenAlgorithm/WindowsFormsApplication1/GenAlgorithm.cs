@@ -662,7 +662,7 @@ namespace GenAlgorithm
 
         private List<Individ> GenerationModificaton(List<Individ> individs)
         {
-            Logger.Get().Debug("called linear generation modification.");
+            Logger.Get().Debug("called generation modification.");
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
             int permissibleIndividCount = 0;
             List<Individ> permissibleIndivids = new List<Individ>();
