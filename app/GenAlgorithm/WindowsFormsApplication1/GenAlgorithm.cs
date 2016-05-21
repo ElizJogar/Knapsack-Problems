@@ -135,7 +135,10 @@ namespace GenAlgorithm
         {
             get { return _data.COST;  }
         }
-
+        public int INDIVID_SIZE
+        {
+            get { return _individSize; }
+        }
        public GenAlgorithm(ADataInstances data)
         {
             _data = data;
@@ -180,7 +183,7 @@ namespace GenAlgorithm
             return maxCost;
         }
 
-        public Individ DanzigAlgorithm() // Danzig algorithm: to generate an initial population of individuals
+        private Individ DanzigAlgorithm()
         {
             Individ ind = new Individ(_individSize);
             List<double> specificCostList = new List<double>();
@@ -216,7 +219,7 @@ namespace GenAlgorithm
             return ind;
         }
 
-        public Individ RandomAlgorithm()// Random algorithm: to generate an initial population of individuals
+        private Individ RandomAlgorithm()
         {
             Individ ind = new Individ(_individSize);
             int summaryWeight = 0;
@@ -235,7 +238,7 @@ namespace GenAlgorithm
             return ind;
         }
 
-        public List<Individ> CreatePopulation(int n, int type) //  Сreating population: to generate an initial population of individuals with different
+        public List<Individ> CreatePopulation(int n, int type)
         {
             Logger.Get().Debug("called CreatePopulation function.");
             List<Individ> population = new List<Individ>();
@@ -259,16 +262,14 @@ namespace GenAlgorithm
             string text = "Initial population";
             for (int i = 0; i < population.Count; i++)
             {
-                text = "";
                 for (int j = 0; j < population[i].SIZE; j++)
                     text += population[i].INDIVID[j];
                 text += ", ";
-            //temp
             }
             Logger.Get().Debug(text);
             return population;
         }
-        public List<Individ> SinglePointCrossover(List<Individ> individs)// Single - point crossover
+        public List<Individ> SinglePointCrossover(List<Individ> individs)
         {
             Logger.Get().Debug("called single point crossover.");
             List<Individ> population = new List<Individ>();
@@ -295,11 +296,10 @@ namespace GenAlgorithm
                 }
             }
             population.AddRange(individs);
-            Logger.Get().Debug("population count after crossover - " + population.Count);
             return population;
         }
 
-        public List<Individ> TwoPointCrossover(List<Individ> individs)// Two - point crossover 
+        public List<Individ> TwoPointCrossover(List<Individ> individs) 
         {
             Logger.Get().Debug("called two-point crossover.");
             List<Individ> population = new List<Individ>();
@@ -337,7 +337,7 @@ namespace GenAlgorithm
             return population;
         }
 
-        public List<Individ> UniformCrossover(List<Individ> individs)//Uniform crossover
+        public List<Individ> UniformCrossover(List<Individ> individs)
         {
             Logger.Get().Debug("called uniform crossover.");
             List<Individ> population = new List<Individ>();
@@ -365,7 +365,7 @@ namespace GenAlgorithm
             return population;
         }
 
-        public List<Individ> PointMutation(List<Individ> individs) //point mutation
+        public List<Individ> PointMutation(List<Individ> individs)
         {
             Logger.Get().Debug("called point mutation.");
             List<Individ> population = new List<Individ>();
@@ -486,7 +486,7 @@ namespace GenAlgorithm
             return population;
         }
 
-        private int[] PenaltyFunctionMethod(List<Individ> individs)// Penalty function method
+        private int[] PenaltyFunctionMethod(List<Individ> individs)
         {
             Logger.Get().Debug("called penalty function method.");
             int [] scalledFitnessFunctions = new int[individs.Count];
@@ -507,35 +507,23 @@ namespace GenAlgorithm
                 if (scalledFitnessFunctions[i] < minCost)
                     minCost = scalledFitnessFunctions[i];
             }
-            string text = "";
             for(int i = 0; i < individs.Count; i++)
             {
                 if (scalledFitnessFunctions[i] == minCost)
                     scalledFitnessFunctions[i] = 0;
-                else if (scalledFitnessFunctions[i] > 0)
+                else if (scalledFitnessFunctions[i] <= 0)
                  {
-                   if(GetWeight(individs[i]) <= LIMIT)
-                       text += "|normal " + scalledFitnessFunctions[i];
-                   else
-                       text +="|p (positive) " + scalledFitnessFunctions[i];
-                 }
-                 else
-                 {
-                     text +="|p (negative) " + scalledFitnessFunctions[i];
                      cost = scalledFitnessFunctions[i];
                      coeffA = averageCost / (cost - averageCost);
                      coeffB = averageCost * cost / (cost - averageCost);
-                     scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * scalledFitnessFunctions[i] + coeffB);
-                     text += " average - " + averageCost + " cost -  " + cost + " coefficient A - " + coeffA + ", coefficient B - " + coeffB + "|scalled - " + scalledFitnessFunctions[i];
+                     scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * scalledFitnessFunctions[i] + coeffB);    
                  }
             }
-            Logger.Get().Debug(text);
             return scalledFitnessFunctions;
         }
 
-        public List<Individ> BettaTournamentSelection(List<Individ> individs, int populationCount, int beta) //Betta Tournament selection
+        public List<Individ> BettaTournamentSelection(List<Individ> individs, int populationCount, int beta)
         {
-            string text = "";
             int[] costs = PenaltyFunctionMethod(individs);
             Logger.Get().Debug("called betta - tournament selection.");
             List<Individ> population = new List<Individ>();
@@ -569,24 +557,12 @@ namespace GenAlgorithm
                 }
                 population.Add(individ);
             }
-            for (int i = 0; i < population.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < population[i].SIZE; j++)
-                    text += population[i].INDIVID[j];
-                text += " COST: " + GetCost(population[i]);
-                int weight = GetWeight(population[i]);
-                Logger.Get().Debug(text);
-                if (weight > LIMIT)
-                    Logger.Get().Warning("Weight is invalid. - " + weight);
-            }
             population = GenerationModificaton(population);
             return population;
         }
 
-        public List<Individ> LinearRankSelection(List<Individ> individs, int populationCount)//Linear rank selection
+        public List<Individ> LinearRankSelection(List<Individ> individs, int populationCount)
         {
-            string text = "";
             int[] costs = PenaltyFunctionMethod(individs);
             Logger.Get().Debug("called linear rank selection.");
             List<Individ> sortedPopulation = new List<Individ>();
@@ -645,17 +621,6 @@ namespace GenAlgorithm
 
             individs.Clear();
             individs = (generation.Count > populationCount) ? sortedPopulation : generation;
-            for (int i = 0; i < individs.Count; i++)
-            {
-                text = "";
-                for (int j = 0; j < individs[i].SIZE; j++)
-                    text += individs[i].INDIVID[j];
-                text += " COST: " + GetCost(individs[i]);
-                Logger.Get().Debug(text);
-                int weight = GetWeight(individs[i]);
-                if (weight > LIMIT)
-                    Logger.Get().Warning("Weight is invalid. - " + weight);
-            }
             individs = GenerationModificaton(individs);
             return individs;
         }

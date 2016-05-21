@@ -50,7 +50,6 @@ namespace GenAlgorithm
                               "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
                               "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
                               "BT","BU"};
-           // string[] dataInstances = { "Test", "No correlation", "The weak correlation", "The strong correlation", "Subtotals" };
             string[] initialPopulation = { "Danzig _algorithm", "Random _algorithm" };
             string[] crossover = { "Single-point crossover", "Two-point crossover", "Uniform crossover" };
             string[] mutation = { "Point mutation", "Inversion", "Translocation", "Saltation" };
@@ -158,6 +157,16 @@ namespace GenAlgorithm
                             sheet.Cells[4, number].Formula = convergence;
                             sheet.Cells[5, number].Formula = average;
                         }
+            sheet.Cells[7, 1] = "Data Instances:";
+            sheet.Cells[8, 1] = "Cost: ";
+            sheet.Cells[9, 1] = "Weight: ";
+            sheet.Cells[10, 1] = "Limit: ";
+            sheet.Cells[10, 2] = _algorithm.LIMIT;
+            for (int i = 2; i < _algorithm.INDIVID_SIZE + 2; i++)
+            {
+                sheet.Cells[8, i] = _algorithm.COST[i - 2];
+                sheet.Cells[9, i] = _algorithm.WEIGHT[i - 2];
+            }
             MessageBox.Show(@"Report created successfully!");
             _excel.Visible = true;
         }
