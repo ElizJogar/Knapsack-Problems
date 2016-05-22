@@ -65,8 +65,8 @@ namespace GenAlgorithm
             int summaryWeight = 0;
             for( int i = 0; i < _weight.Length; i++)
             {
-                _weight[i] = _rand.Next(1, _range);
-                _cost[i] = _rand.Next(1, _range);
+                _weight[i] = _rand.Next(1, _range + 1);
+                _cost[i] = _rand.Next(1, _range + 1);
                 summaryWeight += _weight[i];
             }
             _maxWeight = (int)(summaryWeight * 0.8); 
@@ -79,7 +79,7 @@ namespace GenAlgorithm
 
         private int getCost(int weight)
         {
-            int cost = _rand.Next((weight - _range / 10), (weight + _range / 10));
+            int cost = _rand.Next((weight - _range / 10), (weight + _range / 10) + 1);
             if (cost < 1)
                 cost = getCost(weight);
             return cost;
@@ -90,7 +90,7 @@ namespace GenAlgorithm
             int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
             {
-                _weight[i] = _rand.Next(1, _range);
+                _weight[i] = _rand.Next(1, _range + 1);
                 _cost[i] = getCost(_weight[i]);
                 summaryWeight += _weight[i];
             }
@@ -107,7 +107,7 @@ namespace GenAlgorithm
             int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
             {
-                _weight[i] = _rand.Next(1, _range);
+                _weight[i] = _rand.Next(1, _range + 1);
                 _cost[i] = _weight[i] + 10;
                 summaryWeight += _weight[i];
             }
@@ -123,7 +123,7 @@ namespace GenAlgorithm
             int summaryWeight = 0;
             for (int i = 0; i < _weight.Length; i++)
             {
-                _weight[i] = _rand.Next(1, _range);
+                _weight[i] = _rand.Next(1, _range + 1);
                 _cost[i] = _weight[i];
                 summaryWeight += _weight[i];
             }
