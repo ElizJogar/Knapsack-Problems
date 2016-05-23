@@ -125,7 +125,7 @@ namespace GenAlgorithm
         private void reportClick(object sender, EventArgs e)
         {
 
-            int betta = (bettaBox.Text.Length != 0) ? Convert.ToInt32(bettaBox.Text) : 2;
+            int betta = 7;// (bettaBox.Text.Length != 0) ? Convert.ToInt32(bettaBox.Text) : 2;
             int startCount = (startsNumberBox.Text.Length != 0) ? Convert.ToInt32(startsNumberBox.Text) : 1;
             populationCount = (numberOfPopulationBox.Text.Length != 0) ? Convert.ToInt32(numberOfPopulationBox.Text) : 30;
             iterationCount = (numberOfIterationBox.Text.Length != 0) ? Convert.ToInt32(numberOfIterationBox.Text) : 20;
