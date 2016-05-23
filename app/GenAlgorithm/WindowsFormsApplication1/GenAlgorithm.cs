@@ -210,9 +210,10 @@ namespace GenAlgorithm
                              if (ind.INDIVID[j] == 0)
                                  summaryWeight -= _data.WEIGHT[j];
                          }
-                         else
-                             ind.INDIVID[j] = 0;
-                         break;
+                        else
+                            ind.INDIVID[j] = 0;
+                        specificCost[j] = -1;
+                        break;
                     }
                 }
             }
