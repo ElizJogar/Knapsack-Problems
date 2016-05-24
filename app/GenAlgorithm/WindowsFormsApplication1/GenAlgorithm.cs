@@ -628,18 +628,18 @@ namespace GenAlgorithm
 
         private List<Individ> GenerationModificaton(List<Individ> individs)
         {
+            string text = "";
             Logger.Get().Debug("called generation modification.");
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
-            int permissibleIndividCount = 0;
             List<Individ> permissibleIndivids = new List<Individ>();
+            text = "";
             for (int i = 0; i < individs.Count; i++)
                 if (GetWeight(individs[i]) > LIMIT)
                 {
-                    permissibleIndividCount++;
                     permissibleIndivids.Add(individs[i]);
                     individs.RemoveAt(i);
+                    i--;
                 }
-
             foreach (Individ individ in permissibleIndivids)
             {
                 dictionary.Clear();
@@ -658,9 +658,9 @@ namespace GenAlgorithm
                         }
                         else break;
                     }
-            }    
+            }
             individs.AddRange(permissibleIndivids);
-            string text = "Generation \r\n";
+            text = "Generation \r\n";
             for (int i = 0; i < individs.Count; i++)
             {
                 text = "";
