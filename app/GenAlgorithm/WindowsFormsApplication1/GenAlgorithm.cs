@@ -639,28 +639,26 @@ namespace GenAlgorithm
                     permissibleIndivids.Add(individs[i]);
                     individs.RemoveAt(i);
                 }
-            if ( permissibleIndividCount >= individs.Count / 3)
-            {
-                foreach (Individ individ in permissibleIndivids)
-                {
-                    dictionary.Clear();
-                    for (int i = 0; i < _individSize; i++)
-                        if (individ.INDIVID[i] == 1)
-                            dictionary.Add(i, (double)_data.COST[i] / _data.WEIGHT[i]);
 
-                    dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-                    while(GetWeight(individ) > LIMIT)
-                        foreach (var item in dictionary)
+            foreach (Individ individ in permissibleIndivids)
+            {
+                dictionary.Clear();
+                for (int i = 0; i < _individSize; i++)
+                    if (individ.INDIVID[i] == 1)
+                        dictionary.Add(i, (double)_data.COST[i] / _data.WEIGHT[i]);
+
+                dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+                while (GetWeight(individ) > LIMIT)
+                    foreach (var item in dictionary)
+                    {
+                        if (GetWeight(individ) > LIMIT)
                         {
-                            if (GetWeight(individ) > LIMIT)
-                            {
-                                if(_rand.Next(10) <= 5)
+                            if (_rand.Next(10) <= 5)
                                 individ.INDIVID[item.Key] = 0;
-                            }
-                            else break;
                         }
-                }
-            }
+                        else break;
+                    }
+            }    
             individs.AddRange(permissibleIndivids);
             string text = "Generation \r\n";
             for (int i = 0; i < individs.Count; i++)
