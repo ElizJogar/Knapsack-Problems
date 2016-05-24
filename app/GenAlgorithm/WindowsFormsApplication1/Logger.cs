@@ -26,7 +26,7 @@ namespace GenAlgorithm
         private Logger()
         {
             _culture = new CultureInfo("en-GB");
-            debug = true;
+            debug = false;
             _localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             _dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc");
