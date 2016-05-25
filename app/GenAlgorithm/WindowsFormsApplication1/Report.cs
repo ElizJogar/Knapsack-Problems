@@ -168,6 +168,7 @@ namespace GenAlgorithm
                 sheet.Cells[9, i] = _algorithm.WEIGHT[i - 2];
             }
             sheet.Cells[12, 1] = "Results:";
+            sheet.Cells[12, 5] = "count:";
             sheet.Cells[13, 1] = "max from the max";
             sheet.Cells[14, 1] = "min from the max";
             sheet.Cells[15, 1] = "max from the min";
@@ -184,6 +185,8 @@ namespace GenAlgorithm
             {
                 sheet.Cells[11 + j, 4] = "= MAX(" + vsS[1] + i + ":" + vsS[length] + i + ")";
                 sheet.Cells[12 + j, 4] = "= MIN(" + vsS[1] + i + ":" + vsS[length] + i + ")";
+                sheet.Cells[11 + j, 5] = "= COUNTIF(" + vsS[1] + i + ":" + vsS[length] + i + "," + vsS[3] + (11 + j) + ")";
+                sheet.Cells[12 + j, 5] = "= COUNTIF(" + vsS[1] + i + ":" + vsS[length] + i + "," + vsS[3] + (12 + j) + ")";
             }
             sheet.Cells[21, 5] = "= COUNTIF(" + vsS[1] + "2:" + vsS[length/2] + "2," + vsS[3] + "13)";
             sheet.Cells[22, 5] = "=COUNTIF(" + vsS[length / 2 + 1] + "2:" + vsS[length] + "2," + vsS[3] + "13)";

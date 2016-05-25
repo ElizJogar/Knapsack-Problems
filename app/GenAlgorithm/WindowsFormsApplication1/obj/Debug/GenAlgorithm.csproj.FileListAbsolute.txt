@@ -27,4 +27,3 @@ C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApp
 C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.csproj.GenerateResource.Cache
 C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
 C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-C:\Users\epronina\Desktop\university\git\diplom\app\GenAlgorithm\WindowsFormsApplication1\obj\Debug\GenAlgorithm.csprojResolveAssemblyReference.cache
