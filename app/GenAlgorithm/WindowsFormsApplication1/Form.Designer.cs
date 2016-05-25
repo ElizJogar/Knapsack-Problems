@@ -288,7 +288,7 @@
             this.reportLabel.Name = "reportLabel";
             this.reportLabel.Size = new System.Drawing.Size(102, 45);
             this.reportLabel.TabIndex = 34;
-            this.reportLabel.Text = "Number of runs of the algorithm:";
+            this.reportLabel.Text = "Number of experiments:";
             // 
             // dataInstancesBox
             // 

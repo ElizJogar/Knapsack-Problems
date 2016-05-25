@@ -185,7 +185,7 @@ namespace GenAlgorithm
                 sheet.Cells[11 + j, 4] = "= MAX(" + vsS[1] + i + ":" + vsS[length] + i + ")";
                 sheet.Cells[12 + j, 4] = "= MIN(" + vsS[1] + i + ":" + vsS[length] + i + ")";
             }
-            sheet.Cells[21, 5] = "= COUNTIF(" + vsS[1] + "2:" + vsS[length] + "2," + vsS[3] + "13)";
+            sheet.Cells[21, 5] = "= COUNTIF(" + vsS[1] + "2:" + vsS[length/2] + "2," + vsS[3] + "13)";
             sheet.Cells[22, 5] = "=COUNTIF(" + vsS[length / 2 + 1] + "2:" + vsS[length] + "2," + vsS[3] + "13)";
             MessageBox.Show(@"Report created successfully!");
             _excel.Visible = true;
