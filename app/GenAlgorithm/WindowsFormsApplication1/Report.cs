@@ -167,6 +167,26 @@ namespace GenAlgorithm
                 sheet.Cells[8, i] = _algorithm.COST[i - 2];
                 sheet.Cells[9, i] = _algorithm.WEIGHT[i - 2];
             }
+            sheet.Cells[12, 1] = "Results:";
+            sheet.Cells[13, 1] = "max from the max";
+            sheet.Cells[14, 1] = "min from the max";
+            sheet.Cells[15, 1] = "max from the min";
+            sheet.Cells[16, 1] = "min from the min";
+            sheet.Cells[17, 1] = "max from the i";
+            sheet.Cells[18, 1] = "min from the i";
+            sheet.Cells[19, 1] = "max from the i(average)";
+            sheet.Cells[20, 1] = "min from the i(average)";
+            sheet.Cells[21, 1] = "the number of the best decisions A.D.";
+            sheet.Cells[22, 1] = "the number of the best decisions R.A.";
+       
+            int length = initialPopulation.Length * crossover.Length * mutation.Length *  selection.Length;
+            for (int i = 2, j = 2; i < 6; i++, j += 2)
+            {
+                sheet.Cells[11 + j, 4] = "= MAX(" + vsS[1] + i + ":" + vsS[length] + i + ")";
+                sheet.Cells[12 + j, 4] = "= MIN(" + vsS[1] + i + ":" + vsS[length] + i + ")";
+            }
+            sheet.Cells[21, 5] = "= COUNTIF(" + vsS[1] + "2:" + vsS[length] + "2," + vsS[3] + "13)";
+            sheet.Cells[22, 5] = "=COUNTIF(" + vsS[length / 2 + 1] + "2:" + vsS[length] + "2," + vsS[3] + "13)";
             MessageBox.Show(@"Report created successfully!");
             _excel.Visible = true;
         }
