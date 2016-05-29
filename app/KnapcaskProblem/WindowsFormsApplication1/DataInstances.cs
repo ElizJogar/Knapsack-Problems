@@ -39,13 +39,13 @@ namespace GenAlgorithm
             _rand = new Random(System.DateTime.Now.Millisecond);
             Fill();
         }
-
         public abstract void Fill();
+
+        public abstract string GetStringType();
     }
     public class TestDataInstances : ADataInstances //204
     {
         public TestDataInstances(int size, int range) : base(size, range) { }
-       
         public override void Fill()
         {
             int[] tmpCost = {21, 19, 27, 3, 24, 30, 6, 13, 2, 21, 26, 26, 24, 1, 10 };
@@ -54,12 +54,16 @@ namespace GenAlgorithm
             _weight = tmpWeight;
             _maxWeight = 80; 
         }
+
+        public override string GetStringType()
+        {
+               return "test";
+        }
     }
 
     public class UncorrDataInstances : ADataInstances
     {
         public UncorrDataInstances(int size, int range) : base(size, range) {}
-       
         public override void Fill()
         {
             int summaryWeight = 0;
@@ -70,6 +74,11 @@ namespace GenAlgorithm
                 summaryWeight += _weight[i];
             }
             _maxWeight = (int)(summaryWeight * 0.8); 
+        }
+
+        public override string GetStringType()
+        {
+            return "uncorreled";
         }
     }
 
@@ -96,12 +105,22 @@ namespace GenAlgorithm
             }
             _maxWeight = (int)(summaryWeight * 0.8); 
         }
+
+        public override string GetStringType()
+        {
+            return "weakly_correled";
+        }
     }
 
     public class StronglyCorrDataInstances : ADataInstances
     {
         public StronglyCorrDataInstances(int size, int range) : base(size, range) {}
-       
+
+        public String STRING_TYPE
+        {
+            get { return "strongly_correled"; }
+        }
+
         public override void Fill()
         {
             int summaryWeight = 0;
@@ -113,11 +132,17 @@ namespace GenAlgorithm
             }
             _maxWeight = (int)(summaryWeight * 0.8);
         }
+
+        public override string GetStringType()
+        {
+            return "strongly_correled";
+        }
     }
 
     public class SubsetSumDataInstances : ADataInstances
     {
         public SubsetSumDataInstances(int size, int range) : base(size, range) {}
+
         public override void Fill()
         {
             int summaryWeight = 0;
@@ -128,6 +153,11 @@ namespace GenAlgorithm
                 summaryWeight += _weight[i];
             }
             _maxWeight = (int)(summaryWeight * 0.8);
+        }
+
+        public override string GetStringType()
+        {
+            return "subset_summ";
         }
     }
 }

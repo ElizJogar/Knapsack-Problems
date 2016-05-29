@@ -132,25 +132,30 @@ namespace GenAlgorithm
             int startCount = (startsNumberBox.Text.Length != 0) ? Convert.ToInt32(startsNumberBox.Text) : 1;
             populationCount = (numberOfPopulationBox.Text.Length != 0) ? Convert.ToInt32(numberOfPopulationBox.Text) : 30;
             iterationCount = (numberOfIterationBox.Text.Length != 0) ? Convert.ToInt32(numberOfIterationBox.Text) : 20;
-            switch (dataInstancesBox.Text)
-            {
-                case "Test":
-                    algorithm = new GenAlgorithm(new TestDataInstances(15, 100));
-                    break;
-                case "No correlation":
-                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
-                    break;
-                case "The weak correlation":
-                    algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, 100));
-                    break;
-                case "The strong correlation":
-                    algorithm = new GenAlgorithm(new StronglyCorrDataInstances(15, 100));
-                    break;
-                case "Subtotals":
-                    algorithm = new GenAlgorithm(new SubsetSumDataInstances(15, 100));
-                    break;
-            }
-            AExcelReport report = new ParametersCombinationsAnalysisReport(iterationCount, populationCount, betta, startCount, algorithm);
+            //ADataInstances data;
+            //switch (dataInstancesBox.Text)
+            //{
+            //    case "Test":
+            //        data = new TestDataInstances(15, 100);
+            //        break;
+            //    case "No correlation":
+            //        data = new UncorrDataInstances(15, 100);
+            //        break;
+            //    case "The weak correlation":
+            //        data = new WeaklyCorrDataInstances(15, 100);
+            //        break;
+            //    case "The strong correlation":
+            //        data = new StronglyCorrDataInstances(15, 100);
+            //        break;
+            //    case "Subtotals":
+            //        data = new SubsetSumDataInstances(15, 100);
+            //        break;
+            //default:
+            //        data = new TestDataInstances(15, 100);
+            //        break;
+            //}
+            AExcelReport report = new DataInstancesAnalysisReport(iterationCount, populationCount, betta, startCount, 3); 
+                //  new ParametersCombinationsAnalysisReport(iterationCount, populationCount, betta, startCount, data);
             report.Create();
         }
     }

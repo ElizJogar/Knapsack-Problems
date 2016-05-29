@@ -59,8 +59,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.DataLabel = new System.Windows.Forms.Label();
             this.MaxCost = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dataAnalysisBox = new System.Windows.Forms.ComboBox();
+            this.analysisLabel = new System.Windows.Forms.Label();
+            this.instNumberBox = new System.Windows.Forms.TextBox();
+            this.instancesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // startPopulBox
@@ -265,7 +266,7 @@
             // report
             // 
             this.report.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.report.Location = new System.Drawing.Point(408, 477);
+            this.report.Location = new System.Drawing.Point(577, 461);
             this.report.Name = "report";
             this.report.Size = new System.Drawing.Size(116, 60);
             this.report.TabIndex = 31;
@@ -275,7 +276,7 @@
             // 
             // startsNumberBox
             // 
-            this.startsNumberBox.Location = new System.Drawing.Point(408, 419);
+            this.startsNumberBox.Location = new System.Drawing.Point(578, 402);
             this.startsNumberBox.Name = "startsNumberBox";
             this.startsNumberBox.Size = new System.Drawing.Size(118, 20);
             this.startsNumberBox.TabIndex = 32;
@@ -286,7 +287,7 @@
             this.reportLabel.AllowDrop = true;
             this.reportLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.reportLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.reportLabel.Location = new System.Drawing.Point(405, 371);
+            this.reportLabel.Location = new System.Drawing.Point(575, 354);
             this.reportLabel.Name = "reportLabel";
             this.reportLabel.Size = new System.Drawing.Size(102, 45);
             this.reportLabel.TabIndex = 34;
@@ -378,27 +379,35 @@
             this.MaxCost.Size = new System.Drawing.Size(91, 410);
             this.MaxCost.TabIndex = 43;
             // 
-            // label1
+            // analysisLabel
             // 
-            this.label1.AllowDrop = true;
-            this.label1.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Location = new System.Drawing.Point(405, 302);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 32);
-            this.label1.TabIndex = 44;
-            this.label1.Text = "Type of analysis:";
+            this.analysisLabel.AllowDrop = true;
+            this.analysisLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.analysisLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.analysisLabel.Location = new System.Drawing.Point(575, 192);
+            this.analysisLabel.Name = "analysisLabel";
+            this.analysisLabel.Size = new System.Drawing.Size(135, 69);
+            this.analysisLabel.TabIndex = 44;
+            this.analysisLabel.Text = "Combinations of parameters analysis for data instances:";
             // 
-            // dataAnalysisBox
+            // instNumberBox
             // 
-            this.dataAnalysisBox.FormattingEnabled = true;
-            this.dataAnalysisBox.Items.AddRange(new object[] {
-            "Combinations of parameters analysis",
-            "Combinations of parameters analysis for data instances "});
-            this.dataAnalysisBox.Location = new System.Drawing.Point(408, 337);
-            this.dataAnalysisBox.Name = "dataAnalysisBox";
-            this.dataAnalysisBox.Size = new System.Drawing.Size(287, 21);
-            this.dataAnalysisBox.TabIndex = 45;
+            this.instNumberBox.Location = new System.Drawing.Point(577, 320);
+            this.instNumberBox.Name = "instNumberBox";
+            this.instNumberBox.Size = new System.Drawing.Size(118, 20);
+            this.instNumberBox.TabIndex = 45;
+            this.instNumberBox.Text = "2";
+            // 
+            // instancesLabel
+            // 
+            this.instancesLabel.AllowDrop = true;
+            this.instancesLabel.Font = new System.Drawing.Font("Arial Unicode MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.instancesLabel.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.instancesLabel.Location = new System.Drawing.Point(574, 269);
+            this.instancesLabel.Name = "instancesLabel";
+            this.instancesLabel.Size = new System.Drawing.Size(102, 45);
+            this.instancesLabel.TabIndex = 46;
+            this.instancesLabel.Text = "Number of instances:";
             // 
             // GenAlgorithmView
             // 
@@ -406,8 +415,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(718, 744);
-            this.Controls.Add(this.dataAnalysisBox);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.instancesLabel);
+            this.Controls.Add(this.instNumberBox);
+            this.Controls.Add(this.analysisLabel);
             this.Controls.Add(this.MaxCost);
             this.Controls.Add(this.DataLabel);
             this.Controls.Add(this.label2);
@@ -478,8 +488,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label DataLabel;
         private System.Windows.Forms.TextBox MaxCost;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox dataAnalysisBox;
+        private System.Windows.Forms.Label analysisLabel;
+        private System.Windows.Forms.TextBox instNumberBox;
+        private System.Windows.Forms.Label instancesLabel;
 
  
     }
