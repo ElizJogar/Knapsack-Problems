@@ -36,11 +36,7 @@ namespace GenAlgorithm
                     algorithm = new GenAlgorithm(new TestDataInstances(15, 100));
                     break;
                 case "No correlation":
-                    ADataInstances data = new UncorrDataInstances(1000, 100);
-                    algorithm = new GenAlgorithm(data);
-                    ExhaustiveSearchAlgorithm alg = new ExhaustiveSearchAlgorithm(data);
-                    int maxCost = alg.Run();
-                    Logger.Get().Debug("maxCost - " + maxCost);
+                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
                     break;
                 case "The weak correlation":
                     algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, 100));
