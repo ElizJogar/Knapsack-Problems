@@ -12,6 +12,7 @@ namespace GenAlgorithm
         private ADataInstances  _data;
         public ExhaustiveSearchAlgorithm (ADataInstances data)
         {
+            data.Fill();
             _data = data;
         }
         public int Run()

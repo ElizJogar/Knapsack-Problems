@@ -20,9 +20,6 @@ namespace GenAlgorithm
         public GenAlgorithmView()
         {
             InitializeComponent();
-            ExhaustiveSearchAlgorithm alg = new ExhaustiveSearchAlgorithm(new TestDataInstances(4, 100));
-            int maxCost = alg.Run();
-            Logger.Get().Debug("maxCost - " + maxCost);
         }
 
         private void runClick(object sender, EventArgs e)
@@ -39,7 +36,11 @@ namespace GenAlgorithm
                     algorithm = new GenAlgorithm(new TestDataInstances(15, 100));
                     break;
                 case "No correlation":
-                    algorithm = new GenAlgorithm(new UncorrDataInstances(15, 100));
+                    ADataInstances data = new UncorrDataInstances(1000, 100);
+                    algorithm = new GenAlgorithm(data);
+                    ExhaustiveSearchAlgorithm alg = new ExhaustiveSearchAlgorithm(data);
+                    int maxCost = alg.Run();
+                    Logger.Get().Debug("maxCost - " + maxCost);
                     break;
                 case "The weak correlation":
                     algorithm = new GenAlgorithm(new WeaklyCorrDataInstances(15, 100));
@@ -128,33 +129,12 @@ namespace GenAlgorithm
         private void reportClick(object sender, EventArgs e)
         {
 
-            int betta = 7;// (bettaBox.Text.Length != 0) ? Convert.ToInt32(bettaBox.Text) : 2;
+            int betta =  (bettaBox.Text.Length != 0) ? Convert.ToInt32(bettaBox.Text) : 2;
             int startCount = (startsNumberBox.Text.Length != 0) ? Convert.ToInt32(startsNumberBox.Text) : 1;
             populationCount = (numberOfPopulationBox.Text.Length != 0) ? Convert.ToInt32(numberOfPopulationBox.Text) : 30;
             iterationCount = (numberOfIterationBox.Text.Length != 0) ? Convert.ToInt32(numberOfIterationBox.Text) : 20;
-            //ADataInstances data;
-            //switch (dataInstancesBox.Text)
-            //{
-            //    case "Test":
-            //        data = new TestDataInstances(15, 100);
-            //        break;
-            //    case "No correlation":
-            //        data = new UncorrDataInstances(15, 100);
-            //        break;
-            //    case "The weak correlation":
-            //        data = new WeaklyCorrDataInstances(15, 100);
-            //        break;
-            //    case "The strong correlation":
-            //        data = new StronglyCorrDataInstances(15, 100);
-            //        break;
-            //    case "Subtotals":
-            //        data = new SubsetSumDataInstances(15, 100);
-            //        break;
-            //default:
-            //        data = new TestDataInstances(15, 100);
-            //        break;
-            //}
-            AExcelReport report = new DataInstancesAnalysisReport(iterationCount, populationCount, betta, startCount, 3); 
+            int instancesCount  = (instNumberBox.Text.Length != 0)  ? Convert.ToInt32(instNumberBox.Text) : 5;
+            AExcelReport report = new DataInstancesAnalysisReport(iterationCount, populationCount, betta, startCount, instancesCount); 
                 //  new ParametersCombinationsAnalysisReport(iterationCount, populationCount, betta, startCount, data);
             report.Create();
         }

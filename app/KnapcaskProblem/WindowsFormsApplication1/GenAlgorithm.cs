@@ -141,6 +141,7 @@ namespace GenAlgorithm
         }
        public GenAlgorithm(ADataInstances data)
         {
+            data.Fill();
             _data = data;
             _individSize = data.WEIGHT.Length;
             Logger.Get().Debug("Genetic algorithm created.");

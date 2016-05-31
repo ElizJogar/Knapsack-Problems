@@ -37,7 +37,7 @@ namespace GenAlgorithm
             _cost = new int[size];
             _weight = new int[size];
             _rand = new Random(System.DateTime.Now.Millisecond);
-            Fill();
+           // Fill();
         }
         public abstract void Fill();
 
