@@ -298,7 +298,9 @@ namespace GenAlgorithm
                             for (int g = 0; g < selection.Length; g++, n++)
                             {
                                 sheet.Cells[1, n] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
-                                for (int nIndex = 2; nIndex < 6; nIndex++)
+                                sheet.Cells[2, n].Formula = getAFormula("= MAX(", 25, n, _instancesCount, vsS, 2);
+                                sheet.Cells[3, n].Formula = getAFormula("= MIN(", 26, n, _instancesCount, vsS, 2);
+                                for (int nIndex = 4; nIndex < 6; nIndex++)
                                     sheet.Cells[nIndex, n].Formula = getAFormula("= MAX(", 23 + nIndex, n, _instancesCount, vsS, 2);
                                 for (int nIndex = 6; nIndex < 8; nIndex++)
                                     sheet.Cells[nIndex, n].Formula = getAFormula("= MIN(", 21 + nIndex, n, _instancesCount, vsS, 2);
