@@ -254,7 +254,7 @@ namespace GenAlgorithm
                 sheet.Columns.ColumnWidth = 14;
                 int n = 2;
                 sheet.Cells[2, 1] = "deviation %";
-                sheet.Cells[3, 1] = "max probabil.%";
+                sheet.Cells[3, 1] = "probabil.(avg)%";
                 sheet.Cells[4, 1] = "i(avg) min %";
                 for (int i = 0; i < initialPopulation.Length; i++)
                     for (int j = 0; j < crossover.Length; j++)
@@ -263,17 +263,17 @@ namespace GenAlgorithm
                             {
                                 sheet.Cells[1, n] = initialPopulation[i] + Environment.NewLine + crossover[j] + Environment.NewLine + mutation[k] + Environment.NewLine + selection[g] + Environment.NewLine;
                                 sheet.Cells[2, n].Formula = createFormula("= MIN(", 21, n, _instancesCount, 2);
-                                string maxIf = "=MAX(";
-                                string minIf = "=MIN(";
+                                string avgPr = "=AVERAGE(";
+                                string avgI = "=AVERAGE(";
                                 for (int v = 3; v < _instancesCount + 2; v++)
                                 {
-                                    maxIf += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + v + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + v + "!" + _vsS[n - 1] + "22" + "," + "-1),";
-                                    minIf += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + v + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + v + "!" + _vsS[n - 1] + "23" + "," + "1000000000),";
+                                    avgPr += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + v + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + v + "!" + _vsS[n - 1] + "22" + "," + "0),";
+                                    avgI += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + v + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + v + "!" + _vsS[n - 1] + "23" + "," + "0),";
                                 }
-                                maxIf += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "22" + ",-1))";
-                                minIf += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "23" + ",1000000000))";
-                                sheet.Cells[3, n].Formula = maxIf;
-                                sheet.Cells[4, n].Formula = minIf;
+                                avgPr += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "22" + ",0))";
+                                avgI += "IF(" + _vsS[n - 1] + "2" + "=Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "21" + "," + "Sheet" + (_instancesCount + 2) + "!" + _vsS[n - 1] + "23" + ",0))";
+                                sheet.Cells[3, n].Formula = avgPr;
+                                sheet.Cells[4, n].Formula = avgI;
                             }
                 summaryWorkbook.SaveAs(_dir + @"\" + _data.GetStringType() + "_summary.xlsx");
                 summaryWorkbook.Close();                
