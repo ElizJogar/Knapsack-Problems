@@ -255,7 +255,7 @@ namespace GenAlgorithm
                 int n = 2;
                 sheet.Cells[2, 1] = "deviation %";
                 sheet.Cells[3, 1] = "probabil.(avg)%";
-                sheet.Cells[4, 1] = "i(avg) min %";
+                sheet.Cells[4, 1] = "i(avg avg) %";
                 for (int i = 0; i < initialPopulation.Length; i++)
                     for (int j = 0; j < crossover.Length; j++)
                         for (int k = 0; k < mutation.Length; k++)
