@@ -69,7 +69,7 @@ namespace GenAlgorithm
                     individs = algorithm.CreatePopulation(populationCount, algorithm.RANDOM_ALGORITHM);
                     break;
             }
-            InitialPopulation.Text = " Individ:            Cost:\r\n";
+            InitialPopulation.Text = "Individ:\t\tCost:\r\n";
             for (int i = 0; i < individs.Count; i++)
             {
                 for (int j = 0; j < individs.ElementAt(i).SIZE; j++)
