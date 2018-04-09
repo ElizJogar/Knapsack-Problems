@@ -1,0 +1,14 @@
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.csprojResolveAssemblyReference.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.csproj.CoreCompileInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.AssemblyInfoInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.AssemblyInfo.cs
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\GeneticAlgorithm.deps.json
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\GeneticAlgorithm.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\GeneticAlgorithm.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\KnapsackProblemData.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\Logger.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\KnapsackProblemData.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\bin\Debug\netstandard2.0\Logger.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.csproj.CopyComplete
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard2.0\GeneticAlgorithm.pdb

@@ -1,0 +1,14 @@
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.deps.json
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\KnapsackProblemData.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\KnapsackProblemData.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.csprojResolveAssemblyReference.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.csproj.CoreCompileInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.AssemblyInfoInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.AssemblyInfo.cs
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.csproj.CopyComplete
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard2.0\ExhaustiveSearchAlgorithm.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\Logger.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\bin\Debug\netstandard2.0\Logger.pdb

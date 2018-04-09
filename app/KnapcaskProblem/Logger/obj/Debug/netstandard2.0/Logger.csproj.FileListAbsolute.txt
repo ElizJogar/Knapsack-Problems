@@ -1,0 +1,9 @@
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\bin\Debug\netstandard2.0\Logger.deps.json
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\bin\Debug\netstandard2.0\Logger.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\bin\Debug\netstandard2.0\Logger.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard2.0\Logger.csproj.CoreCompileInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard2.0\Logger.AssemblyInfoInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard2.0\Logger.AssemblyInfo.cs
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard2.0\Logger.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard2.0\Logger.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard2.0\Logger.csprojResolveAssemblyReference.cache
