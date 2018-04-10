@@ -163,7 +163,6 @@ namespace Algorithm
             int cost = 0;
             int minCost = 0;
 
-            var realMinCost = Helpers.GetMinCost(individs, data);
             for (int i = 0; i < individs.Count; i++)
             {
                 cost = Helpers.GetCost(individs[i], data);
