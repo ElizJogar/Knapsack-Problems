@@ -6,7 +6,7 @@ using CustomLogger;
 
 namespace Algorithm
 {
-    public interface ISelection: IOperator
+    public interface ISelection : IOperator
     {
         List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args);
     }
@@ -14,7 +14,7 @@ namespace Algorithm
     public abstract class ASelection : ISelection
     {
         protected Random m_random = new Random(System.DateTime.Now.Millisecond);
-        protected List<Individ> GenerationModificaton(List<Individ> individs, AData data)
+        protected List<Individ> ModifyGeneration(List<Individ> individs, AData data)
         {
             Logger.Get().Debug("Called generation modification");
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
@@ -31,19 +31,22 @@ namespace Algorithm
             {
                 dictionary.Clear();
                 for (int i = 0; i < individ.SIZE; i++)
+                {
                     if (individ.GENOTYPE[i] == 1)
+                    {
                         dictionary.Add(i, (double)data.COST[i] / data.WEIGHT[i]);
-
+                    }
+                }
                 dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-                while (Helpers.GetWeight(individ, data) > data.MAX_WEIGHT)
+                var weight = Helpers.GetWeight(individ, data);
+                while (weight > data.MAX_WEIGHT)
                 {
                     foreach (var item in dictionary)
                     {
-                        if (Helpers.GetWeight(individ, data) > data.MAX_WEIGHT)
-                        {
-                                individ.GENOTYPE[item.Key] = 0;
-                        }
-                        else break;
+                        if (weight <= data.MAX_WEIGHT) break;
+
+                        individ.GENOTYPE[item.Key] = 0;
+                        weight -= data.WEIGHT[item.Key];
                     }
                 }
             }
@@ -98,8 +101,7 @@ namespace Algorithm
                 }
                 population.Add(individ);
             }
-            population = GenerationModificaton(population, data);
-            return population;
+            return ModifyGeneration(population, data);
         }
     }
 
@@ -107,66 +109,41 @@ namespace Algorithm
     {
         public override List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args)
         {
-            int[] costs = PenaltyFunction.Run(individs, data);
-            Logger.Get().Debug("Called " + Convert.ToString(this));
-            List<Individ> sortedPopulation = new List<Individ>();
-            List<Individ> generation = new List<Individ>();
-            List<int> costList = new List<int>();
-            int[] rang = new int[individs.Count];
-            double[] n = new double[individs.Count]; // expected numbers
-            n[individs.Count - 1] = m_random.NextDouble() + 1.1;
-            n[individs.Count - 1] = (n[individs.Count - 1] > 2) ? 2 : n[individs.Count - 1];
-            n[0] = 2 - n[individs.Count - 1];
-            for (int i = 0; i < individs.Count; i++)
-                costList.Add(costs[i]);
-            costList.Sort();
-            for (int i = 0; i < individs.Count; i++)
-            {
-                for (int j = 0; j < individs.Count; j++)
-                {
-                    if (costs[j] != -1)
-                    {
-                        if (costs[j] == costList[i])
-                        {
-                            costs[j] = -1;
-                            sortedPopulation.Add(individs[j]);
-                            break;
-                        }
-                    }
-                }
-            }
+            var size = individs.Count;
 
-            for (int i = 0; i < individs.Count; i++)
+            Logger.Get().Debug("Called " + Convert.ToString(this));
+
+            List<Individ> sortedPopulation = new List<Individ>(individs);
+            List<Individ> generation = new List<Individ>();
+
+            int[] rang = new int[size];
+            double[] nCopy = new double[size];
+            double a = m_random.NextDouble() + 1.1;
+            nCopy[size - 1] = a > 2 ? 2 : a;
+            nCopy[0] = 2 - nCopy[size - 1];
+
+            sortedPopulation.Sort((first, second) =>
+            {
+                return Helpers.GetCost(first, data).CompareTo(Helpers.GetCost(second, data));
+            });
+
+            for (int i = 0; i < size; ++i)
             {
                 rang[i] = i + 1;
-                n[i] = n[0] + (n[individs.Count - 1] - n[0]) * (rang[i] - 1) / (individs.Count - 1);
-                if (n[i] >= 1)
-                    generation.Add(sortedPopulation[i]);
-            }
-
-            if (generation.Count < populationCount)
-            {
-                for (int j = 0; j < individs.Count; j++)
-                    if (n[j] > 1 && m_random.Next((int)(n[j] - 1) * 100) == 0 || n[j] < 1 && m_random.Next((int)(n[j] * 100)) == 0)
-                        generation.Add(sortedPopulation[j]);
-
-            }
-
-            if (generation.Count > populationCount)
-            {
-                sortedPopulation.Clear();
-                int k = 0;
-                for (int i = 0; i < populationCount; i++)
+                nCopy[i] = nCopy[0] + (nCopy[size - 1] - nCopy[0]) * (rang[i] - 1) / (size - 1);
+                if (nCopy[i] >= 1 && !generation.Contains(sortedPopulation[i]))
                 {
-                    k = m_random.Next(generation.Count);
-                    sortedPopulation.Add(generation[k]);
+                    var copies = 0;
+                    while (copies++ != nCopy[i]) generation.Add(sortedPopulation[i]);
                 }
             }
 
-            individs.Clear();
-            individs = (generation.Count > populationCount) ? sortedPopulation : generation;
-            individs = GenerationModificaton(individs, data);
-            return individs;
+            while (generation.Count < populationCount)
+            {
+                var index = m_random.Next(0, size);
+                generation.Add(sortedPopulation[index]);
+            }
+            return ModifyGeneration(generation, data);
         }
     }
 
@@ -185,18 +162,21 @@ namespace Algorithm
             int weight = 0;
             int cost = 0;
             int minCost = 0;
+
+            var realMinCost = Helpers.GetMinCost(individs, data);
             for (int i = 0; i < individs.Count; i++)
             {
                 cost = Helpers.GetCost(individs[i], data);
                 weight = Helpers.GetWeight(individs[i], data);
-                scalledFitnessFunctions[i] = (weight <= data.MAX_WEIGHT) ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
-                if (scalledFitnessFunctions[i] < minCost)
-                    minCost = scalledFitnessFunctions[i];
+                scalledFitnessFunctions[i] = weight <= data.MAX_WEIGHT ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
             }
+
             for (int i = 0; i < individs.Count; i++)
             {
                 if (scalledFitnessFunctions[i] == minCost)
+                {
                     scalledFitnessFunctions[i] = 0;
+                }
                 else if (scalledFitnessFunctions[i] <= 0)
                 {
                     cost = scalledFitnessFunctions[i];

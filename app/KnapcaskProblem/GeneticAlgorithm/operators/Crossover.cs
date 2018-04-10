@@ -17,7 +17,7 @@ namespace Algorithm
             Logger.Get().Debug("Called " + Convert.ToString(this));
             List<Individ> population = new List<Individ>();
             int k = 0;
-            for (int i = 0; i < individs.Count; i++)
+            for (int i = 0; i < individs.Count - 1; i++)
             {
                 for (int j = i + 1; j < individs.Count; j++)
                 {
