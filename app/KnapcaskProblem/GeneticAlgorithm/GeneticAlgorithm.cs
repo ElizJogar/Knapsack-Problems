@@ -11,22 +11,11 @@ namespace Algorithm
         private ICrossover m_crossover = null;
         private IMutation m_mutation = null;
         private ISelection m_selection = null;
-      
-        public int[] WEIGHT
-        {
-            get { return m_data.WEIGHT;  }
-        }
+        private Individ m_winner = null;
 
-        public int[] COST
-        {
-            get { return m_data.COST;  }
-        }
        public GeneticAlgorithm(AData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
         {
             m_data = data;
-            // TODO: refactor
-            m_data.Fill();
-
             m_initialPopulation = population;
             m_crossover = crossover;
             m_mutation = mutation;
@@ -40,6 +29,8 @@ namespace Algorithm
    
         public List<Individ> Init(int n)
         {
+            m_winner = null;
+
             Logger.Get().Debug("Called CreatePopulation function.");
             List<Individ> population = new List<Individ>();
             for (int i = 0; i < n; ++i)
@@ -65,11 +56,28 @@ namespace Algorithm
             return population;
         }
        
-        public List<Individ> Run(int iterationCount, int populationCount, List<Individ> individs, params object[] args)
+        public int Run(int populationCount, ref List<Individ> individs, params object[] args)
         {
             individs = m_crossover.Run(individs);
             individs = m_mutation.Run(individs);
-            return m_selection.Run(individs, populationCount, m_data, args);
+            individs = m_selection.Run(individs, populationCount, m_data, args);
+
+            return Helpers.GetMaxCost(ref m_winner, individs, m_data);
+        }
+
+        public int Run(int iterationCount, int populationCount, params object[] args)
+        {
+            var individs = Init(populationCount);
+            for(var i = 0; i < iterationCount - 1; ++i)
+            {
+                Run(populationCount, ref individs, args);
+            }
+            return Run(populationCount, ref individs, args);
+        }
+        public Individ getWinner()
+        {
+            return m_winner;
         }
     }
 }
+

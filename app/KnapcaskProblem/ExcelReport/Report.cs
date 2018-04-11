@@ -43,7 +43,7 @@ namespace ExcelReport
             m_excel = new Excel.Application();
         }
 
-        private string CreateFormula(string formula, int count, int number, int startCount, int firstListNumber = 0)
+        private string FillFormula(string formula, int count, int number, int startCount, int firstListNumber = 0)
         {
             string tmp = formula;
             for (int d = firstListNumber + 1; d < startCount + firstListNumber; d++)
@@ -72,7 +72,7 @@ namespace ExcelReport
             AData[] data = { new UncorrData(15, 100), new WeaklyCorrData(15, 100), new StronglyCorrData(15, 100), new SubsetSumData(15, 100) };
 
             int length = initialPopulation.Length * crossover.Length * mutation.Length * selection.Length;
-            for (int dataIndex = 0; dataIndex < 4; ++dataIndex)
+            for (int dataIndex = 0; dataIndex < 1; ++dataIndex)
             {
                 Excel.Workbook workbook;
                 Excel.Worksheet sheet;
@@ -85,7 +85,6 @@ namespace ExcelReport
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
                     m_data.Fill();
-                    m_individs.Clear();
 
                     int optimum = new ExhaustiveSearchAlgorithm(m_data).Run();
 
@@ -109,15 +108,13 @@ namespace ExcelReport
                                 {
                                     for (int g = 0; g < selection.Length; g++)
                                     {
-                                        count++;
-                                        m_individs.Clear();
+                                        ++count;
                                         var alg = new GeneticAlgorithm(m_data, initialPopulation[i], crossover[j], mutation[k], selection[g]);
 
                                         m_individs = alg.Init(m_populationCount);
                                         for (int x = 0; x < m_iterationCount; x++)
                                         {
-                                            m_individs = alg.Run(m_iterationCount, m_populationCount, m_individs, m_betta);
-                                            sheet.Cells[x + 2, count] = Helpers.GetMaxCost(m_individs, m_data);
+                                            sheet.Cells[x + 2, count] = alg.Run(m_populationCount, ref m_individs, m_betta);
                                         }
                                         sheet.Cells[1, count] = GetOperatorsStr(initialPopulation[i], crossover[j], mutation[k], selection[g]);
                                         sheet.Cells[m_iterationCount + 4, count].Formula = "= MAX(" + m_vsS[count - 1] + 2 + ":" + m_vsS[count - 1] + (m_iterationCount + 1) + ")";
@@ -141,8 +138,8 @@ namespace ExcelReport
                                 {
                                     number++;
                                     sheet.Cells[1, number] = GetOperatorsStr(initialPopulation[i], crossover[j], mutation[k], selection[g]);
-                                    string max = CreateFormula("= MAX(", m_iterationCount + 4, number, m_runsCount);
-                                    string average = CreateFormula("= AVERAGE(", m_iterationCount + 5, number, m_runsCount);
+                                    string max = FillFormula("= MAX(", m_iterationCount + 4, number, m_runsCount);
+                                    string average = FillFormula("= AVERAGE(", m_iterationCount + 5, number, m_runsCount);
                                     sheet.Cells[2, number].Formula = max;
                                     string sum = "=SUM(";
                                     for (int v = 1; v < m_runsCount; v++)
@@ -177,7 +174,7 @@ namespace ExcelReport
                         sheet.Cells[12 + j, 5] = "= COUNTIF(" + m_vsS[1] + i + ":" + m_vsS[length] + i + "," + m_vsS[3] + (12 + j) + ")";
                     }
                     workbook.Saved = true;
-                    workbook.SaveAs(m_dir + @"\" + m_data.GetStringType() + (instIndex + 1) + ".xlsx");
+                    workbook.SaveAs(m_dir + @"\" + m_data.Str() + (instIndex + 1) + ".xlsx");
                     (sheet as Excel.Worksheet).Copy(summaryWorkbook.Worksheets[instIndex + 1]);
 
                     workbook.Close();
@@ -209,7 +206,7 @@ namespace ExcelReport
                             for (int g = 0; g < selection.Length; g++, n++)
                             {
                                 sheet.Cells[1, n] = GetOperatorsStr(initialPopulation[i], crossover[j], mutation[k], selection[g]);
-                                sheet.Cells[2, n].Formula = CreateFormula("= MIN(", 21, n, m_instancesCount, 2);
+                                sheet.Cells[2, n].Formula = FillFormula("= MIN(", 21, n, m_instancesCount, 2);
                                 string avgPr = "=AVERAGE(";
                                 string avgI = "=AVERAGE(";
                                 for (int v = 3; v < m_instancesCount + 2; v++)
@@ -222,7 +219,7 @@ namespace ExcelReport
                                 sheet.Cells[3, n].Formula = avgPr;
                                 sheet.Cells[4, n].Formula = avgI;
                             }
-                summaryWorkbook.SaveAs(m_dir + @"\" + m_data.GetStringType() + "_summary.xlsx");
+                summaryWorkbook.SaveAs(m_dir + @"\" + m_data.Str() + "_summary.xlsx");
                 summaryWorkbook.Close();
             }
             m_excel.Quit();

@@ -8,7 +8,6 @@ namespace Algorithm
         private AData m_data;
         public ExhaustiveSearchAlgorithm (AData data)
         {
-            data.Fill();
             m_data = data;
         }
         public int Run()

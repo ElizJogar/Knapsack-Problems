@@ -1,4 +1,6 @@
-﻿namespace Algorithm
+﻿using System;
+
+namespace Algorithm
 {
     public class Individ
     {
@@ -36,4 +38,27 @@
         }
     }
 
+    public class IndividEx : Individ, IComparable
+    {
+        public IndividEx(int size) : base(size) { }
+        public int COST { set; get; }
+        public int WEIGHT { set; get; }
+        public int CompareTo(Object obj)
+        {
+            var other = (IndividEx)obj;
+            if (COST < other.COST)
+            {
+                return -1;
+            }
+            else if (COST == other.COST)
+            {
+                return 0;
+            }
+            else if (COST > other.COST)
+            {
+                return 1;
+            }
+            return 0;
+        }
+    }
 }

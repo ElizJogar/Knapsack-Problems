@@ -44,8 +44,7 @@ namespace CLI
                 Console.WriteLine($"There are unknown options: {extras.ToString()}");
             }
 
-            if (showHelp)
-                return false;
+            if (showHelp) return false;
 
             return true;
         }

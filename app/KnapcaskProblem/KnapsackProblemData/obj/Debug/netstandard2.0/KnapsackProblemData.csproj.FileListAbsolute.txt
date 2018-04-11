@@ -6,3 +6,4 @@ C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\n
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblemData.AssemblyInfo.cs
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblemData.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblemData.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblemData.csprojResolveAssemblyReference.cache

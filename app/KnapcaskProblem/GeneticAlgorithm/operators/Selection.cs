@@ -20,17 +20,20 @@ namespace Algorithm
             Dictionary<int, double> dictionary = new Dictionary<int, double>();
             List<Individ> permissibleIndivids = new List<Individ>();
 
-            for (int i = 0; i < individs.Count; i++)
-                if (Helpers.GetWeight(individs[i], data) > data.MAX_WEIGHT)
+            individs.RemoveAll(individ =>
+            {
+                if (Helpers.GetWeight(individ, data) > data.MAX_WEIGHT)
                 {
-                    permissibleIndivids.Add(individs[i]);
-                    individs.RemoveAt(i);
-                    i--;
+                    permissibleIndivids.Add(individ);
+                    return true;
                 }
-            foreach (Individ individ in permissibleIndivids)
+                return false;
+            });
+ 
+            foreach (var individ in permissibleIndivids)
             {
                 dictionary.Clear();
-                for (int i = 0; i < individ.SIZE; i++)
+                for (int i = 0; i < individ.SIZE; ++i)
                 {
                     if (individ.GENOTYPE[i] == 1)
                     {
@@ -66,40 +69,29 @@ namespace Algorithm
     {
         public override List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args)
         {
-            int beta = (int)args[0];
-
-            int[] costs = PenaltyFunction.Run(individs, data);
             Logger.Get().Debug("Called " + Convert.ToString(this));
+            var beta = (int)args[0];
+            var individsEx = PenaltyFunction.Run(individs, data);
             List<Individ> population = new List<Individ>();
             for (int j = 0; j < populationCount; j++)
             {
-                int c = 0;
-                int count = 0;
-                List<int> costList = new List<int>();
-                List<int> number = new List<int>();
-                for (int i = 0; i < individs.Count; i++)
+                var individsEx4Beta = new List<IndividEx>();
+                var index = new List<int>();
+                while (individsEx4Beta.Count != beta)
                 {
-                    c = m_random.Next(2);
-                    if (c == 1 && count < beta && !number.Contains(i))
+                    for (int i = 0; i < individsEx.Count; ++i)
                     {
-                        costList.Add(costs[i]);
-                        number.Add(i);
-                        count++;
-                    }
-                    if (i == individs.Count - 1 && count < beta)
-                        i = -1;
-                }
-                int maxCost = 0;
-                Individ individ = null;
-                for (int i = 0; i < beta; i++)
-                {
-                    if (costList[i] > maxCost)
-                    {
-                        maxCost = costList[i];
-                        individ = individs[number[i]];
+                        if (individsEx4Beta.Count >= beta) break;
+
+                        int randomNumber = m_random.Next(100);
+                        if (randomNumber < 50 && !index.Contains(i))
+                        {  
+                            individsEx4Beta.Add(individsEx[i]);
+                            index.Add(i);
+                        }
                     }
                 }
-                population.Add(individ);
+                population.Add(individsEx4Beta.Max());
             }
             return ModifyGeneration(population, data);
         }
@@ -113,7 +105,7 @@ namespace Algorithm
 
             Logger.Get().Debug("Called " + Convert.ToString(this));
 
-            List<Individ> sortedPopulation = new List<Individ>(individs);
+            var individsEx = PenaltyFunction.Run(individs, data);
             List<Individ> generation = new List<Individ>();
 
             int[] rang = new int[size];
@@ -122,26 +114,28 @@ namespace Algorithm
             nCopy[size - 1] = a > 2 ? 2 : a;
             nCopy[0] = 2 - nCopy[size - 1];
 
-            sortedPopulation.Sort((first, second) =>
-            {
-                return Helpers.GetCost(first, data).CompareTo(Helpers.GetCost(second, data));
-            });
+            individsEx.Sort();
 
             for (int i = 0; i < size; ++i)
             {
+                if (generation.Count >= populationCount) break;
+
                 rang[i] = i + 1;
                 nCopy[i] = nCopy[0] + (nCopy[size - 1] - nCopy[0]) * (rang[i] - 1) / (size - 1);
-                if (nCopy[i] >= 1 && !generation.Contains(sortedPopulation[i]))
+                if (nCopy[i] >= 1 && !generation.Contains(individsEx[i]))
                 {
                     var copies = 0;
-                    while (copies++ != nCopy[i]) generation.Add(sortedPopulation[i]);
+                    while (copies++ < (int)nCopy[i] && generation.Count < populationCount)
+                    {
+                        generation.Add(individsEx[i]);
+                    }
                 }
             }
 
             while (generation.Count < populationCount)
             {
                 var index = m_random.Next(0, size);
-                generation.Add(sortedPopulation[index]);
+                generation.Add(individsEx[index]);
             }
             return ModifyGeneration(generation, data);
         }
@@ -149,13 +143,17 @@ namespace Algorithm
 
     class PenaltyFunction
     {
-        static public int[] Run(List<Individ> individs, AData data)
+        static public List<IndividEx> Run(List<Individ> individs, AData data)
         {
             Logger.Get().Debug("Called Algorithm.PenaltyFunction");
             int[] scalledFitnessFunctions = new int[individs.Count];
+            var individsEx = new List<IndividEx>();
+
             int averageCost = 0;
             for (int i = 0; i < individs.Count; i++)
+            {
                 averageCost += Helpers.GetCost(individs[i], data);
+            }
             averageCost /= individs.Count;
             double coeffA = 0;
             double coeffB = 0;
@@ -165,9 +163,14 @@ namespace Algorithm
 
             for (int i = 0; i < individs.Count; i++)
             {
+                var individEx = new IndividEx(individs[i].SIZE);
+                individEx.GENOTYPE = individs[i].GENOTYPE;
+
                 cost = Helpers.GetCost(individs[i], data);
                 weight = Helpers.GetWeight(individs[i], data);
+                individEx.WEIGHT = weight;
                 scalledFitnessFunctions[i] = weight <= data.MAX_WEIGHT ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
+                individsEx.Add(individEx);
             }
 
             for (int i = 0; i < individs.Count; i++)
@@ -183,8 +186,9 @@ namespace Algorithm
                     coeffB = averageCost * cost / (cost - averageCost);
                     scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * scalledFitnessFunctions[i] + coeffB);
                 }
+                individsEx[i].COST = scalledFitnessFunctions[i];
             }
-            return scalledFitnessFunctions;
+            return individsEx;
         }
     }
 }
