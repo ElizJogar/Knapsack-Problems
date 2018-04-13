@@ -17,8 +17,7 @@ namespace Algorithm
         protected List<Individ> ModifyGeneration(List<Individ> individs, AData data)
         {
             Logger.Get().Debug("Called generation modification");
-            Dictionary<int, double> dictionary = new Dictionary<int, double>();
-            List<Individ> permissibleIndivids = new List<Individ>();
+            var permissibleIndivids = new List<Individ>();
 
             individs.RemoveAll(individ =>
             {
@@ -32,7 +31,7 @@ namespace Algorithm
  
             foreach (var individ in permissibleIndivids)
             {
-                dictionary.Clear();
+                var dictionary = new Dictionary<int, double>();
                 for (int i = 0; i < individ.SIZE; ++i)
                 {
                     if (individ.GENOTYPE[i] == 1)
@@ -146,7 +145,6 @@ namespace Algorithm
         static public List<IndividEx> Run(List<Individ> individs, AData data)
         {
             Logger.Get().Debug("Called Algorithm.PenaltyFunction");
-            int[] scalledFitnessFunctions = new int[individs.Count];
             var individsEx = new List<IndividEx>();
 
             int averageCost = 0;
@@ -169,24 +167,23 @@ namespace Algorithm
                 cost = Helpers.GetCost(individs[i], data);
                 weight = Helpers.GetWeight(individs[i], data);
                 individEx.WEIGHT = weight;
-                scalledFitnessFunctions[i] = weight <= data.MAX_WEIGHT ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
+                individEx.COST = weight <= data.MAX_WEIGHT ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
                 individsEx.Add(individEx);
             }
 
             for (int i = 0; i < individs.Count; i++)
             {
-                if (scalledFitnessFunctions[i] == minCost)
+                if (individsEx[i].COST == minCost)
                 {
-                    scalledFitnessFunctions[i] = 0;
+                    individsEx[i].COST = 0;
                 }
-                else if (scalledFitnessFunctions[i] <= 0)
+                else if (individsEx[i].COST <= 0)
                 {
-                    cost = scalledFitnessFunctions[i];
+                    cost = individsEx[i].COST;
                     coeffA = averageCost / (cost - averageCost);
                     coeffB = averageCost * cost / (cost - averageCost);
-                    scalledFitnessFunctions[i] = Convert.ToInt32(coeffA * scalledFitnessFunctions[i] + coeffB);
+                    individsEx[i].COST = Convert.ToInt32(coeffA * cost + coeffB);
                 }
-                individsEx[i].COST = scalledFitnessFunctions[i];
             }
             return individsEx;
         }

@@ -13,9 +13,9 @@ namespace CLI
         {
             ArgParser parser = new ArgParser();
             bool debug = false;
-            var iterationCount = 5;// 40;
-            var populationCount = 5;// 30;
-            var betta = 2;
+            var iterationCount = 30;// 40;
+            var populationCount = 15;// 30;
+            var betta = 5;
             var runsCount = 1;// 30; 
             var instancesCount = 1;// 5;
 

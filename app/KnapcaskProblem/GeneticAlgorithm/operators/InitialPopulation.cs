@@ -16,11 +16,11 @@ namespace Algorithm
         public Individ Run(AData data)
         {
             var size = data.COST.Length;
-            Individ ind = new Individ(size);
-            List<double> specificCostList = new List<double>();
+            var individ = new Individ(size);
+            var specificCostList = new List<double>();
             double[] specificCost = new double[size];
-            int summaryWeight = 0;
-            for (int i = 0; i < size; i++)
+            var summaryWeight = 0;
+            for (int i = 0; i < size; ++i)
             {
                 specificCost[i] = (double) data.COST[i] / data.WEIGHT[i];
                 specificCostList.Add(specificCost[i]);
@@ -28,28 +28,28 @@ namespace Algorithm
             specificCostList.Sort();
             specificCostList.Reverse();
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; ++i)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 0; j < size; ++j)
                 {
                     if (specificCostList[i] == specificCost[j])
                     {
                         summaryWeight +=  data.WEIGHT[j];
                         if (summaryWeight <= data.MAX_WEIGHT)
                         {
-                            ind.GENOTYPE[j] = m_random.Next(2);
-                            if (ind.GENOTYPE[j] == 0) summaryWeight -=  data.WEIGHT[j];
+                            individ.GENOTYPE[j] = m_random.Next(2);
+                            if (individ.GENOTYPE[j] == 0) summaryWeight -=  data.WEIGHT[j];
                         }
                         else
                         {
-                            ind.GENOTYPE[j] = 0;
+                            individ.GENOTYPE[j] = 0;
                         }
                         specificCost[j] = -1;
                         break;
                     }
                 }
             }
-            return ind;
+            return individ;
         }
     }
     public class RandomPopulation: IInitialPopulation
