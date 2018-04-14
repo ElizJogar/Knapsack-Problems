@@ -49,9 +49,9 @@ namespace Algorithm
         public Individ Run(AData data)
         {
             var size = data.COST.Length;
-            Individ individ = new Individ(size);
-            int summaryWeight = 0;
-            for (int i = 0; i < size; i++)
+            var individ = new Individ(size);
+            var summaryWeight = 0;
+            for (var i = 0; i < size; ++i)
             {
                 summaryWeight += data.WEIGHT[i];
                 if (summaryWeight <= data.MAX_WEIGHT)
