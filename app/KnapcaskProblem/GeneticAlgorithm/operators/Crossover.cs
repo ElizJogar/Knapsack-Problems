@@ -98,7 +98,7 @@ namespace Algorithm
                         var individ = new Individ(individs[i].SIZE);
                         for (var s = 0; s < individs[i].SIZE; ++s)
                         {
-                            individ.GENOTYPE[s] = m_random.Next(100) > 50 ? individs[j].GENOTYPE[s] : individs[i].GENOTYPE[s];
+                            individ.GENOTYPE[s] = m_random.Next(2) == 1 ? individs[j].GENOTYPE[s] : individs[i].GENOTYPE[s];
                         }
                         population.Add(individ);
                     }
