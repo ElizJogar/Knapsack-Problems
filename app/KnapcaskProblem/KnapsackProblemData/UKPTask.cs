@@ -40,6 +40,14 @@ namespace KnapsackProblem
         {
             return "UKP";
         }
-
+        public int[] GetX()
+        {
+            var x = new int[m_data.COST.Length];
+            for (var i = 0; i < x.Length; ++i)
+            {
+                x[i] = m_indices[i + 1] - m_indices[i];
+            }
+            return x;
+        }
     }
 }

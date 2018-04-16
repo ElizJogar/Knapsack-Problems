@@ -59,12 +59,4 @@ namespace Algorithm
             return individsEx;
         }
     }
-
-    public class RepairOperator : IConstraintProcessing
-    {
-        public List<IndividEx> Run(List<Individ> individs, IData data)
-        {
-            return null;
-        }
-    }
 }

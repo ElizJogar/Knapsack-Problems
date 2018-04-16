@@ -21,7 +21,7 @@ namespace Algorithm
             {
                 var individ = individs[i];
                 var k = m_random.Next(individ.SIZE);
-                if (m_random.Next(100) == 1) individ.GENOTYPE[k] = individs[i].GENOTYPE[k] == 0 ? 1 : 0;
+                if (m_random.Next(100) <= 50) individ.GENOTYPE[k] = individs[i].GENOTYPE[k] == 0 ? 1 : 0;
                 var zeroCount = 0;
                 Array.ForEach(individ.GENOTYPE, gen =>
                 {
@@ -48,7 +48,7 @@ namespace Algorithm
                 var k = m_random.Next(individ.SIZE - 2);
                 var r = m_random.Next(k + 1, individ.SIZE - 1);
 
-                if (m_random.Next(100) == 1)
+                if (m_random.Next(100) <= 50)
                 {
                     for (var j = k; j <= r; ++j)
                     {
@@ -80,7 +80,7 @@ namespace Algorithm
                 var k = m_random.Next(individ.SIZE - 2);
                 var r = m_random.Next(k + 1, individ.SIZE - 1);
 
-                if (m_random.Next(100) == 1)
+                if (m_random.Next(100) <= 50)
                 {
                     for (var j = 0; j <= k; ++j)
                     {
@@ -118,7 +118,7 @@ namespace Algorithm
                 var k = m_random.Next(individs[i].SIZE / 2);
                 var r = m_random.Next(k + 1, individs[i].SIZE);
 
-                if (m_random.Next(100) == 1)
+                if (m_random.Next(100) <= 50)
                 {
                     individ.GENOTYPE[r] = individs[i].GENOTYPE[k];
                     individ.GENOTYPE[k] = individs[i].GENOTYPE[r];

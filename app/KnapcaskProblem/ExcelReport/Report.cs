@@ -44,7 +44,7 @@ namespace ExcelReport
             m_excel = new Excel.Application();
         }
 
-        private string FillFormula(string formula, int count, int number, int startCount, int firstListNumber = 0)
+        private string CreateFormula(string formula, int count, int number, int startCount, int firstListNumber = 0)
         {
             string tmp = formula;
             for (int d = firstListNumber + 1; d < startCount + firstListNumber; d++)
@@ -69,8 +69,8 @@ namespace ExcelReport
             IInitialPopulation[] initialPopulation = { new DanzigAlgorithm(), new RandomPopulation() };
             ICrossover[] crossover = { new SinglePointCrossover(), new TwoPointCrossover(), new UniformCrossover() };
             IMutation[] mutation = { new PointMutation(), new Inversion(), new Translocation(), new Saltation() };
-            var constraintProcessing = new PenaltyFunction();
-            ISelection[] selection = { new BettaTournament(constraintProcessing), new LinearRankSelection(constraintProcessing) };
+            ISelection[] selection = { new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator()),
+                                       new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()) };
             IData[] data = { new UncorrData(15, 100), new WeaklyCorrData(15, 100), new StronglyCorrData(15, 100), new SubsetSumData(15, 100) };
 
             int length = initialPopulation.Length * crossover.Length * mutation.Length * selection.Length;
@@ -138,8 +138,8 @@ namespace ExcelReport
                                 {
                                     number++;
                                     sheet.Cells[1, number] = GetOperatorsStr(initialPopulation[i], crossover[j], mutation[k], selection[g]);
-                                    string max = FillFormula("= MAX(", m_iterationCount + 4, number, m_runsCount);
-                                    string average = FillFormula("= AVERAGE(", m_iterationCount + 5, number, m_runsCount);
+                                    string max = CreateFormula("= MAX(", m_iterationCount + 4, number, m_runsCount);
+                                    string average = CreateFormula("= AVERAGE(", m_iterationCount + 5, number, m_runsCount);
                                     sheet.Cells[2, number].Formula = max;
                                     string sum = "=SUM(";
                                     for (int v = 1; v < m_runsCount; v++)
@@ -152,12 +152,24 @@ namespace ExcelReport
                     sheet.Cells[8, 1] = "Cost: ";
                     sheet.Cells[9, 1] = "Weight: ";
                     sheet.Cells[10, 1] = "Limit: ";
-                    sheet.Cells[10, 2] = taskData.MAX_WEIGHT;
-                    for (int i = 2; i < taskData.COST.Length + 2; i++)
+                    sheet.Cells[10, 2] = data[dataIndex].MAX_WEIGHT;
+                    for (var i = 2; i < data[dataIndex].COST.Length + 2; ++i)
                     {
-                        sheet.Cells[8, i] = taskData.COST[i - 2];
-                        sheet.Cells[9, i] = taskData.WEIGHT[i - 2];
+                        sheet.Cells[8, i] = data[dataIndex].COST[i - 2];
+                        sheet.Cells[9, i] = data[dataIndex].WEIGHT[i - 2];
                     }
+
+                    var ukp = m_task as UKPTask;
+                    if (ukp != null)
+                    {
+                        sheet.Cells[11, 1] = "Max X[i] Count: ";
+                        var x = ukp.GetX();
+                        for (var i = 2; i < x.Length + 2; ++i)
+                        {
+                            sheet.Cells[11, i] = x[i - 2];
+                        }
+                    }
+
                     sheet.Cells[12, 1] = "Results:";
                     sheet.Cells[12, 5] = "count:";
                     sheet.Cells[13, 1] = "max from the max";
@@ -206,7 +218,7 @@ namespace ExcelReport
                             for (int g = 0; g < selection.Length; g++, n++)
                             {
                                 sheet.Cells[1, n] = GetOperatorsStr(initialPopulation[i], crossover[j], mutation[k], selection[g]);
-                                sheet.Cells[2, n].Formula = FillFormula("= MIN(", 21, n, m_instancesCount, 2);
+                                sheet.Cells[2, n].Formula = CreateFormula("= MIN(", 21, n, m_instancesCount, 2);
                                 string avgPr = "=AVERAGE(";
                                 string avgI = "=AVERAGE(";
                                 for (int v = 3; v < m_instancesCount + 2; v++)

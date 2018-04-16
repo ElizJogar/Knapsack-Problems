@@ -13,7 +13,7 @@ namespace KnapsackProblem
         }
         public string Str()
         {
-            return "0-1KP";
+            return "01KP";
         }
     }
 }

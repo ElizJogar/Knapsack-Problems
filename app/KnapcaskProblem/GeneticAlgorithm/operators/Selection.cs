@@ -15,9 +15,12 @@ namespace Algorithm
     {
         protected Random m_random = new Random(System.DateTime.Now.Millisecond);
         protected IConstraintProcessing m_cp;
-        public ASelection(IConstraintProcessing cp)
+        protected IRepairOperator m_op;
+
+        public ASelection(IConstraintProcessing cp, IRepairOperator op)
         {
             m_cp = cp;
+            m_op = op;
         }
         protected List<Individ> ModifyGeneration(List<Individ> individs, IData data)
         {
@@ -71,7 +74,7 @@ namespace Algorithm
 
     public class BettaTournament : ASelection
     {
-        public BettaTournament(IConstraintProcessing cp) : base(cp) { }
+        public BettaTournament(IConstraintProcessing cp, IRepairOperator op) : base(cp, op) { }
 
         public override List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args)
         {
@@ -99,13 +102,13 @@ namespace Algorithm
                 }
                 population.Add(individsEx4Beta.Max());
             }
-            return ModifyGeneration(population, data);
+            return m_op.Run(population, data);
         }
     }
 
     public class LinearRankSelection : ASelection
     {
-        public LinearRankSelection(IConstraintProcessing cp) : base(cp) { }
+        public LinearRankSelection(IConstraintProcessing cp, IRepairOperator op) : base(cp, op) { }
         public override List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args)
         {
             var size = individs.Count;
@@ -144,7 +147,7 @@ namespace Algorithm
                 var index = m_random.Next(0, size);
                 generation.Add(individsEx[index]);
             }
-            return ModifyGeneration(generation, data);
+            return m_op.Run(generation, data);
         }
     }
 }
