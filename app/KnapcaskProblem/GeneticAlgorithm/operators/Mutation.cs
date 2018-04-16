@@ -45,7 +45,7 @@ namespace Algorithm
             {
                 var individ = individs[i];
 
-                var k = m_random.Next(individ.SIZE - 2);
+                var k = m_random.Next(individ.SIZE - 1);
                 var r = m_random.Next(k + 1, individ.SIZE - 1);
 
                 if (m_random.Next(100) <= 50)
@@ -77,8 +77,8 @@ namespace Algorithm
             for (var i = 0; i < s; ++i)
             {
                 var individ = individs[i];
-                var k = m_random.Next(individ.SIZE - 2);
-                var r = m_random.Next(k + 1, individ.SIZE - 1);
+                var k = m_random.Next(individ.SIZE - 1);
+                var r = m_random.Next(k + 1, individ.SIZE);
 
                 if (m_random.Next(100) <= 50)
                 {

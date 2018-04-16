@@ -29,9 +29,8 @@ namespace Algorithm
             var summaryWeight = 0;
             foreach (var pair in specificCosts)
             {
-                summaryWeight += data.WEIGHT[pair.Key];
-                individ.GENOTYPE[pair.Key] = summaryWeight <= data.MAX_WEIGHT ? m_random.Next(2) : 0;
-                if (individ.GENOTYPE[pair.Key] == 0) summaryWeight -= data.WEIGHT[pair.Key];
+                individ.GENOTYPE[pair.Key] = (summaryWeight + data.WEIGHT[pair.Key]) <= data.MAX_WEIGHT ? m_random.Next(2) : 0;
+                if (individ.GENOTYPE[pair.Key] == 1) summaryWeight += data.WEIGHT[pair.Key];
             }
             return individ;
         }
@@ -46,9 +45,8 @@ namespace Algorithm
             var summaryWeight = 0;
             for (var i = 0; i < size; ++i)
             {
-                summaryWeight += data.WEIGHT[i];
-                individ.GENOTYPE[i] = summaryWeight <= data.MAX_WEIGHT ? m_random.Next(2) : 0;
-                if (individ.GENOTYPE[i] == 0) summaryWeight -= data.WEIGHT[i];
+                individ.GENOTYPE[i] = (summaryWeight + data.WEIGHT[i]) <= data.MAX_WEIGHT ? m_random.Next(2) : 0;
+                if (individ.GENOTYPE[i] == 1) summaryWeight += data.WEIGHT[i];
             }
             return individ;
         }

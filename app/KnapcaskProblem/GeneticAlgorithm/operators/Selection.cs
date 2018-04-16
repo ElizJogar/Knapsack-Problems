@@ -64,7 +64,8 @@ namespace Algorithm
             string text = Environment.NewLine + "Generation:";
             for (int i = 0; i < individs.Count; i++)
             {
-                text += individs[i].Str() + " COST: " + Helpers.GetCost(individs[i], data) + " WEIGHT: " + Helpers.GetWeight(individs[i], data) + Environment.NewLine;
+                text += individs[i].Str() + " COST: " + Helpers.GetCost(individs[i], data)
+                    + " WEIGHT: " + Helpers.GetWeight(individs[i], data) + Environment.NewLine;
             }
             Logger.Get().Debug(text);
             return individs;
