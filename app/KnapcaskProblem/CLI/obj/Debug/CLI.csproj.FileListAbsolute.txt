@@ -100,12 +100,10 @@ C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\System.Xml.XPath.
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\ExcelReport.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\ExhaustiveSearchAlgorithm.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\GeneticAlgorithm.dll
-C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\KnapsackProblemData.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\Logger.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\ExcelReport.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\ExhaustiveSearchAlgorithm.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\GeneticAlgorithm.pdb
-C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\KnapsackProblemData.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\Logger.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\obj\Debug\CLI.csprojResolveAssemblyReference.cache
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\obj\Debug\CLI.exe.config
@@ -114,3 +112,5 @@ C:\university\diploma\diplom\app\KnapcaskProblem\CLI\obj\Debug\CLI.csproj.CopyCo
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\obj\Debug\CLI.exe
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\obj\Debug\CLI.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\Mono.Options.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\KnapsackProblem.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\CLI\bin\Debug\KnapsackProblem.pdb

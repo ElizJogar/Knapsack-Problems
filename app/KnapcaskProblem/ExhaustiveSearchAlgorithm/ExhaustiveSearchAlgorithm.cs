@@ -1,12 +1,12 @@
 ﻿using System;
-using KnapsackProblemData;
+using KnapsackProblem;
 
 namespace Algorithm
 {
     public class ExhaustiveSearchAlgorithm
     {
-        private AData m_data;
-        public ExhaustiveSearchAlgorithm (AData data)
+        private IData m_data;
+        public ExhaustiveSearchAlgorithm (IData data)
         {
             m_data = data;
         }

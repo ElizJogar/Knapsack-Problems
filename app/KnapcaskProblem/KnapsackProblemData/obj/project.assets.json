@@ -183,9 +183,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblemData.csproj",
-      "projectName": "KnapsackProblemData",
-      "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblemData.csproj",
+      "projectUniqueName": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblem.csproj",
+      "projectName": "KnapsackProblem",
+      "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblem.csproj",
       "packagesPath": "C:\\Users\\epronina\\.nuget\\packages\\",
       "outputPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\obj\\",
       "projectStyle": "PackageReference",

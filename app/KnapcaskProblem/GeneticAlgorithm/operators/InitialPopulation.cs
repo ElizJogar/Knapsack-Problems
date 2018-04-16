@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using KnapsackProblemData;
+using KnapsackProblem;
 using System.Linq;
 using CustomLogger;
 
@@ -8,13 +8,13 @@ namespace Algorithm
 {
     public interface IInitialPopulation: IOperator
     {
-        Individ Run(AData data);
+        Individ Run(IData data);
     }
 
     public class DanzigAlgorithm: IInitialPopulation
     {
         private Random m_random = new Random(System.DateTime.Now.Millisecond);
-        public Individ Run(AData data)
+        public Individ Run(IData data)
         {
             var size = data.COST.Length;
             var individ = new Individ(size);
@@ -39,7 +39,7 @@ namespace Algorithm
     public class RandomPopulation: IInitialPopulation
     {
         private Random m_random = new Random(System.DateTime.Now.Millisecond);
-        public Individ Run(AData data)
+        public Individ Run(IData data)
         {
             var size = data.COST.Length;
             var individ = new Individ(size);

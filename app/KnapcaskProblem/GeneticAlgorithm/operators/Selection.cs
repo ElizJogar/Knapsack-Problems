@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KnapsackProblemData;
+using KnapsackProblem;
 using CustomLogger;
 
 namespace Algorithm
 {
     public interface ISelection : IOperator
     {
-        List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args);
+        List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args);
     }
 
     public abstract class ASelection : ISelection
     {
         protected Random m_random = new Random(System.DateTime.Now.Millisecond);
-        protected List<Individ> ModifyGeneration(List<Individ> individs, AData data)
+        protected IConstraintProcessing m_cp;
+        public ASelection(IConstraintProcessing cp)
+        {
+            m_cp = cp;
+        }
+        protected List<Individ> ModifyGeneration(List<Individ> individs, IData data)
         {
             Logger.Get().Debug("Called generation modification");
             var permissibleIndivids = new List<Individ>();
@@ -61,16 +66,18 @@ namespace Algorithm
             Logger.Get().Debug(text);
             return individs;
         }
-        public abstract List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args);
+        public abstract List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args);
     }
 
     public class BettaTournament : ASelection
     {
-        public override List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args)
+        public BettaTournament(IConstraintProcessing cp) : base(cp) { }
+
+        public override List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args)
         {
             Logger.Get().Debug("Called " + Convert.ToString(this));
             var beta = (int)args[0];
-            var individsEx = PenaltyFunction.Run(individs, data);
+            var individsEx = m_cp.Run(individs, data);
             List<Individ> population = new List<Individ>();
             for (int j = 0; j < populationCount; j++)
             {
@@ -98,13 +105,14 @@ namespace Algorithm
 
     public class LinearRankSelection : ASelection
     {
-        public override List<Individ> Run(List<Individ> individs, int populationCount, AData data, params object[] args)
+        public LinearRankSelection(IConstraintProcessing cp) : base(cp) { }
+        public override List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args)
         {
             var size = individs.Count;
 
             Logger.Get().Debug("Called " + Convert.ToString(this));
 
-            var individsEx = PenaltyFunction.Run(individs, data);
+            var individsEx = m_cp.Run(individs, data);
             List<Individ> generation = new List<Individ>();
 
             int[] rang = new int[size];
@@ -137,55 +145,6 @@ namespace Algorithm
                 generation.Add(individsEx[index]);
             }
             return ModifyGeneration(generation, data);
-        }
-    }
-
-    class PenaltyFunction
-    {
-        static public List<IndividEx> Run(List<Individ> individs, AData data)
-        {
-            Logger.Get().Debug("Called Algorithm.PenaltyFunction");
-            var individsEx = new List<IndividEx>();
-
-            int averageCost = 0;
-            for (int i = 0; i < individs.Count; i++)
-            {
-                averageCost += Helpers.GetCost(individs[i], data);
-            }
-            averageCost /= individs.Count;
-            double coeffA = 0;
-            double coeffB = 0;
-            int weight = 0;
-            int cost = 0;
-            int minCost = 0;
-
-            for (int i = 0; i < individs.Count; i++)
-            {
-                var individEx = new IndividEx(individs[i].SIZE);
-                individEx.GENOTYPE = individs[i].GENOTYPE;
-
-                cost = Helpers.GetCost(individs[i], data);
-                weight = Helpers.GetWeight(individs[i], data);
-                individEx.WEIGHT = weight;
-                individEx.COST = weight <= data.MAX_WEIGHT ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
-                individsEx.Add(individEx);
-            }
-
-            for (int i = 0; i < individs.Count; i++)
-            {
-                if (individsEx[i].COST == minCost)
-                {
-                    individsEx[i].COST = 0;
-                }
-                else if (individsEx[i].COST <= 0)
-                {
-                    cost = individsEx[i].COST;
-                    coeffA = averageCost / (cost - averageCost);
-                    coeffB = averageCost * cost / (cost - averageCost);
-                    individsEx[i].COST = Convert.ToInt32(coeffA * cost + coeffB);
-                }
-            }
-            return individsEx;
         }
     }
 }

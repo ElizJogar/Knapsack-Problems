@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExhaustiveSearchAlgorithm",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneticAlgorithm", "GeneticAlgorithm\GeneticAlgorithm.csproj", "{8A91849A-3896-4D02-A8F7-7C189F126EFC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnapsackProblemData", "KnapsackProblemData\KnapsackProblemData.csproj", "{E667C6A7-9D0F-42D3-A1D0-9379DCCB64B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KnapsackProblem", "KnapsackProblemData\KnapsackProblem.csproj", "{E667C6A7-9D0F-42D3-A1D0-9379DCCB64B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{1ABDCAB0-1270-4C85-99C6-59DFDD091111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Logger\Logger.csproj", "{1ABDCAB0-1270-4C85-99C6-59DFDD091111}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{86EFBFD0-25BD-44BC-BA3F-C8EBC16372E7}"
 EndProject

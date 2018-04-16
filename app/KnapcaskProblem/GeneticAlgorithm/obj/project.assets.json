@@ -26,14 +26,14 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "KnapsackProblemData/1.0.0": {
+      "KnapsackProblem/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
-          "bin/placeholder/KnapsackProblemData.dll": {}
+          "bin/placeholder/KnapsackProblem.dll": {}
         },
         "runtime": {
-          "bin/placeholder/KnapsackProblemData.dll": {}
+          "bin/placeholder/KnapsackProblem.dll": {}
         }
       },
       "Logger/1.0.0": {
@@ -190,10 +190,10 @@
         "netstandard.library.nuspec"
       ]
     },
-    "KnapsackProblemData/1.0.0": {
+    "KnapsackProblem/1.0.0": {
       "type": "project",
-      "path": "../KnapsackProblemData/KnapsackProblemData.csproj",
-      "msbuildProject": "../KnapsackProblemData/KnapsackProblemData.csproj"
+      "path": "../KnapsackProblemData/KnapsackProblem.csproj",
+      "msbuildProject": "../KnapsackProblemData/KnapsackProblem.csproj"
     },
     "Logger/1.0.0": {
       "type": "project",
@@ -203,7 +203,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "KnapsackProblemData >= 1.0.0",
+      "KnapsackProblem >= 1.0.0",
       "Logger >= 1.0.0",
       "NETStandard.Library >= 2.0.1"
     ]
@@ -238,8 +238,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblemData.csproj": {
-              "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblemData.csproj"
+            "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblem.csproj": {
+              "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\KnapsackProblemData\\KnapsackProblem.csproj"
             },
             "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\Logger\\Logger.csproj": {
               "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\Logger\\Logger.csproj"

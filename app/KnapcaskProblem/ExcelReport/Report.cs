@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
-
-using KnapsackProblemData;
+using KnapsackProblem;
 using Algorithm;
 
 namespace ExcelReport
@@ -11,7 +10,7 @@ namespace ExcelReport
     public class DataAnalysisReport
     {
         protected Excel.Application m_excel;
-        private AData m_data;
+        private ITask m_task;
         private List<Individ> m_individs;
         private int m_iterationCount;
         private int m_populationCount;
@@ -28,17 +27,19 @@ namespace ExcelReport
         {
             return m_dir;
         }
-        public DataAnalysisReport(int iterationCount, int populationCount, int betta, int startCount, int instancesCount)
+        public DataAnalysisReport(ITask task = null, int iterationCount = 1, int populationCount = 1, int betta = 1, int startCount = 1, int instancesCount = 1)
         {
-            m_iterationCount = iterationCount > 0 ? iterationCount : 1;
-            m_populationCount = populationCount > 0 ? populationCount : 1;
-            m_betta = betta > 0 ? betta : 1;
-            m_runsCount = startCount > 0 ? startCount : 1;
-            m_instancesCount = instancesCount > 0 ? instancesCount : 1;
+            m_task = task;
+            m_iterationCount = iterationCount;
+            m_populationCount = populationCount;
+            m_betta = betta;
+            m_runsCount = startCount;
+            m_instancesCount = instancesCount;
             m_individs = new List<Individ>();
             DateTime localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\reports_" + localDate.ToShortDateString() + "-" + localDate.Hour + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
+            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\reports_" + task.Str() + "_" 
+                + localDate.ToShortDateString() + "-" + localDate.Hour + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
             m_dir.Create();
             m_excel = new Excel.Application();
         }
@@ -68,15 +69,15 @@ namespace ExcelReport
             IInitialPopulation[] initialPopulation = { new DanzigAlgorithm(), new RandomPopulation() };
             ICrossover[] crossover = { new SinglePointCrossover(), new TwoPointCrossover(), new UniformCrossover() };
             IMutation[] mutation = { new PointMutation(), new Inversion(), new Translocation(), new Saltation() };
-            ISelection[] selection = { new BettaTournament(), new LinearRankSelection() };
-            AData[] data = { new UncorrData(15, 100), new WeaklyCorrData(15, 100), new StronglyCorrData(15, 100), new SubsetSumData(15, 100) };
+            var constraintProcessing = new PenaltyFunction();
+            ISelection[] selection = { new BettaTournament(constraintProcessing), new LinearRankSelection(constraintProcessing) };
+            IData[] data = { new UncorrData(15, 100), new WeaklyCorrData(15, 100), new StronglyCorrData(15, 100), new SubsetSumData(15, 100) };
 
             int length = initialPopulation.Length * crossover.Length * mutation.Length * selection.Length;
             for (int dataIndex = 0; dataIndex < 1; ++dataIndex)
             {
                 Excel.Workbook workbook;
                 Excel.Worksheet sheet;
-                m_data = data[dataIndex];
 
                 m_excel.SheetsInNewWorkbook = 2;
                 m_excel.Workbooks.Add(Type.Missing);
@@ -84,9 +85,8 @@ namespace ExcelReport
                 summaryWorkbook.Saved = true;
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
-                    m_data.Fill();
-
-                    int optimum = new ExhaustiveSearchAlgorithm(m_data).Run();
+                    var taskData = m_task.Create(data[dataIndex]);
+                    int optimum = new ExhaustiveSearchAlgorithm(taskData).Run();
 
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
@@ -109,7 +109,7 @@ namespace ExcelReport
                                     for (int g = 0; g < selection.Length; g++)
                                     {
                                         ++count;
-                                        var alg = new GeneticAlgorithm(m_data, initialPopulation[i], crossover[j], mutation[k], selection[g]);
+                                        var alg = new GeneticAlgorithm(taskData, initialPopulation[i], crossover[j], mutation[k], selection[g]);
 
                                         m_individs = alg.Init(m_populationCount);
                                         for (int x = 0; x < m_iterationCount; x++)
@@ -152,11 +152,11 @@ namespace ExcelReport
                     sheet.Cells[8, 1] = "Cost: ";
                     sheet.Cells[9, 1] = "Weight: ";
                     sheet.Cells[10, 1] = "Limit: ";
-                    sheet.Cells[10, 2] = m_data.MAX_WEIGHT;
-                    for (int i = 2; i < m_data.COST.Length + 2; i++)
+                    sheet.Cells[10, 2] = taskData.MAX_WEIGHT;
+                    for (int i = 2; i < taskData.COST.Length + 2; i++)
                     {
-                        sheet.Cells[8, i] = m_data.COST[i - 2];
-                        sheet.Cells[9, i] = m_data.WEIGHT[i - 2];
+                        sheet.Cells[8, i] = taskData.COST[i - 2];
+                        sheet.Cells[9, i] = taskData.WEIGHT[i - 2];
                     }
                     sheet.Cells[12, 1] = "Results:";
                     sheet.Cells[12, 5] = "count:";
@@ -174,7 +174,7 @@ namespace ExcelReport
                         sheet.Cells[12 + j, 5] = "= COUNTIF(" + m_vsS[1] + i + ":" + m_vsS[length] + i + "," + m_vsS[3] + (12 + j) + ")";
                     }
                     workbook.Saved = true;
-                    workbook.SaveAs(m_dir + @"\" + m_data.Str() + (instIndex + 1) + ".xlsx");
+                    workbook.SaveAs(m_dir + @"\" + taskData.Str() + (instIndex + 1) + ".xlsx");
                     (sheet as Excel.Worksheet).Copy(summaryWorkbook.Worksheets[instIndex + 1]);
 
                     workbook.Close();
@@ -219,7 +219,7 @@ namespace ExcelReport
                                 sheet.Cells[3, n].Formula = avgPr;
                                 sheet.Cells[4, n].Formula = avgI;
                             }
-                summaryWorkbook.SaveAs(m_dir + @"\" + m_data.Str() + "_summary.xlsx");
+                summaryWorkbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + "_summary.xlsx");
                 summaryWorkbook.Close();
             }
             m_excel.Quit();

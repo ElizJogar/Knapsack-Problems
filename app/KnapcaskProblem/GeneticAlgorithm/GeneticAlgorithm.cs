@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
-using KnapsackProblemData;
+using KnapsackProblem;
 using CustomLogger;
 
 namespace Algorithm
 {
     public class GeneticAlgorithm
 {
-        private AData m_data = null;
+        private IData m_data = null;
         private IInitialPopulation m_initialPopulation = null;
         private ICrossover m_crossover = null;
         private IMutation m_mutation = null;
         private ISelection m_selection = null;
         private Individ m_winner = null;
 
-       public GeneticAlgorithm(AData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
+       public GeneticAlgorithm(IData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
         {
             m_data = data;
             m_initialPopulation = population;

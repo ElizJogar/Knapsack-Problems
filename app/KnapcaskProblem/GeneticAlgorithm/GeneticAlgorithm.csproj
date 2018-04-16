@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KnapsackProblemData\KnapsackProblemData.csproj" />
+    <ProjectReference Include="..\KnapsackProblemData\KnapsackProblem.csproj" />
     <ProjectReference Include="..\Logger\Logger.csproj" />
   </ItemGroup>
 

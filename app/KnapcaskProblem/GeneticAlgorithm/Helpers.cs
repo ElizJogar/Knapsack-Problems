@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KnapsackProblemData;
+using KnapsackProblem;
 
 namespace Algorithm
 { 
     public class Helpers
     {
-        public static int GetCost(Individ individ, AData data)
+        public static int GetCost(Individ individ, IData data)
         {
             int summaryCost = 0;
             for (int i = 0; i < individ.SIZE; ++i)
@@ -16,7 +16,7 @@ namespace Algorithm
             return summaryCost;
         }
 
-        public static int GetWeight(Individ individ, AData data)
+        public static int GetWeight(Individ individ, IData data)
         {
             int summaryWeight = 0;
             for (int i = 0; i < individ.SIZE; ++i)
@@ -26,7 +26,7 @@ namespace Algorithm
             return summaryWeight;
         }
 
-        public static int GetMaxCost(List<Individ> individs, AData data)
+        public static int GetMaxCost(List<Individ> individs, IData data)
         {
             int maxCost = GetCost(individs.First(), data);
 
@@ -38,7 +38,7 @@ namespace Algorithm
             return maxCost;
         }
 
-        public static int GetMaxCost(ref Individ individ, List<Individ> individs, AData data)
+        public static int GetMaxCost(ref Individ individ, List<Individ> individs, IData data)
         {
             individ = individs.First();
             int maxCost = GetCost(individ, data);
@@ -55,7 +55,7 @@ namespace Algorithm
             return maxCost;
 
         }
-        public static int GetMinCost(List<Individ> individs, AData data)
+        public static int GetMinCost(List<Individ> individs, IData data)
         {
             int minCost = GetCost(individs.First(), data);
 

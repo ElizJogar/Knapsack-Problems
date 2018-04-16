@@ -9,7 +9,7 @@
     ".NETStandard,Version=v2.0/": {
       "GeneticAlgorithm/1.0.0": {
         "dependencies": {
-          "KnapsackProblemData": "1.0.0",
+          "KnapsackProblem": "1.0.0",
           "Logger": "1.0.0",
           "NETStandard.Library": "2.0.1"
         },
@@ -23,9 +23,9 @@
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
       },
-      "KnapsackProblemData/1.0.0": {
+      "KnapsackProblem/1.0.0": {
         "runtime": {
-          "KnapsackProblemData.dll": {}
+          "KnapsackProblem.dll": {}
         }
       },
       "Logger/1.0.0": {
@@ -55,7 +55,7 @@
       "path": "netstandard.library/2.0.1",
       "hashPath": "netstandard.library.2.0.1.nupkg.sha512"
     },
-    "KnapsackProblemData/1.0.0": {
+    "KnapsackProblem/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

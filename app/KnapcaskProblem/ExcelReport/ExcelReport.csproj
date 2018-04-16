@@ -66,9 +66,9 @@
       <Project>{8a91849a-3896-4d02-a8f7-7c189f126efc}</Project>
       <Name>GeneticAlgorithm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\KnapsackProblemData\KnapsackProblemData.csproj">
+    <ProjectReference Include="..\KnapsackProblemData\KnapsackProblem.csproj">
       <Project>{e667c6a7-9d0f-42d3-a1d0-9379dccb64b2}</Project>
-      <Name>KnapsackProblemData</Name>
+      <Name>KnapsackProblem</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logger\Logger.csproj">
       <Project>{1abdcab0-1270-4c85-99c6-59dfdd091111}</Project>
