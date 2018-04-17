@@ -9,17 +9,31 @@ namespace UnitTests
     {
         private int GOLD = 175;
         private int OFFSET = 10;
+
         [TestMethod]
         public void CheckGAWithParams()
         {
-            var data = new KPTask().Create(new TestData(15, 100));
-            var alg = new GeneticAlgorithm(data,
+                var data = new KPTask().Create(new TestData(15, 100));
+                var alg = new GeneticAlgorithm(data,
                 new RandomPopulation(),
                 new SinglePointCrossover(),
                 new PointMutation(),
                 new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
-            var result = alg.Run(30, 15);
-            Assert.IsTrue(GOLD - OFFSET <= result);
+                Assert.IsTrue(GOLD - OFFSET <= alg.Run(30, 15));
+        }
+    }
+
+    [TestClass]
+    public class InitialPopulationTest
+    {
+        [TestMethod]
+        public void CheckDanzigAlgorithm()
+        {
+            var alg = new DanzigAlgorithm();
+            var data  = new KPTask().Create(new TestData(15, 100));
+            var individ = alg.Run(data);
+
+            Assert.AreEqual(individ.SIZE, data.COST.Length);
         }
     }
 }
