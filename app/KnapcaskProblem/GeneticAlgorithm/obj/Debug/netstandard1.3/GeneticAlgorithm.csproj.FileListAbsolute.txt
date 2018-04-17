@@ -1,0 +1,3 @@
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard1.3\GeneticAlgorithm.csproj.CoreCompileInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard1.3\GeneticAlgorithm.AssemblyInfoInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\GeneticAlgorithm\obj\Debug\netstandard1.3\GeneticAlgorithm.AssemblyInfo.cs

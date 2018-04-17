@@ -32,8 +32,10 @@ namespace Algorithm
 
             for (var i = 0; i < individs.Count; ++i)
             {
-                var individEx = new IndividEx(individs[i].SIZE);
-                individEx.GENOTYPE = individs[i].GENOTYPE;
+                var individEx = new IndividEx(individs[i].SIZE)
+                {
+                    GENOTYPE = individs[i].GENOTYPE
+                };
 
                 cost = Helpers.GetCost(individs[i], data);
                 weight = Helpers.GetWeight(individs[i], data);

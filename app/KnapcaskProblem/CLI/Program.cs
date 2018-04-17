@@ -21,9 +21,9 @@ namespace CLI
             parser.AddArgument("r|runs=", "Starts count for each test", r => runsCount = Convert.ToInt32(r));
             parser.AddArgument("inst|instances=", "Instances count for each data type", inst => instancesCount = Convert.ToInt32(inst));
 
-            var report = new DataAnalysisReport(new UKPTask(), iterationCount, populationCount, betta, runsCount, instancesCount);
+            var report = new DataAnalysisReport(new KPTask(), iterationCount, populationCount, betta, runsCount, instancesCount);
             report.Create();
-            Console.WriteLine("Report created successfully! You can see reports here: {0}", report.getDir());
+            Console.WriteLine("Report created successfully! You can see reports here: {0}", report.GetDir());
         }
     }
 }

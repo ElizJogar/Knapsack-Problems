@@ -12,6 +12,19 @@ namespace Algorithm
         private IMutation m_mutation = null;
         private ISelection m_selection = null;
         private Individ m_winner = null;
+        public GeneticAlgorithm(IData data)
+        {
+            m_data = data;
+            m_initialPopulation = new DanzigAlgorithm();
+            m_crossover = new SinglePointCrossover();
+            m_mutation = new PointMutation();
+            m_selection = new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());
+
+            // Adding log info
+            Logger.Get().Debug("Genetic algorithm created.");
+            Logger.Get().Debug("COST: " + string.Join(", ", data.COST));
+            Logger.Get().Debug("WEIGHT: " + string.Join(", ", data.WEIGHT));
+        }
 
        public GeneticAlgorithm(IData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
         {
@@ -74,7 +87,7 @@ namespace Algorithm
             }
             return Run(populationCount, ref individs, args);
         }
-        public Individ getWinner()
+        public Individ GetWinner()
         {
             return m_winner;
         }

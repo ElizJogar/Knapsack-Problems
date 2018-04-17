@@ -88,11 +88,11 @@ namespace KnapsackProblem
         public WeaklyCorrData(int size, int range) : base(size, range) { }
         public WeaklyCorrData(int range, int[] cost, int[] weight, int maxWeight) : base(range, cost, weight, maxWeight) { }
 
-        private int getCost(int weight)
+        private int GetCost(int weight)
         {
             int cost = m_random.Next((weight - RANGE / 10), (weight + RANGE / 10) + 1);
             if (cost < 1)
-                cost = getCost(weight);
+                cost = GetCost(weight);
             return cost;
         }
 
@@ -102,7 +102,7 @@ namespace KnapsackProblem
             for (int i = 0; i < WEIGHT.Length; i++)
             {
                 WEIGHT[i] = m_random.Next(1, RANGE + 1);
-                COST[i] = getCost(WEIGHT[i]);
+                COST[i] = GetCost(WEIGHT[i]);
                 summaryWeight += WEIGHT[i];
             }
             MAX_WEIGHT = (int)(summaryWeight * 0.8);

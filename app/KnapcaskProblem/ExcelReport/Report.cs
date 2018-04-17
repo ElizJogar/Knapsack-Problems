@@ -23,7 +23,7 @@ namespace ExcelReport
                               "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
                               "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
                               "BT","BU"};
-        public DirectoryInfo getDir()
+        public DirectoryInfo GetDir()
         {
             return m_dir;
         }
@@ -53,7 +53,7 @@ namespace ExcelReport
             return tmp;
         }
 
-        private string getOperatorName(IOperator op)
+        private string GetOperatorName(IOperator op)
         {
             string res = Convert.ToString(op);
             return res.Replace("Algorithm.", "");
@@ -61,7 +61,7 @@ namespace ExcelReport
         private string GetOperatorsStr(params IOperator[] ops)
         {
             var str = "";
-            foreach (var op in ops) str += getOperatorName(op) + Environment.NewLine;
+            foreach (var op in ops) str += GetOperatorName(op) + Environment.NewLine;
             return str;
         }
         public void Create()

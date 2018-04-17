@@ -1,0 +1,4 @@
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard1.3\Logger.csprojResolveAssemblyReference.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard1.3\Logger.csproj.CoreCompileInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard1.3\Logger.AssemblyInfoInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\Logger\obj\Debug\netstandard1.3\Logger.AssemblyInfo.cs

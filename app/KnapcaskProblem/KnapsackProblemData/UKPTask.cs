@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace KnapsackProblem
 {
@@ -15,8 +14,8 @@ namespace KnapsackProblem
 
             var totalCount = 0;
 
-            m_indices = new List<int>();
-            m_indices.Add(0);
+            m_indices = new List<int> { 0 };
+  
             Array.ForEach(m_data.WEIGHT, w =>
             { 
                 totalCount += m_data.MAX_WEIGHT / w;
