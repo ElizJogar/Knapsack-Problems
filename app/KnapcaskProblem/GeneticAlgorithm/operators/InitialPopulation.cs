@@ -11,7 +11,7 @@ namespace Algorithm
         Individ Run(IData data);
     }
 
-    public class DanzigAlgorithm: IInitialPopulation
+    public class DantzigAlgorithm: IInitialPopulation
     {
         private Random m_random = new Random(System.DateTime.Now.Millisecond);
         public Individ Run(IData data)

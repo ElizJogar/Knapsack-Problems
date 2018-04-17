@@ -15,7 +15,7 @@ namespace Algorithm
         public GeneticAlgorithm(IData data)
         {
             m_data = data;
-            m_initialPopulation = new DanzigAlgorithm();
+            m_initialPopulation = new DantzigAlgorithm();
             m_crossover = new SinglePointCrossover();
             m_mutation = new PointMutation();
             m_selection = new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());

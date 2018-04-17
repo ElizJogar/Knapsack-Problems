@@ -66,7 +66,7 @@ namespace ExcelReport
         }
         public void Create()
         {
-            IInitialPopulation[] initialPopulation = { new DanzigAlgorithm(), new RandomPopulation() };
+            IInitialPopulation[] initialPopulation = { new DantzigAlgorithm(), new RandomPopulation() };
             ICrossover[] crossover = { new SinglePointCrossover(), new TwoPointCrossover(), new UniformCrossover() };
             IMutation[] mutation = { new PointMutation(), new Inversion(), new Translocation(), new Saltation() };
             ISelection[] selection = { new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator()),

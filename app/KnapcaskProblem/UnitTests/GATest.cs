@@ -5,7 +5,7 @@ using Algorithm;
 using KnapsackProblem;
 namespace UnitTests
 {
-    [TestClass]
+   [TestClass]
     public class GATest
     {
         [TestMethod]
@@ -26,7 +26,7 @@ namespace UnitTests
         public void CheckOperators()
         {
             //check Danzig algorithm
-            IInitialPopulation alg = new DanzigAlgorithm();
+            IInitialPopulation alg = new DantzigAlgorithm();
             var data = new KPTask().Create(new TestData());
             var parents = new List<Individ>();
             parents.Add(alg.Run(data));
@@ -103,6 +103,7 @@ namespace UnitTests
             Assert.AreEqual(individs.Count, goldCount);
             foreach (var individ in individs)
             {
+                // Individ contains not only zeros
                 Assert.IsTrue(Helpers.GetWeight(individ, data) > 0);
             }
         }
