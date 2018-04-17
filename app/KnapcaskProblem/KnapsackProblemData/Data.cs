@@ -21,6 +21,8 @@ namespace KnapsackProblem
         public int MAX_WEIGHT { get; protected set; }
         public int RANGE { get; protected set; }
 
+        public AData() { }
+
         public AData(int range, int[] cost, int[] weight, int maxWeight)
         {
             RANGE = range;
@@ -44,8 +46,6 @@ namespace KnapsackProblem
     }
     public class TestData : AData //204
     {
-        public TestData(int size, int range) : base(size, range) { }
-        public TestData(int range, int[] cost, int[] weight, int maxWeight) : base(range, cost, weight, maxWeight) { }
         public override void Fill()
         {
             int[] tmpCost = { 21, 19, 27, 3, 24, 30, 6, 13, 2, 21, 26, 26, 24, 1, 10 };
@@ -64,7 +64,8 @@ namespace KnapsackProblem
     public class UncorrData : AData
     {
         public UncorrData(int size, int range) : base(size, range) { }
-        public UncorrData(int range, int[] cost, int[] weight, int maxWeight) : base(range, cost, weight, maxWeight) { }
+        public UncorrData(int range, int[] cost, int[] weight, int maxWeight) 
+            : base(range, cost, weight, maxWeight) { }
         public override void Fill()
         {
             int summaryWeight = 0;
@@ -86,7 +87,8 @@ namespace KnapsackProblem
     public class WeaklyCorrData : AData
     {
         public WeaklyCorrData(int size, int range) : base(size, range) { }
-        public WeaklyCorrData(int range, int[] cost, int[] weight, int maxWeight) : base(range, cost, weight, maxWeight) { }
+        public WeaklyCorrData(int range, int[] cost, int[] weight, int maxWeight) 
+            : base(range, cost, weight, maxWeight) { }
 
         private int GetCost(int weight)
         {
@@ -117,7 +119,8 @@ namespace KnapsackProblem
     public class StronglyCorrData : AData
     {
         public StronglyCorrData(int size, int range) : base(size, range) { }
-        public StronglyCorrData(int range, int[] cost, int[] weight, int maxWeight) : base(range, cost, weight, maxWeight) { }
+        public StronglyCorrData(int range, int[] cost, int[] weight, int maxWeight)
+            : base(range, cost, weight, maxWeight) { }
         public override void Fill()
         {
             int summaryWeight = 0;
@@ -139,7 +142,8 @@ namespace KnapsackProblem
     public class SubsetSumData : AData
     {
         public SubsetSumData(int size, int range) : base(size, range) { }
-        public SubsetSumData(int range, int[] cost, int[] weight, int maxWeight) : base(range, cost, weight, maxWeight) { }
+        public SubsetSumData(int range, int[] cost, int[] weight, int maxWeight)
+            : base(range, cost, weight, maxWeight) { }
         public override void Fill()
         {
             int summaryWeight = 0;

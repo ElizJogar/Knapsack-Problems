@@ -7,11 +7,11 @@ namespace UnitTests
     [TestClass]
     public class ESATest
     {
-        private int GOLD = 175;
         [TestMethod]
         public void CheckESA()
         {
-            var data = new KPTask().Create(new TestData(15, 100));
+            const int GOLD = 175;
+            var data = new KPTask().Create(new TestData());
             var alg = new ExhaustiveSearchAlgorithm(data);
             Assert.AreEqual(GOLD, alg.Run());
         }
