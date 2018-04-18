@@ -27,7 +27,6 @@ namespace UnitTests
 
             while(gen.Increment())
             {
-                var val = gen.ToInt();
                 Assert.AreEqual(gen.ToInt(), ++gold);
             }
         }

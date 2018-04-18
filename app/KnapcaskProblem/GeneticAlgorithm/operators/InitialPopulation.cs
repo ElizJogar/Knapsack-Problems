@@ -32,7 +32,7 @@ namespace Algorithm
                 var gen = individ.GetGen(pair.Key);
                 for(var i = 0; i < gen.Size(); ++i)
                 {
-                    gen.SetBit(i, Convert.ToBoolean(m_random.Next(2)));
+                    gen.SetBit(i, m_random.Next(2) == 1);
                     if (gen.GetBit(i) && weight + gen.GetWeight() > data.Capacity)
                     {
                         gen.SetBit(i, false);
@@ -56,7 +56,7 @@ namespace Algorithm
 
             for (var i = 0; i < size; ++i)
             {
-                individ.SetBit(i, Convert.ToBoolean(m_random.Next(2)));
+                individ.SetBit(i, m_random.Next(2) == 1);
                 if (individ.GetBit(i) && individ.GetWeight() > data.Capacity)
                 {
                     individ.SetBit(i, false);
