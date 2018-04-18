@@ -13,7 +13,7 @@ namespace Algorithm
 
     public abstract class ASelection : ISelection
     {
-        protected Random m_random = new Random(System.DateTime.Now.Millisecond);
+        protected Random m_random = new Random(DateTime.Now.Millisecond);
         protected IConstraintProcessing m_cp;
         protected IRepairOperator m_op;
 
@@ -21,54 +21,6 @@ namespace Algorithm
         {
             m_cp = cp;
             m_op = op;
-        }
-        protected List<Individ> ModifyGeneration(List<Individ> individs, IData data)
-        {
-            Logger.Get().Debug("Called generation modification");
-            var permissibleIndivids = new List<Individ>();
-
-            individs.RemoveAll(individ =>
-            {
-                if (Helpers.GetWeight(individ, data) > data.CAPACITY)
-                {
-                    permissibleIndivids.Add(individ);
-                    return true;
-                }
-                return false;
-            });
- 
-            foreach (var individ in permissibleIndivids)
-            {
-                var dictionary = new Dictionary<int, double>();
-                for (int i = 0; i < individ.SIZE; ++i)
-                {
-                    if (individ.GENOTYPE[i] == 1)
-                    {
-                        dictionary.Add(i, (double)data.COST[i] / data.WEIGHT[i]);
-                    }
-                }
-                dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-                var weight = Helpers.GetWeight(individ, data);
-                while (weight > data.CAPACITY)
-                {
-                    foreach (var item in dictionary)
-                    {
-                        if (weight <= data.CAPACITY) break;
-
-                        individ.GENOTYPE[item.Key] = 0;
-                        weight -= data.WEIGHT[item.Key];
-                    }
-                }
-            }
-            individs.AddRange(permissibleIndivids);
-            string text = Environment.NewLine + "Generation:";
-            for (int i = 0; i < individs.Count; i++)
-            {
-                text += individs[i].Str() + " COST: " + Helpers.GetCost(individs[i], data)
-                    + " WEIGHT: " + Helpers.GetWeight(individs[i], data) + Environment.NewLine;
-            }
-            Logger.Get().Debug(text);
-            return individs;
         }
         public abstract List<Individ> Run(List<Individ> individs, int populationCount, IData data, params object[] args);
     }
@@ -81,27 +33,27 @@ namespace Algorithm
         {
             Logger.Get().Debug("Called " + Convert.ToString(this));
             var beta = (int)args[0];
-            var individsEx = m_cp.Run(individs, data);
+            var customIndivids = m_cp.Run(individs, data);
             List<Individ> population = new List<Individ>();
             for (int j = 0; j < populationCount; j++)
             {
-                var individsEx4Beta = new List<IndividEx>();
+                var individs4Beta = new List<CustomIndivid>();
                 var index = new List<int>();
-                while (individsEx4Beta.Count != beta)
+                while (individs4Beta.Count != beta)
                 {
-                    for (int i = 0; i < individsEx.Count; ++i)
+                    for (int i = 0; i < customIndivids.Count; ++i)
                     {
-                        if (individsEx4Beta.Count >= beta) break;
+                        if (individs4Beta.Count >= beta) break;
 
                         int randomNumber = m_random.Next(100);
                         if (randomNumber < 50 && !index.Contains(i))
                         {  
-                            individsEx4Beta.Add(individsEx[i]);
+                            individs4Beta.Add(customIndivids[i]);
                             index.Add(i);
                         }
                     }
                 }
-                population.Add(individsEx4Beta.Max());
+                population.Add(individs4Beta.Max().Original());
             }
             return m_op.Run(population, data);
         }
@@ -116,7 +68,7 @@ namespace Algorithm
 
             Logger.Get().Debug("Called " + Convert.ToString(this));
 
-            var individsEx = m_cp.Run(individs, data);
+            var customIndivids = m_cp.Run(individs, data);
             List<Individ> generation = new List<Individ>();
 
             int[] rang = new int[size];
@@ -125,7 +77,7 @@ namespace Algorithm
             nCopy[size - 1] = a > 2 ? 2 : a;
             nCopy[0] = 2 - nCopy[size - 1];
 
-            individsEx.Sort();
+            customIndivids.Sort();
 
             for (int i = 0; i < size; ++i)
             {
@@ -133,12 +85,12 @@ namespace Algorithm
 
                 rang[i] = i + 1;
                 nCopy[i] = nCopy[0] + (nCopy[size - 1] - nCopy[0]) * (rang[i] - 1) / (size - 1);
-                if (nCopy[i] >= 1 && !generation.Contains(individsEx[i]))
+                if (nCopy[i] >= 1 && !generation.Contains(customIndivids[i].Original()))
                 {
                     var copies = 0;
                     while (copies++ < (int)nCopy[i] && generation.Count < populationCount)
                     {
-                        generation.Add(individsEx[i]);
+                        generation.Add(customIndivids[i].Original());
                     }
                 }
             }
@@ -146,7 +98,7 @@ namespace Algorithm
             while (generation.Count < populationCount)
             {
                 var index = m_random.Next(0, size);
-                generation.Add(individsEx[index]);
+                generation.Add(customIndivids[index].Original());
             }
             return m_op.Run(generation, data);
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using KnapsackProblem;
 using CustomLogger;
 
@@ -22,8 +23,8 @@ namespace Algorithm
 
             // Adding log info
             Logger.Get().Debug("Genetic algorithm created.");
-            Logger.Get().Debug("COST: " + string.Join(", ", data.COST));
-            Logger.Get().Debug("WEIGHT: " + string.Join(", ", data.WEIGHT));
+            Logger.Get().Debug("Cost: " + string.Join(", ", data.Cost));
+            Logger.Get().Debug("Weight: " + string.Join(", ", data.Weight));
         }
 
        public GeneticAlgorithm(IData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
@@ -36,8 +37,8 @@ namespace Algorithm
 
             // Adding log info
             Logger.Get().Debug("Genetic algorithm created.");
-            Logger.Get().Debug("COST: " + string.Join(", ", data.COST));
-            Logger.Get().Debug("WEIGHT: " + string.Join(", ", data.WEIGHT));            
+            Logger.Get().Debug("Cost: " + string.Join(", ", data.Cost));
+            Logger.Get().Debug("Weight: " + string.Join(", ", data.Weight));            
         }
    
         public List<Individ> Init(int n)
@@ -69,16 +70,17 @@ namespace Algorithm
             return population;
         }
        
-        public int Run(int populationCount, ref List<Individ> individs, params object[] args)
+        public long Run(int populationCount, ref List<Individ> individs, params object[] args)
         {
             individs = m_crossover.Run(individs);
             individs = m_mutation.Run(individs);
             individs = m_selection.Run(individs, populationCount, m_data, args);
 
-            return Helpers.GetMaxCost(ref m_winner, individs, m_data);
+            m_winner = individs.Max();
+            return m_winner.GetCost();
         }
 
-        public int Run(int iterationCount, int populationCount, params object[] args)
+        public long Run(int iterationCount, int populationCount, params object[] args)
         {
             var individs = Init(populationCount);
             for(var i = 0; i < iterationCount - 1; ++i)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KnapsackProblem
 {
@@ -22,44 +23,50 @@ namespace KnapsackProblem
     {
         void Fill();
         string Str();
-        int[] COST { get; }
-        int[] WEIGHT { get; }
-        int CAPACITY { get; }
-        Range RANGE { get; }
+        long[] Cost { get; }
+        long[] Weight { get; }
+        long Capacity { get; }
+        Range Range { get; }
+        int[] ItemMaxCounts { get; set; }
     }
 
     public abstract class AData : IData
     {
         protected Random m_random;
 
-        public int[] COST { get; protected set; }
-        public int[] WEIGHT { get; protected set; }
-        public int CAPACITY { get; protected set; }
-        public Range RANGE { get; protected set; }
+        public long[] Cost { get; protected set; }
+        public long[] Weight { get; protected set; }
+        public int[] ItemMaxCounts { get; set; }
+        public long Capacity { get; protected set; }
+        public Range Range { get; protected set; }
 
-        public AData() { }
+        public AData(int size)
+        {
+            ItemMaxCounts = new int[size];
+        }
 
         public AData(int size, Range range)
         {
-            RANGE = range;
-            COST = new int[size];
-            WEIGHT = new int[size];
-            m_random = new Random(System.DateTime.Now.Millisecond);
+            Range = range;
+            Cost = new long[size];
+            Weight = new long[size];
+            ItemMaxCounts = new int[size];
+            m_random = new Random(DateTime.Now.Millisecond);
         }
 
-        public AData(Range range, int[] cost, int[] weight, int maxWeight)
+        public AData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
         {
-            RANGE = range;
-            COST = cost;
-            WEIGHT = weight;
-            CAPACITY = maxWeight;
-            m_random = new Random(System.DateTime.Now.Millisecond);
+            Range = range;
+            Cost = cost;
+            Weight = weight;
+            Capacity = maxWeight;
+            ItemMaxCounts = itemMaxCounts ?? (new int[cost.Length]);
+            m_random = new Random(DateTime.Now.Millisecond);
         }
-        public void FillCapacity(int maxWeight)
+        protected void FillCapacity(long maxWeight)
         {
-            while (CAPACITY < maxWeight) CAPACITY = m_random.Next(10000, 100001);
+            while (Capacity < maxWeight) Capacity = m_random.Next(10000, 100001);
         }
-
         public abstract void Fill();
 
         public abstract string Str();
@@ -68,16 +75,16 @@ namespace KnapsackProblem
     public class UncorrData : AData
     {
         public UncorrData(int size, Range range) : base(size, range) { }
-        public UncorrData(Range range, int[] cost, int[] weight, int maxWeight)
-            : base(range, cost, weight, maxWeight) { }
+        public UncorrData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
+            : base(range, cost, weight, maxWeight, itemMaxCounts) { }
         public override void Fill()
         {
-            var maxWeight = 0;
-            for (int i = 0; i < WEIGHT.Length; i++)
+            long maxWeight = 0;
+            for (int i = 0; i < Weight.Length; i++)
             {
-                WEIGHT[i] = m_random.Next(RANGE.First, RANGE.Second + 1);
-                COST[i] = m_random.Next(RANGE.First / 10, RANGE.Second + 1);
-                if (maxWeight < WEIGHT[i]) maxWeight = WEIGHT[i];
+                Weight[i] = m_random.Next(Range.First, Range.Second + 1);
+                Cost[i] = m_random.Next(Range.First / 10, Range.Second + 1);
+                if (maxWeight < Weight[i]) maxWeight = Weight[i];
             }
             FillCapacity(maxWeight);
         }
@@ -91,24 +98,24 @@ namespace KnapsackProblem
     public class WeaklyCorrData : AData
     {
         public WeaklyCorrData(int size, Range range) : base(size, range) { }
-        public WeaklyCorrData(Range range, int[] cost, int[] weight, int maxWeight)
-            : base(range, cost, weight, maxWeight) { }
+        public WeaklyCorrData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
+            : base(range, cost, weight, maxWeight, itemMaxCounts) { }
 
-        private int GetCost(int weight)
+        private long GetCost(long weight)
         {
-            int cost = m_random.Next(weight - 100, weight + 101);
+            long cost = m_random.Next((int)weight - 100, (int)weight + 101);
             if (cost < 1) cost = GetCost(weight);
             return cost;
         }
 
         public override void Fill()
         {
-            var maxWeight = 0;
-            for (int i = 0; i < WEIGHT.Length; i++)
+            long maxWeight = 0;
+            for (int i = 0; i < Weight.Length; i++)
             {
-                WEIGHT[i] = m_random.Next(RANGE.First, RANGE.Second + 1);
-                COST[i] = GetCost(WEIGHT[i]);
-                if (maxWeight < WEIGHT[i]) maxWeight = WEIGHT[i];
+                Weight[i] = m_random.Next(Range.First, Range.Second + 1);
+                Cost[i] = GetCost(Weight[i]);
+                if (maxWeight < Weight[i]) maxWeight = Weight[i];
             }
             FillCapacity(maxWeight);
         }
@@ -122,16 +129,16 @@ namespace KnapsackProblem
     public class StronglyCorrData : AData
     {
         public StronglyCorrData(int size, Range range) : base(size, range) { }
-        public StronglyCorrData(Range range, int[] cost, int[] weight, int maxWeight)
-            : base(range, cost, weight, maxWeight) { }
+        public StronglyCorrData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
+            : base(range, cost, weight, maxWeight, itemMaxCounts) { }
         public override void Fill()
         {
-            var maxWeight = 0;
-            for (int i = 0; i < WEIGHT.Length; i++)
+            long maxWeight = 0;
+            for (int i = 0; i < Weight.Length; i++)
             {
-                WEIGHT[i] = m_random.Next(RANGE.First, RANGE.Second + 1);
-                COST[i] = WEIGHT[i] + 100;
-                if (maxWeight < WEIGHT[i]) maxWeight = WEIGHT[i];
+                Weight[i] = m_random.Next(Range.First, Range.Second + 1);
+                Cost[i] = Weight[i] + 100;
+                if (maxWeight < Weight[i]) maxWeight = Weight[i];
             }
             FillCapacity(maxWeight);
         }
@@ -145,16 +152,16 @@ namespace KnapsackProblem
     public class SubsetSumData : AData
     {
         public SubsetSumData(int size, Range range) : base(size, range) { }
-        public SubsetSumData(Range range, int[] cost, int[] weight, int maxWeight)
-            : base(range, cost, weight, maxWeight) { }
+        public SubsetSumData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
+            : base(range, cost, weight, maxWeight, itemMaxCounts) { }
         public override void Fill()
         {
-            var maxWeight = 0;
-            for (int i = 0; i < WEIGHT.Length; i++)
+            long maxWeight = 0;
+            for (int i = 0; i < Weight.Length; i++)
             {
-                WEIGHT[i] = m_random.Next(RANGE.First, RANGE.Second + 1);
-                COST[i] = WEIGHT[i];
-                if (maxWeight < WEIGHT[i]) maxWeight = WEIGHT[i];
+                Weight[i] = m_random.Next(Range.First, Range.Second + 1);
+                Cost[i] = Weight[i];
+                if (maxWeight < Weight[i]) maxWeight = Weight[i];
             }
             FillCapacity(maxWeight);
         }
@@ -165,24 +172,24 @@ namespace KnapsackProblem
         }
     }
 
-    public class VeryVeryStronglyCorrData: AData
+    public class VeryVeryStronglyCorrData : AData
     {
         public VeryVeryStronglyCorrData(int size, Range range) : base(size, range) { }
-        public VeryVeryStronglyCorrData(Range range, int[] cost, int[] weight, int maxWeight)
-            : base(range, cost, weight, maxWeight) { }
+        public VeryVeryStronglyCorrData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
+            : base(range, cost, weight, maxWeight, itemMaxCounts) { }
         public override void Fill()
         {
-            var minWeight = int.MaxValue;
-            var maxWeight = 0;
-            for (int i = 0; i < WEIGHT.Length; i++)
+            long minWeight = long.MaxValue;
+            long maxWeight = 0;
+            for (int i = 0; i < Weight.Length; i++)
             {
-                WEIGHT[i] = m_random.Next(RANGE.First, RANGE.Second + 1);
-                if (minWeight > WEIGHT[i]) minWeight = WEIGHT[i];
-                if (maxWeight < WEIGHT[i]) maxWeight = WEIGHT[i];
+                Weight[i] = m_random.Next(Range.First, Range.Second + 1);
+                if (minWeight > Weight[i]) minWeight = Weight[i];
+                if (maxWeight < Weight[i]) maxWeight = Weight[i];
             }
-            for (int i = 0; i < COST.Length; i++)
+            for (int i = 0; i < Cost.Length; i++)
             {
-                COST[i] = WEIGHT[i] * (WEIGHT[i] - minWeight + 1)/(maxWeight - minWeight + 1) * 100;
+                Cost[i] = Weight[i] * (Weight[i] - minWeight + 1) / (maxWeight - minWeight + 1) * 100;
             }
             FillCapacity(maxWeight);
         }

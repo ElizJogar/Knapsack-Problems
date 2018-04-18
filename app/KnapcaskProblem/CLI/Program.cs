@@ -10,7 +10,7 @@ namespace CLI
         static void Main(string[] args)
         {
             ArgParser parser = new ArgParser();
-            var dataSize = 50; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
+            var dataSize = 15; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
             var iterationCount = 30;// 40;
             var populationCount = 15;// 30;
             var betta = 5;
@@ -23,7 +23,7 @@ namespace CLI
             parser.AddArgument("ds|data_size=", "data size", ds => dataSize = Convert.ToInt32(ds));
             parser.AddArgument("inst|instances=", "Instances count for each data type", inst => instancesCount = Convert.ToInt32(inst));
 
-            var report = new DataAnalysisReport(new UKPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
+            var report = new DataAnalysisReport(new KPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
             report.Create();
             Console.WriteLine("Report created successfully! You can see reports here: {0}", report.GetDir());
         }

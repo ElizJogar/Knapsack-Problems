@@ -99,7 +99,7 @@ namespace ExcelReport
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
                     var taskData = m_task.Create(data[dataIndex]);
-                    int optimum = new ExhaustiveSearchAlgorithm(taskData).Run();
+                    long optimum = new ExhaustiveSearchAlgorithm(taskData).Run();
 
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
@@ -165,18 +165,17 @@ namespace ExcelReport
                     sheet.Cells[8, 1] = "Cost: ";
                     sheet.Cells[9, 1] = "Weight: ";
                     sheet.Cells[10, 1] = "Limit: ";
-                    sheet.Cells[10, 2] = data[dataIndex].CAPACITY;
-                    for (var i = 2; i < data[dataIndex].COST.Length + 2; ++i)
+                    sheet.Cells[10, 2] = data[dataIndex].Capacity;
+                    for (var i = 2; i < data[dataIndex].Cost.Length + 2; ++i)
                     {
-                        sheet.Cells[8, i] = data[dataIndex].COST[i - 2];
-                        sheet.Cells[9, i] = data[dataIndex].WEIGHT[i - 2];
+                        sheet.Cells[8, i] = data[dataIndex].Cost[i - 2];
+                        sheet.Cells[9, i] = data[dataIndex].Weight[i - 2];
                     }
 
-                    var ukp = m_task as UKPTask;
-                    if (ukp != null)
+                    if (m_task as UKPTask != null)
                     {
                         sheet.Cells[11, 1] = "Max X[i] Count: ";
-                        var x = ukp.GetX();
+                        var x = taskData.ItemMaxCounts;
                         for (var i = 2; i < x.Length + 2; ++i)
                         {
                             sheet.Cells[11, i] = x[i - 2];

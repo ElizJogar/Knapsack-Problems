@@ -11,7 +11,7 @@ namespace Algorithm
 
     public class PointMutation: IMutation
     {
-        private Random m_random = new Random(System.DateTime.Now.Millisecond);
+        private Random m_random = new Random(DateTime.Now.Millisecond);
         public List<Individ> Run(List<Individ> individs)
         {
             Logger.Get().Debug("Called " + Convert.ToString(this));
@@ -20,14 +20,9 @@ namespace Algorithm
             for (var i = 0; i < s; ++i)
             {
                 var individ = individs[i];
-                var k = m_random.Next(individ.SIZE);
-                if (m_random.Next(100) <= 50) individ.GENOTYPE[k] = individs[i].GENOTYPE[k] == 0 ? 1 : 0;
-                var zeroCount = 0;
-                Array.ForEach(individ.GENOTYPE, gen =>
-                {
-                    if (gen == 0) ++zeroCount;
-                });
-                if (zeroCount != individ.SIZE) population.Add(individ);
+                var k = m_random.Next(individ.FlatSize());
+                if (m_random.Next(100) <= 50) individ.SetBit(k, !individs[i].GetBit(k));
+                if (individ.GetWeight() > 0) population.Add(individ);
             }
             for (var i = s; i < individs.Count; ++i) population.Add(individs[i]);
             return population;
@@ -35,7 +30,7 @@ namespace Algorithm
     }
     public class Inversion : IMutation
     {
-        private Random m_random = new Random(System.DateTime.Now.Millisecond);
+        private Random m_random = new Random(DateTime.Now.Millisecond);
         public List<Individ> Run(List<Individ> individs)
         {
             Logger.Get().Debug("Called " + Convert.ToString(this));
@@ -45,22 +40,17 @@ namespace Algorithm
             {
                 var individ = individs[i];
 
-                var k = m_random.Next(individ.SIZE - 1);
-                var r = m_random.Next(k + 1, individ.SIZE - 1);
+                var k = m_random.Next(individ.FlatSize() - 1);
+                var r = m_random.Next(k + 1, individ.FlatSize() - 1);
 
                 if (m_random.Next(100) <= 50)
                 {
                     for (var j = k; j <= r; ++j)
                     {
-                        individ.GENOTYPE[j] = individs[i].GENOTYPE[j] == 0 ? 1 : 0;
+                        individ.SetBit(j, !individs[i].GetBit(j));
                     }
                 }
-                var zeroCount = 0;
-                Array.ForEach(individ.GENOTYPE, gen =>
-                {
-                    if (gen == 0) ++zeroCount;
-                });
-                if (zeroCount != individ.SIZE) population.Add(individ);
+                if (individ.GetWeight() > 0) population.Add(individ);
             }
             for (var i = s; i < individs.Count; ++i) population.Add(individs[i]);
             return population;
@@ -68,7 +58,7 @@ namespace Algorithm
     }
     public class Translocation : IMutation
     {
-        private Random m_random = new Random(System.DateTime.Now.Millisecond);
+        private Random m_random = new Random(DateTime.Now.Millisecond);
         public List<Individ> Run(List<Individ> individs)
         {
             Logger.Get().Debug("Called " + Convert.ToString(this));
@@ -77,26 +67,21 @@ namespace Algorithm
             for (var i = 0; i < s; ++i)
             {
                 var individ = individs[i];
-                var k = m_random.Next(individ.SIZE - 1);
-                var r = m_random.Next(k + 1, individ.SIZE);
+                var k = m_random.Next(individ.FlatSize() - 1);
+                var r = m_random.Next(k + 1, individ.FlatSize());
 
                 if (m_random.Next(100) <= 50)
                 {
                     for (var j = 0; j <= k; ++j)
                     {
-                        individ.GENOTYPE[j] = individs[i].GENOTYPE[j] == 0 ? 1 : 0;
+                        individ.SetBit(j, !individs[i].GetBit(j));
                     }
-                    for (var j = r; j < individs[i].SIZE; ++j)
+                    for (var j = r; j < individs[i].FlatSize(); ++j)
                     {
-                        individ.GENOTYPE[j] = individs[i].GENOTYPE[j] == 0 ? 1 : 0;
+                        individ.SetBit(j, !individs[i].GetBit(j));
                     }
                 }
-                var zeroCount = 0;
-                Array.ForEach(individ.GENOTYPE, gen =>
-                {
-                    if (gen == 0) ++zeroCount;
-                });
-                if (zeroCount != individ.SIZE) population.Add(individ);
+                if (individ.GetWeight() > 0) population.Add(individ);
             }
             for (var i = s; i < individs.Count; ++i) population.Add(individs[i]);
             return population;
@@ -105,7 +90,7 @@ namespace Algorithm
 
     public class Saltation : IMutation
     {
-        private Random m_random = new Random(System.DateTime.Now.Millisecond);
+        private Random m_random = new Random(DateTime.Now.Millisecond);
         public List<Individ> Run(List<Individ> individs)
         {
             Logger.Get().Debug("Called " + Convert.ToString(this));
@@ -115,20 +100,15 @@ namespace Algorithm
             {
                 var individ = individs[i];
 
-                var k = m_random.Next(individs[i].SIZE / 2);
-                var r = m_random.Next(k + 1, individs[i].SIZE);
+                var k = m_random.Next(individs[i].FlatSize() / 2);
+                var r = m_random.Next(k + 1, individs[i].FlatSize());
 
                 if (m_random.Next(100) <= 50)
                 {
-                    individ.GENOTYPE[r] = individs[i].GENOTYPE[k];
-                    individ.GENOTYPE[k] = individs[i].GENOTYPE[r];
+                    individ.SetBit(r, individs[i].GetBit(k));
+                    individ.SetBit(k, individs[i].GetBit(r));
                 }
-                var zeroCount = 0;
-                Array.ForEach(individ.GENOTYPE, gen =>
-                {
-                    if (gen == 0) ++zeroCount;
-                });
-                if (zeroCount != individ.SIZE) population.Add(individ);
+                if (individ.GetWeight() > 0) population.Add(individ);
             }
             for (var i = s; i < individs.Count; ++i) population.Add(individs[i]);
             return population;

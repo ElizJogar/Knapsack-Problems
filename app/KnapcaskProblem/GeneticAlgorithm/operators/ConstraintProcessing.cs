@@ -8,57 +8,58 @@ namespace Algorithm
 {
     public interface IConstraintProcessing : IOperator
     {
-        List<IndividEx> Run(List<Individ> individs, IData data);
+        List<CustomIndivid> Run(List<Individ> individs, IData data);
     }
 
     public class PenaltyFunction : IConstraintProcessing
     {
-        public List<IndividEx> Run(List<Individ> individs, IData data)
+        public List<CustomIndivid> Run(List<Individ> individs, IData data)
         {
             Logger.Get().Debug("Called Algorithm.PenaltyFunction");
-            var individsEx = new List<IndividEx>();
+            var customIndivids = new List<CustomIndivid>();
 
-            int averageCost = 0;
+            long averageCost = 0;
             for (int i = 0; i < individs.Count; i++)
             {
-                averageCost += Helpers.GetCost(individs[i], data);
+                averageCost += individs[i].GetCost();
             }
             averageCost /= individs.Count;
             double coeffA = 0;
             double coeffB = 0;
-            int weight = 0;
-            int cost = 0;
-            int minCost = 0;
+            long weight = 0;
+            long cost = 0;
+            long minCost = 0;
 
             for (var i = 0; i < individs.Count; ++i)
             {
-                var individEx = new IndividEx(individs[i].SIZE)
-                {
-                    GENOTYPE = individs[i].GENOTYPE
-                };
+                var customIndivid = new CustomIndivid(individs[i]);
 
-                cost = Helpers.GetCost(individs[i], data);
-                weight = Helpers.GetWeight(individs[i], data);
-                individEx.WEIGHT = weight;
-                individEx.COST = weight <= data.CAPACITY ? cost : cost - (int)Math.Pow(weight - data.CAPACITY, 2);
-                individsEx.Add(individEx);
+                cost = individs[i].GetCost();
+                weight = individs[i].GetWeight();
+
+                customIndivid.SetWeight(weight);
+                cost = weight <= data.Capacity ? cost : cost - (long)Math.Pow(weight - data.Capacity, 2);
+                customIndivid.SetCost(cost);
+                customIndivids.Add(customIndivid);
             }
+
+            minCost = customIndivids.Min().GetCost();
 
             for (var i = 0; i < individs.Count; ++i)
             {
-                if (individsEx[i].COST == minCost)
+                if (customIndivids[i].GetCost() == minCost)
                 {
-                    individsEx[i].COST = 0;
+                    customIndivids[i].SetCost(0);
                 }
-                else if (individsEx[i].COST <= 0)
+                else if (customIndivids[i].GetCost() <= 0)
                 {
-                    cost = individsEx[i].COST;
-                    coeffA = averageCost / (cost - averageCost);
-                    coeffB = averageCost * cost / (cost - averageCost);
-                    individsEx[i].COST = Convert.ToInt32(coeffA * cost + coeffB);
+                    cost = customIndivids[i].GetCost();
+                    coeffA = averageCost / (0 - averageCost + cost);
+                    coeffB = averageCost * cost / (0 - averageCost + cost);
+                    customIndivids[i].SetCost(Convert.ToInt64(coeffA * cost + coeffB));
                 }
             }
-            return individsEx;
+            return customIndivids;
         }
     }
 }

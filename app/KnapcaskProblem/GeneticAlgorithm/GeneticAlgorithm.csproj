@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KnapsackProblemData\KnapsackProblem.csproj" />
     <ProjectReference Include="..\Logger\Logger.csproj" />
   </ItemGroup>

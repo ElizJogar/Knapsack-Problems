@@ -6,47 +6,61 @@ using CustomLogger;
 
 namespace Algorithm
 {
-    public interface IInitialPopulation: IOperator
+    public interface IInitialPopulation : IOperator
     {
         Individ Run(IData data);
     }
 
-    public class DantzigAlgorithm: IInitialPopulation
+    public class DantzigAlgorithm : IInitialPopulation
     {
-        private Random m_random = new Random(System.DateTime.Now.Millisecond);
+        private Random m_random = new Random(DateTime.Now.Millisecond);
         public Individ Run(IData data)
         {
-            var size = data.COST.Length;
-            var individ = new Individ(size);
+            var size = data.Cost.Length;
+            var individ = new Individ(data);
             var specificCosts = new Dictionary<int, double>();
 
             for (int i = 0; i < size; ++i)
             {
-                specificCosts.Add(i, (double)data.COST[i] / data.WEIGHT[i]);
+                specificCosts.Add(i, (double)data.Cost[i] / data.Weight[i]);
             }
             specificCosts = specificCosts.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var summaryWeight = 0;
+            long weight = 0;
             foreach (var pair in specificCosts)
             {
-                individ.GENOTYPE[pair.Key] = (summaryWeight + data.WEIGHT[pair.Key]) <= data.CAPACITY ? m_random.Next(2) : 0;
-                if (individ.GENOTYPE[pair.Key] == 1) summaryWeight += data.WEIGHT[pair.Key];
+                var gen = individ.GetGen(pair.Key);
+                for(var i = 0; i < gen.Size(); ++i)
+                {
+                    gen.SetBit(i, Convert.ToBoolean(m_random.Next(2)));
+                    if (gen.GetBit(i) && weight + gen.GetWeight() > data.Capacity)
+                    {
+                        gen.SetBit(i, false);
+                    }
+                    else
+                    {
+                        weight += gen.GetWeight();
+                    }
+                }
             }
             return individ;
         }
     }
-    public class RandomPopulation: IInitialPopulation
+    public class RandomPopulation : IInitialPopulation
     {
-        private Random m_random = new Random(System.DateTime.Now.Millisecond);
+        private Random m_random = new Random(DateTime.Now.Millisecond);
         public Individ Run(IData data)
         {
-            var size = data.COST.Length;
-            var individ = new Individ(size);
-            var summaryWeight = 0;
+            var individ = new Individ(data);
+            var size = individ.FlatSize();
+
             for (var i = 0; i < size; ++i)
             {
-                individ.GENOTYPE[i] = (summaryWeight + data.WEIGHT[i]) <= data.CAPACITY ? m_random.Next(2) : 0;
-                if (individ.GENOTYPE[i] == 1) summaryWeight += data.WEIGHT[i];
+                individ.SetBit(i, Convert.ToBoolean(m_random.Next(2)));
+                if (individ.GetBit(i) && individ.GetWeight() > data.Capacity)
+                {
+                    individ.SetBit(i, false);
+                }
             }
             return individ;
         }

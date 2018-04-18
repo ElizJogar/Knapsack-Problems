@@ -13,13 +13,15 @@ namespace UnitTests
         {
             const int GOLD = 175;
             const int OFFSET = 10;
+
             var data = new KPTask().Create(new TestData());
             var alg = new GeneticAlgorithm(data,
             new RandomPopulation(),
             new SinglePointCrossover(),
             new PointMutation(),
             new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
-            Assert.IsTrue(GOLD - OFFSET <= alg.Run(30, 15));
+
+            Assert.IsTrue(GOLD - OFFSET <= alg.Run(15, 15));
         }
 
         [TestMethod]
@@ -74,7 +76,7 @@ namespace UnitTests
             Assert.AreEqual(4, newIndivids.Count);
             foreach (var individ in newIndivids)
             {
-                Assert.IsTrue(individ.COST >= 0 && individ.WEIGHT >= 0);
+                Assert.IsTrue(individ.GetWeight() >= 0);
             }
             // check simple Repair operator
             IRepairOperator repairOperator = new RepairOperator();
@@ -106,14 +108,14 @@ namespace UnitTests
             foreach (var individ in individs)
             {
                 // Individ contains not only zeros
-                Assert.IsTrue(Helpers.GetWeight(individ, data) > 0);
+                Assert.IsTrue(individ.GetWeight() > 0);
             }
         }
         private void CheckAdmissibleIndivid(Individ individ, IData data)
         {
-            Assert.AreEqual(data.COST.Length, individ.SIZE);
-            var weight = Helpers.GetWeight(individ, data);
-            Assert.IsTrue(weight <= data.CAPACITY && weight > 0);
+            Assert.AreEqual(data.Cost.Length, individ.Size());
+            var weight = individ.GetWeight();
+            Assert.IsTrue(weight <= data.Capacity && weight > 0);
         }
 
         private void CheckAdmissibleIndivids(List<Individ> individs, IData data, int goldCount)
