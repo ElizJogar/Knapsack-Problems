@@ -35,7 +35,7 @@ namespace Algorithm
 
             individs.RemoveAll(individ =>
             {
-                if (Helpers.GetWeight(individ, data) > data.MAX_WEIGHT)
+                if (Helpers.GetWeight(individ, data) > data.CAPACITY)
                 {
                     permissibleIndivids.Add(individ);
                     return true;
@@ -52,7 +52,7 @@ namespace Algorithm
             foreach (var individ in permissibleIndivids)
             {
                 var weight = Helpers.GetWeight(individ, data);
-                while (weight > data.MAX_WEIGHT)
+                while (weight > data.CAPACITY)
                 {
                     foreach (var item in specificCosts)
                     {
@@ -61,7 +61,7 @@ namespace Algorithm
                             individ.GENOTYPE[item.Key] = 0;
                             weight -= data.WEIGHT[item.Key];
 
-                            if (weight <= data.MAX_WEIGHT) break;
+                            if (weight <= data.CAPACITY) break;
                         }
                     }
                 }
@@ -88,7 +88,7 @@ namespace Algorithm
             foreach (var individ in individs)
             {
                 var weight = Helpers.GetWeight(individ, data);
-                while (weight > data.MAX_WEIGHT)
+                while (weight > data.CAPACITY)
                 {
                     foreach (var item in specificCosts)
                     {
@@ -97,7 +97,7 @@ namespace Algorithm
                             individ.GENOTYPE[item.Key] = 0;
                             weight -= data.WEIGHT[item.Key];
 
-                            if (weight <= data.MAX_WEIGHT) break;
+                            if (weight <= data.CAPACITY) break;
                         }
                     }
                 }
@@ -109,7 +109,7 @@ namespace Algorithm
                 foreach (var item in specificCosts)
                 {
                     if (individ.GENOTYPE[item.Key] == 0 &&
-                        (weight + data.WEIGHT[item.Key]) <= data.MAX_WEIGHT)
+                        (weight + data.WEIGHT[item.Key]) <= data.CAPACITY)
                     {
                         individ.GENOTYPE[item.Key] = 1;
                         weight += data.WEIGHT[item.Key];

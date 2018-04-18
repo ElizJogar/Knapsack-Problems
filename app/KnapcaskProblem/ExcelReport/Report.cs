@@ -16,30 +16,35 @@ namespace ExcelReport
         private int m_populationCount;
         private int m_betta;
         private int m_runsCount;
+        private int m_dataSize;
         private int m_instancesCount;
         private DirectoryInfo m_dir;
         private string[] m_vsS ={ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
                               "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-                              "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
-                              "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
+                              "AA", "AB", "AC", "AD", "AE","AF", "AG", "AH", "AI", "AJ", "AK", "AL",
+                              "AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV",
+                              "AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG",
+                              "BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS",
                               "BT","BU"};
         public DirectoryInfo GetDir()
         {
             return m_dir;
         }
-        public DataAnalysisReport(ITask task = null, int iterationCount = 1, int populationCount = 1, int betta = 1, int startCount = 1, int instancesCount = 1)
+        public DataAnalysisReport(ITask task = null, int iterationCount = 1, int populationCount = 1, int betta = 1, int startCount = 1, int dataSize = 15, int instancesCount = 1)
         {
             m_task = task;
             m_iterationCount = iterationCount;
             m_populationCount = populationCount;
             m_betta = betta;
             m_runsCount = startCount;
+            m_dataSize = dataSize;
             m_instancesCount = instancesCount;
-            m_individs = new List<Individ>();
+
             DateTime localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\reports_" + task.Str() + "_" 
-                + localDate.ToShortDateString() + "-" + localDate.Hour + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
+                + localDate.ToShortDateString() + "-" + localDate.Hour 
+                + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
             m_dir.Create();
             m_excel = new Excel.Application();
         }
@@ -67,11 +72,19 @@ namespace ExcelReport
         public void Create()
         {
             IInitialPopulation[] initialPopulation = { new DantzigAlgorithm(), new RandomPopulation() };
+
             ICrossover[] crossover = { new SinglePointCrossover(), new TwoPointCrossover(), new UniformCrossover() };
+
             IMutation[] mutation = { new PointMutation(), new Inversion(), new Translocation(), new Saltation() };
+
             ISelection[] selection = { new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator()),
                                        new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()) };
-            IData[] data = { new UncorrData(15, 100), new WeaklyCorrData(15, 100), new StronglyCorrData(15, 100), new SubsetSumData(15, 100) };
+
+            IData[] data = { new UncorrData(m_dataSize, new Range(10, 9999)),
+                new WeaklyCorrData(m_dataSize, new Range(10, 9999)),
+                new StronglyCorrData(m_dataSize, new Range(10, 9999)),
+                new SubsetSumData(m_dataSize, new Range(1, 9999)),
+                new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
 
             int length = initialPopulation.Length * crossover.Length * mutation.Length * selection.Length;
             for (int dataIndex = 0; dataIndex < 1; ++dataIndex)
@@ -152,7 +165,7 @@ namespace ExcelReport
                     sheet.Cells[8, 1] = "Cost: ";
                     sheet.Cells[9, 1] = "Weight: ";
                     sheet.Cells[10, 1] = "Limit: ";
-                    sheet.Cells[10, 2] = data[dataIndex].MAX_WEIGHT;
+                    sheet.Cells[10, 2] = data[dataIndex].CAPACITY;
                     for (var i = 2; i < data[dataIndex].COST.Length + 2; ++i)
                     {
                         sheet.Cells[8, i] = data[dataIndex].COST[i - 2];

@@ -18,7 +18,7 @@ namespace KnapsackProblem
   
             Array.ForEach(m_data.WEIGHT, w =>
             { 
-                totalCount += m_data.MAX_WEIGHT / w;
+                totalCount += m_data.CAPACITY / w;
                 m_indices.Add(totalCount);
             });
 
@@ -33,7 +33,7 @@ namespace KnapsackProblem
                     weight[j] = m_data.WEIGHT[i];
                 }
             }
-            return (IData)Activator.CreateInstance(m_data.GetType(), m_data.RANGE, cost, weight, m_data.MAX_WEIGHT);
+            return (IData)Activator.CreateInstance(m_data.GetType(), m_data.RANGE, cost, weight, m_data.CAPACITY);
         }
         public string Str()
         {

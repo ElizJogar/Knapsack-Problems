@@ -1,9 +1,9 @@
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\bin\Debug\netstandard2.0\KnapsackProblem.deps.json
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\bin\Debug\netstandard2.0\KnapsackProblem.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\bin\Debug\netstandard2.0\KnapsackProblem.pdb
-C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.csprojResolveAssemblyReference.cache
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.csproj.CoreCompileInputs.cache
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.AssemblyInfoInputs.cache
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.AssemblyInfo.cs
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard2.0\KnapsackProblem.csprojResolveAssemblyReference.cache

@@ -28,8 +28,10 @@ namespace UnitTests
             //check Danzig algorithm
             IInitialPopulation alg = new DantzigAlgorithm();
             var data = new KPTask().Create(new TestData());
-            var parents = new List<Individ>();
-            parents.Add(alg.Run(data));
+            var parents = new List<Individ>
+            {
+                alg.Run(data)
+            };
             CheckAdmissibleIndivid(parents[0], data);
 
             //check Random population
@@ -111,7 +113,7 @@ namespace UnitTests
         {
             Assert.AreEqual(data.COST.Length, individ.SIZE);
             var weight = Helpers.GetWeight(individ, data);
-            Assert.IsTrue(weight <= data.MAX_WEIGHT && weight > 0);
+            Assert.IsTrue(weight <= data.CAPACITY && weight > 0);
         }
 
         private void CheckAdmissibleIndivids(List<Individ> individs, IData data, int goldCount)

@@ -29,7 +29,7 @@ namespace Algorithm
 
             individs.RemoveAll(individ =>
             {
-                if (Helpers.GetWeight(individ, data) > data.MAX_WEIGHT)
+                if (Helpers.GetWeight(individ, data) > data.CAPACITY)
                 {
                     permissibleIndivids.Add(individ);
                     return true;
@@ -49,11 +49,11 @@ namespace Algorithm
                 }
                 dictionary = dictionary.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
                 var weight = Helpers.GetWeight(individ, data);
-                while (weight > data.MAX_WEIGHT)
+                while (weight > data.CAPACITY)
                 {
                     foreach (var item in dictionary)
                     {
-                        if (weight <= data.MAX_WEIGHT) break;
+                        if (weight <= data.CAPACITY) break;
 
                         individ.GENOTYPE[item.Key] = 0;
                         weight -= data.WEIGHT[item.Key];

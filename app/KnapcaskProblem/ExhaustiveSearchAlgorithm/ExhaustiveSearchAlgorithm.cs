@@ -13,7 +13,7 @@ namespace Algorithm
         public int Run()
         {
             int itemsCount = m_data.WEIGHT.Length;
-            int limit = m_data.MAX_WEIGHT;
+            int limit = m_data.CAPACITY;
             int[,] K = new int[itemsCount + 1, limit + 1];
 
             for (int i = 0; i <= itemsCount; ++i)
@@ -29,7 +29,7 @@ namespace Algorithm
                 }
             }
 
-            return K[itemsCount, m_data.MAX_WEIGHT];
+            return K[itemsCount, m_data.CAPACITY];
         }
     }
 }

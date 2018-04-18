@@ -40,7 +40,7 @@ namespace Algorithm
                 cost = Helpers.GetCost(individs[i], data);
                 weight = Helpers.GetWeight(individs[i], data);
                 individEx.WEIGHT = weight;
-                individEx.COST = weight <= data.MAX_WEIGHT ? cost : cost - (int)Math.Pow(weight - data.MAX_WEIGHT, 2);
+                individEx.COST = weight <= data.CAPACITY ? cost : cost - (int)Math.Pow(weight - data.CAPACITY, 2);
                 individsEx.Add(individEx);
             }
 

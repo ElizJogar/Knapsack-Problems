@@ -10,7 +10,7 @@ namespace UnitTests
             int[] tmpWeight = { 2, 26, 23, 6, 19, 9, 8, 20, 11, 1, 17, 21, 7, 20, 11 };
             COST = tmpCost;
             WEIGHT = tmpWeight;
-            MAX_WEIGHT = 80;
+            CAPACITY = 80;
         }
 
         public override string Str()
