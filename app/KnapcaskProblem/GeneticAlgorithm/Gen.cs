@@ -15,6 +15,7 @@ namespace Algorithm
         bool Increment();
         bool Decrement();
         int Size();
+        int ToInt();
     }
 
     public class Gen : IGen
@@ -34,14 +35,13 @@ namespace Algorithm
         {
             m_value = value;
         }
-        public void SetBit(int index, bool value)
-        {
-            m_value[index] = value;
-        }
-
         public BitArray Get()
         {
             return m_value;
+        }
+        public void SetBit(int index, bool value)
+        {
+            m_value[index] = value;
         }
         public bool GetBit(int index)
         {
@@ -94,7 +94,7 @@ namespace Algorithm
         {
             return m_value.Count;
         }
-        protected int ToInt()
+        public int ToInt()
         {
             int[] array = new int[1];
             m_value.CopyTo(array, 0);

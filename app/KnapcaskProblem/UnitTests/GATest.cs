@@ -76,7 +76,7 @@ namespace UnitTests
             Assert.AreEqual(4, newIndivids.Count);
             foreach (var individ in newIndivids)
             {
-                Assert.IsTrue(individ.GetWeight() >= 0);
+                Assert.IsTrue(individ.GetCost() >= 0 && individ.GetWeight() >= 0);
             }
             // check simple Repair operator
             IRepairOperator repairOperator = new RepairOperator();

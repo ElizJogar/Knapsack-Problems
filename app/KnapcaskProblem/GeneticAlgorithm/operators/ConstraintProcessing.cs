@@ -54,8 +54,8 @@ namespace Algorithm
                 else if (customIndivids[i].GetCost() <= 0)
                 {
                     cost = customIndivids[i].GetCost();
-                    coeffA = averageCost / (0 - averageCost + cost);
-                    coeffB = averageCost * cost / (0 - averageCost + cost);
+                    coeffA = averageCost / (cost - averageCost);
+                    coeffB = averageCost * cost / (cost - averageCost);
                     customIndivids[i].SetCost(Convert.ToInt64(coeffA * cost + coeffB));
                 }
             }
