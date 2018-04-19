@@ -23,11 +23,14 @@ namespace Algorithm
         private BitArray m_value;
         private long m_cost;
         private long m_weight;
+        private long m_maxValue;
 
-        public Gen(long cost, long weight, int size = 1)
+        public Gen(long cost, long weight, int maxValue = 1)
         {
             m_cost = cost;
             m_weight = weight;
+            m_maxValue = maxValue;
+            var size = (int)Math.Log(maxValue, 2) + 1;
             m_value = new BitArray(size);
         }
 
@@ -50,7 +53,7 @@ namespace Algorithm
         public bool Increment()
         {
             var decVal = ToInt();
-            if (decVal == Math.Pow(2, m_value.Length) - 1)
+            if (decVal >= m_maxValue)
             {
                 return false;
             }

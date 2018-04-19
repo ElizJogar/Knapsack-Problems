@@ -18,14 +18,12 @@ namespace Algorithm
             var totalSize = 0;
             for (var i = 0; i < data.Cost.Length; ++i)
             {
-                var count = data.ItemMaxCounts[i];
-                count = count > 0 ? (int)Math.Log(count, 2) : 1;
-                m_genes.Add(new Gen(data.Cost[i], data.Weight[i], count));
-                for (var j = 0; j < count; ++j)
+                m_genes.Add(new Gen(data.Cost[i], data.Weight[i], data.ItemMaxCounts[i]));                
+                for (var j = 0; j < m_genes[i].Size(); ++j)
                 {
                     m_indices.Add(totalSize + j, new int[2] { i, j });
                 }
-                totalSize += count;
+                totalSize += m_genes[i].Size();
             }
         }
         public int Size()

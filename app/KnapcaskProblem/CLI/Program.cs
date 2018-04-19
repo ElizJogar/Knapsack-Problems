@@ -23,7 +23,7 @@ namespace CLI
             parser.AddArgument("ds|data_size=", "data size", ds => dataSize = Convert.ToInt32(ds));
             parser.AddArgument("inst|instances=", "Instances count for each data type", inst => instancesCount = Convert.ToInt32(inst));
 
-            var report = new DataAnalysisReport(new KPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
+            var report = new DataAnalysisReport(new UKPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
             report.Create();
             Console.WriteLine("Report created successfully! You can see reports here: {0}", report.GetDir());
         }

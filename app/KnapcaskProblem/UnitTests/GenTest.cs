@@ -11,7 +11,10 @@ namespace UnitTests
         {
             long cost = 70;
             long weight = 80;
+
             var gen = new Gen(cost, weight, 4);
+            Assert.AreEqual(3, gen.Size());
+
             for (var i = 0; i < 2; ++i)
             {
                 gen.SetBit(i, true);

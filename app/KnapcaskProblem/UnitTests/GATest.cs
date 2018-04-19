@@ -5,7 +5,7 @@ using Algorithm;
 using KnapsackProblem;
 namespace UnitTests
 {
-   [TestClass]
+    [TestClass]
     public class GATest
     {
         [TestMethod]
@@ -16,12 +16,22 @@ namespace UnitTests
 
             var data = new KPTask().Create(new TestData());
             var alg = new GeneticAlgorithm(data,
-            new RandomPopulation(),
+            new DantzigAlgorithm(),
+            new SinglePointCrossover(),
+            new PointMutation(),
+            new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
+            Assert.IsTrue(GOLD - OFFSET <= alg.Run(15, 15));
+
+            const int UKP_GOLD = 243004;
+            const int UKP_OFFSET = 12000;
+            data = new UKPTask().Create(new UKPTestData());
+            alg = new GeneticAlgorithm(data,
+            new DantzigAlgorithm(),
             new SinglePointCrossover(),
             new PointMutation(),
             new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
 
-            Assert.IsTrue(GOLD - OFFSET <= alg.Run(15, 15));
+            Assert.IsTrue(UKP_GOLD - UKP_OFFSET <= alg.Run(30, 15));
         }
 
         [TestMethod]

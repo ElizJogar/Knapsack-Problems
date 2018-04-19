@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KnapsackProblem;
 
 namespace Algorithm
@@ -12,7 +13,24 @@ namespace Algorithm
         }
         public long Run()
         {
-            int itemsCount = m_data.Weight.Length;
+            var itemsCount = 0;
+            var indices = new List<int> { 0 };
+            foreach (var count in m_data.ItemMaxCounts)
+            {
+                itemsCount += count;
+                indices.Add(itemsCount);
+            }
+            var cost = new long[itemsCount];
+            var weight = new long[itemsCount];
+
+            for (var i = 0; i < indices.Count - 1; ++i)
+            {
+                for (var j = indices[i]; j < indices[i + 1]; ++j)
+                {
+                    cost[j] = m_data.Cost[i];
+                    weight[j] = m_data.Weight[i];
+                }
+            }
             long limit = m_data.Capacity;
             long[,] K = new long[itemsCount + 1, limit + 1];
 
@@ -22,8 +40,8 @@ namespace Algorithm
                 {
                     if (i == 0 || w == 0)
                         K[i, w] = 0;
-                    else if (m_data.Weight[i - 1] <= w)
-                        K[i, w] = Math.Max(m_data.Cost[i - 1] + K[i - 1, w - m_data.Weight[i - 1]], K[i - 1, w]);
+                    else if (weight[i - 1] <= w)
+                        K[i, w] = Math.Max(cost[i - 1] + K[i - 1, w - weight[i - 1]], K[i - 1, w]);
                     else
                         K[i, w] = K[i - 1, w];
                 }

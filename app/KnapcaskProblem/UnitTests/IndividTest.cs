@@ -14,13 +14,13 @@ namespace UnitTests
             var individ = new Individ(new UKPTask().Create(new TestData()));
 
             Assert.AreEqual(15, individ.Size());
-            Assert.AreEqual(38, individ.FlatSize());
+            Assert.AreEqual(53, individ.FlatSize());
 
             individ.SetBit(3, true);
             individ.SetBit(5, true);
 
-            Assert.AreEqual(187, individ.GetCost());
-            Assert.AreEqual(42, individ.GetWeight());
+            Assert.AreEqual(840, individ.GetCost());
+            Assert.AreEqual(80, individ.GetWeight());
 
             var individs = new List<Individ> { individ };
             Assert.IsTrue(individs.Contains(individ));
@@ -28,8 +28,8 @@ namespace UnitTests
             var g = individ.GetGen(0);
             g.SetBit(0, true);
 
-            Assert.AreEqual(208, individ.GetCost());
-            Assert.AreEqual(44, individ.GetWeight());
+            Assert.AreEqual(861, individ.GetCost());
+            Assert.AreEqual(82, individ.GetWeight());
         }
     }
 }

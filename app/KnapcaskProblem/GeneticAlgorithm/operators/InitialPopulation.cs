@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using KnapsackProblem;
 using System.Linq;
-using CustomLogger;
 
 namespace Algorithm
 {

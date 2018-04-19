@@ -3,21 +3,19 @@ using System.Collections.Generic;
 
 namespace KnapsackProblem
 {
-    public class UKPTask: ITask
+    public class UKPTask : ITask
     {
-        private IData m_data;
         public IData Create(IData data)
         {
-            m_data = data;
-            m_data.Fill();
+            data.Fill();
 
-            var itemMaxCounts = new int [data.Cost.Length];
-            for (var i = 0; i < m_data.Weight.Length; ++i)
+            var itemMaxCounts = new int[data.Cost.Length];
+            for (var i = 0; i < data.Weight.Length; ++i)
             {
-                itemMaxCounts[i] = (int)(m_data.Capacity / m_data.Weight[i]);
+                itemMaxCounts[i] = (int)(data.Capacity / data.Weight[i]);
             }
-            return (IData)Activator.CreateInstance(m_data.GetType(),
-                m_data.Range, m_data.Cost, m_data.Weight, m_data.Capacity, itemMaxCounts);
+            return (IData)Activator.CreateInstance(data.GetType(),
+                data.Range, data.Cost, data.Weight, data.Capacity, itemMaxCounts);
         }
         public string Str()
         {
