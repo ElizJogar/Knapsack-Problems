@@ -21,10 +21,10 @@ namespace UnitTests
         }
     }
 
-    public class UKPTestData : AData
+    public class TestData1 : AData
     {
-        public UKPTestData() : base(15) { }
-        public UKPTestData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
+        public TestData1() : base(15) { }
+        public TestData1(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
            : base(range, cost, weight, maxWeight, itemMaxCounts) { }
         public override void Fill()
         {

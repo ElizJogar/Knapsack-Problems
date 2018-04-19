@@ -24,7 +24,7 @@ namespace UnitTests
 
             const int UKP_GOLD = 243004;
             const int UKP_OFFSET = 12000;
-            data = new UKPTask().Create(new UKPTestData());
+            data = new UKPTask().Create(new TestData1());
             alg = new GeneticAlgorithm(data,
             new DantzigAlgorithm(),
             new SinglePointCrossover(),
