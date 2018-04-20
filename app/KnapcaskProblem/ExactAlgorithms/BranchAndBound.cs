@@ -13,11 +13,11 @@ namespace Algorithm
 
     public interface IFS
     {
-        IContainer<T> Create<T>();
+        IContainer<T> CreateContainer<T>();
     }
-    public class DFS: IFS
+    public class DFS : IFS
     {
-        public IContainer<T> Create<T>()
+        public IContainer<T> CreateContainer<T>()
         {
             return new DFSContainer<T>();
         }
@@ -25,14 +25,14 @@ namespace Algorithm
 
     public class BFS : IFS
     {
-        public IContainer<T> Create<T>()
+        public IContainer<T> CreateContainer<T>()
         {
             return new BFSContainer<T>();
         }
     }
 
 
-    public class BranchAndBound
+    public class BranchAndBound : IExactAlgorithm
     {
         private List<Item> m_items;
         private long m_capacity;
@@ -61,7 +61,7 @@ namespace Algorithm
         }
         public long Run()
         {
-            var container = new BFSContainer<Node>();
+            var container = m_fs.CreateContainer<Node>();
             var first = new Node()
             {
                 level = -1,

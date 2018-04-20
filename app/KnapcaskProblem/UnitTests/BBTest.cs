@@ -13,6 +13,11 @@ namespace UnitTests
             var data = new KPTask().Create(new TestData());
             var alg = new BranchAndBound(data);
             Assert.AreEqual(GOLD, alg.Run());
+
+            const int UKP_GOLD = 243004;
+            data = new UKPTask().Create(new TestData1());
+            alg = new BranchAndBound(data);
+            Assert.AreEqual(UKP_GOLD, alg.Run());
         }
 
         [TestMethod]

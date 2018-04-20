@@ -82,7 +82,7 @@ namespace Algorithm
             return m_z[index, weight - 1];
         }
     }
-    public class DynamicProgramming
+    public class DynamicProgramming : IExactAlgorithm
     {
         private IDPApproach m_approach = new RecurrentApproach();
         private List<Item> m_items;

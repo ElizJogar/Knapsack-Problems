@@ -5,8 +5,12 @@ using CustomLogger;
 
 namespace Algorithm
 {
-    public class GeneticAlgorithm
-{
+    public interface IHeuristicAlgorithm
+    {
+        long Run(int iterationCount, int populationCount, params object[] args);
+    }
+    public class GeneticAlgorithm : IHeuristicAlgorithm
+    {
         private IData m_data = null;
         private IInitialPopulation m_initialPopulation = null;
         private ICrossover m_crossover = null;
@@ -27,7 +31,7 @@ namespace Algorithm
             Logger.Get().Debug("Weight: " + string.Join(", ", data.Weight));
         }
 
-       public GeneticAlgorithm(IData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
+        public GeneticAlgorithm(IData data, IInitialPopulation population, ICrossover crossover, IMutation mutation, ISelection selection)
         {
             m_data = data;
             m_initialPopulation = population;
@@ -38,9 +42,9 @@ namespace Algorithm
             // Adding log info
             Logger.Get().Debug("Genetic algorithm created.");
             Logger.Get().Debug("Cost: " + string.Join(", ", data.Cost));
-            Logger.Get().Debug("Weight: " + string.Join(", ", data.Weight));            
+            Logger.Get().Debug("Weight: " + string.Join(", ", data.Weight));
         }
-   
+
         public List<Individ> Init(int n)
         {
             m_winner = null;
@@ -63,13 +67,13 @@ namespace Algorithm
             string text = "Initial population: ";
             for (int i = 0; i < population.Count; i++)
             {
-                    text += population[i].Str() + ", ";
+                text += population[i].Str() + ", ";
             }
             Logger.Get().Debug(text);
 
             return population;
         }
-       
+
         public long Run(int populationCount, ref List<Individ> individs, params object[] args)
         {
             individs = m_crossover.Run(individs);
@@ -83,7 +87,7 @@ namespace Algorithm
         public long Run(int iterationCount, int populationCount, params object[] args)
         {
             var individs = Init(populationCount);
-            for(var i = 0; i < iterationCount - 1; ++i)
+            for (var i = 0; i < iterationCount - 1; ++i)
             {
                 Run(populationCount, ref individs, args);
             }
