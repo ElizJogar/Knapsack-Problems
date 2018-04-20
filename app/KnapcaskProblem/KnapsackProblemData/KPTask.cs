@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KnapsackProblem
+﻿namespace KnapsackProblem
 {
     public class KPTask: ITask
     {

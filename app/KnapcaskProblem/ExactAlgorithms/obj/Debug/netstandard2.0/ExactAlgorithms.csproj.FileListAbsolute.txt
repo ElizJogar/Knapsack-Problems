@@ -1,0 +1,14 @@
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\ExactAlgorithms.deps.json
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\ExactAlgorithms.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\ExactAlgorithms.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\KnapsackProblem.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\Logger.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\KnapsackProblem.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\bin\Debug\netstandard2.0\Logger.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.csprojResolveAssemblyReference.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.csproj.CoreCompileInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.AssemblyInfoInputs.cache
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.AssemblyInfo.cs
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.csproj.CopyComplete
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExactAlgorithms\obj\Debug\netstandard2.0\ExactAlgorithms.pdb

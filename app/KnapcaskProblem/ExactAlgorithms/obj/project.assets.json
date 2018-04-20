@@ -216,11 +216,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\ExhaustiveSearchAlgorithm\\ExhaustiveSearchAlgorithm.csproj",
-      "projectName": "ExhaustiveSearchAlgorithm",
-      "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\ExhaustiveSearchAlgorithm\\ExhaustiveSearchAlgorithm.csproj",
+      "projectUniqueName": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\ExactAlgorithms\\ExactAlgorithms.csproj",
+      "projectName": "ExactAlgorithms",
+      "projectPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\ExactAlgorithms\\ExactAlgorithms.csproj",
       "packagesPath": "C:\\Users\\epronina\\.nuget\\packages\\",
-      "outputPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\ExhaustiveSearchAlgorithm\\obj\\",
+      "outputPath": "C:\\university\\diploma\\diplom\\app\\KnapcaskProblem\\ExactAlgorithms\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",

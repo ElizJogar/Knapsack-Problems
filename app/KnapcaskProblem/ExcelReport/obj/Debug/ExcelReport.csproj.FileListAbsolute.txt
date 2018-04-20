@@ -96,11 +96,9 @@ C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\System.Xm
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\System.Xml.XmlSerializer.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\System.Xml.XPath.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\System.Xml.XPath.XDocument.dll
-C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\ExhaustiveSearchAlgorithm.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\GeneticAlgorithm.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\KnapsackProblem.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\Logger.dll
-C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\ExhaustiveSearchAlgorithm.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\GeneticAlgorithm.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\KnapsackProblem.pdb
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\Logger.pdb
@@ -111,3 +109,5 @@ C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\obj\Debug\ExcelRepo
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\obj\Debug\ExcelReport.csproj.CopyComplete
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\obj\Debug\ExcelReport.dll
 C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\obj\Debug\ExcelReport.pdb
+C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\ExactAlgorithms.dll
+C:\university\diploma\diplom\app\KnapcaskProblem\ExcelReport\bin\Debug\ExactAlgorithms.pdb

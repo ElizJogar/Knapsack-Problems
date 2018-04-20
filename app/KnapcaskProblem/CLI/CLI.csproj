@@ -72,13 +72,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExactAlgorithms\ExactAlgorithms.csproj">
+      <Project>{b63249da-76f7-442e-9212-d01efc3ad560}</Project>
+      <Name>ExactAlgorithms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExcelReport\ExcelReport.csproj">
       <Project>{20b7b437-0132-40a6-9147-a823b0917e1a}</Project>
       <Name>ExcelReport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExhaustiveSearchAlgorithm\ExhaustiveSearchAlgorithm.csproj">
-      <Project>{41937bb7-533a-411e-8b1f-9aca1a5143d7}</Project>
-      <Name>ExhaustiveSearchAlgorithm</Name>
     </ProjectReference>
     <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithm.csproj">
       <Project>{8a91849a-3896-4d02-a8f7-7c189f126efc}</Project>

@@ -99,7 +99,7 @@ namespace ExcelReport
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
                     var taskData = m_task.Create(data[dataIndex]);
-                    long optimum = new ExhaustiveSearchAlgorithm(taskData).Run();
+                    long optimum = new DynamicProgramming(taskData).Run();
 
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
