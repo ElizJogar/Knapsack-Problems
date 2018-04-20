@@ -9,24 +9,18 @@ namespace UnitTests
         [TestMethod]
         public void CheckBB_DFS()
         {
-            const int GOLD = 175;
-            var data = new KPTask().Create(new TestData());
-            var alg = new BranchAndBound(data);
-            Assert.AreEqual(GOLD, alg.Run());
-
-            const int UKP_GOLD = 243004;
-            data = new UKPTask().Create(new TestData1());
-            alg = new BranchAndBound(data);
-            Assert.AreEqual(UKP_GOLD, alg.Run());
+            var data = new TestData();
+            var alg = new BranchAndBound(new KPTask().Create(data));
+            Assert.AreEqual(data.Gold(), alg.Run());
+            //TODO: find test data to check
         }
 
         [TestMethod]
         public void CheckBB_BFS()
         {
-            const int GOLD = 175;
-            var data = new KPTask().Create(new TestData());
-            var alg = new BranchAndBound(data, new BFS());
-            Assert.AreEqual(GOLD, alg.Run());
+            var data = new TestData();
+            var alg = new BranchAndBound(new KPTask().Create(data), new BFS());
+            Assert.AreEqual(data.Gold(), alg.Run());
         }
     }
 }

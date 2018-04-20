@@ -9,29 +9,25 @@ namespace UnitTests
         [TestMethod]
         public void CheckDP_Direct()
         {
-            const int GOLD = 175;
-            var data = new KPTask().Create(new TestData());
-            var alg = new DynamicProgramming(data, new DirectApproach());
-            Assert.AreEqual(GOLD, alg.Run());
+            var data = new TestData();
+            var alg = new DynamicProgramming(new KPTask().Create(data), new DirectApproach());
+            Assert.AreEqual(data.Gold(), alg.Run());
 
-            const int UKP_GOLD = 243004;
-            data = new UKPTask().Create(new TestData1());
-            alg = new DynamicProgramming(data, new DirectApproach());
-            Assert.AreEqual(UKP_GOLD, alg.Run());
+            var data1 = new TestData1();
+            alg = new DynamicProgramming(new UKPTask().Create(data1), new DirectApproach());
+            Assert.AreEqual(data1.UKPGold(), alg.Run());
         }
 
         [TestMethod]
         public void CheckDP_Recurrent()
         {
-            const int GOLD = 175;
-            var data = new KPTask().Create(new TestData());
-            var alg = new DynamicProgramming(data);
-            Assert.AreEqual(GOLD, alg.Run());
+            var data = new TestData();
+            var alg = new DynamicProgramming(new KPTask().Create(data));
+            Assert.AreEqual(data.Gold(), alg.Run());
 
-            const int UKP_GOLD = 243004;
-            data = new UKPTask().Create(new TestData1());
-            alg = new DynamicProgramming(data);
-            Assert.AreEqual(UKP_GOLD, alg.Run());
+            var data1 = new TestData1();
+            alg = new DynamicProgramming(new UKPTask().Create(data1));
+            Assert.AreEqual(data1.UKPGold(), alg.Run());
         }
     }
 }

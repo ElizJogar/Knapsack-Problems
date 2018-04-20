@@ -2,7 +2,12 @@
 
 namespace UnitTests
 {
-    public class TestData : AData
+    public interface ITestData
+    {
+        long Gold();
+        long UKPGold();
+    }
+    public class TestData : AData, ITestData
     {
         public TestData() : base(15) { }
         public TestData(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
@@ -19,9 +24,17 @@ namespace UnitTests
         {
             return "test";
         }
+        public long Gold()
+        {
+            return 175;
+        }
+        public long UKPGold()
+        {
+            return 1680;
+        }
     }
 
-    public class TestData1 : AData
+    public class TestData1 : AData, ITestData
     {
         public TestData1() : base(15) { }
         public TestData1(Range range, long[] cost, long[] weight, long maxWeight, int[] itemMaxCounts = null)
@@ -36,7 +49,15 @@ namespace UnitTests
         }
         public override string Str()
         {
-            return "test";
+            return "test1";
+        }
+        public long Gold()
+        {
+            return 70826;
+        }
+        public long UKPGold()
+        {
+            return 243004;
         }
     }
 }

@@ -103,6 +103,7 @@ namespace Algorithm
 
                 // branch with not taking next item
                 if (next.bound > maxCost) container.Add(next);
+
             }
             return maxCost;
         }

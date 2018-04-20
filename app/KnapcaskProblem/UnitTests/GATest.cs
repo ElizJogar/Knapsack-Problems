@@ -11,27 +11,25 @@ namespace UnitTests
         [TestMethod]
         public void CheckGA()
         {
-            const int GOLD = 175;
             const int OFFSET = 10;
 
-            var data = new KPTask().Create(new TestData());
-            var alg = new GeneticAlgorithm(data,
+            var data = new TestData();  
+            var alg = new GeneticAlgorithm(new KPTask().Create(data),
             new DantzigAlgorithm(),
             new SinglePointCrossover(),
             new PointMutation(),
             new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
-            Assert.IsTrue(GOLD - OFFSET <= alg.Run(15, 15));
+            Assert.IsTrue(data.Gold() - OFFSET <= alg.Run(15, 15));
 
-            const int UKP_GOLD = 243004;
             const int UKP_OFFSET = 12000;
-            data = new UKPTask().Create(new TestData1());
-            alg = new GeneticAlgorithm(data,
+            var data1 = new TestData1();
+            alg = new GeneticAlgorithm(new UKPTask().Create(data1),
             new DantzigAlgorithm(),
             new SinglePointCrossover(),
             new PointMutation(),
             new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
 
-            Assert.IsTrue(UKP_GOLD - UKP_OFFSET <= alg.Run(30, 15));
+            Assert.IsTrue(data1.UKPGold() - UKP_OFFSET <= alg.Run(30, 15));
         }
 
         [TestMethod]
