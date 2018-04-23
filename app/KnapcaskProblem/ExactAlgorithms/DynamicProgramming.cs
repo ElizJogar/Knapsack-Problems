@@ -13,7 +13,7 @@ namespace Algorithm
         public long Run(List<Item> items, long capacity)
         {
             var itemsCount = items.Count;
-            long[,] K = new long[itemsCount + 1, capacity + 1];
+            long[,] Z = new long[itemsCount + 1, capacity + 1];
 
             for (int i = 0; i <= itemsCount; ++i)
             {
@@ -21,20 +21,20 @@ namespace Algorithm
                 {
                     if (i == 0 || w == 0)
                     {
-                        K[i, w] = 0;
+                        Z[i, w] = 0;
                     }
                     else if (items[i - 1].weight <= w)
                     {
-                        K[i, w] = Math.Max(items[i - 1].cost + K[i - 1, w - items[i - 1].weight], K[i - 1, w]);
+                        Z[i, w] = Math.Max(items[i - 1].cost + Z[i - 1, w - items[i - 1].weight], Z[i - 1, w]);
                     }
                     else
                     {
-                        K[i, w] = K[i - 1, w];
+                        Z[i, w] = Z[i - 1, w];
                     }
                 }
             }
 
-            return K[itemsCount, capacity];
+            return Z[itemsCount, capacity];
         }
     }
     public class RecurrentApproach : IDPApproach
@@ -45,41 +45,33 @@ namespace Algorithm
         {
             m_items = items;
 
-            m_z = new long[items.Count, capacity];
-            for (var i = 0; i < items.Count; ++i)
+            m_z = new long[items.Count + 1, capacity + 1];
+            for (var i = 0; i <= items.Count; ++i)
             {
-                for (var j = 0; j < capacity; ++j)
+                for (var j = 0; j <= capacity; ++j)
                 {
                     m_z[i, j] = -1;
                 }
             }
-            return CalculateZ(items.Count - 1, capacity);
+            return CalculateZ(items.Count, capacity);
         }
         private long CalculateZ(int index, long weight)
         {
-            if (m_z[index, weight - 1] != -1)
+            if (m_z[index, weight] != -1) return m_z[index, weight];
+            if (index == 0 || weight == 0)
             {
-                return m_z[index, weight - 1];
+                m_z[index, weight] = 0;
             }
-
-            if (index == 0)
+            else if (weight >= m_items[index - 1].weight)
             {
-                m_z[index, weight - 1] = weight >= m_items[0].weight ? m_items[0].cost : 0;
-                return m_z[index, weight - 1];
+                m_z[index, weight] = Math.Max(CalculateZ(index - 1, weight), 
+                                              CalculateZ(index - 1, weight - m_items[index - 1].weight) + m_items[index - 1].cost);
             }
-
-            var first = CalculateZ(index - 1, weight);
-            var newWeight = weight - m_items[index].weight;
-            if (newWeight < 0)
+            else
             {
-                m_z[index, weight - 1] = first;
-                return first;
+                m_z[index, weight] = CalculateZ(index - 1, weight);
             }
-
-            var second = newWeight != 0 ? CalculateZ(index - 1, newWeight) + m_items[index].cost : m_items[index].cost;
-
-            m_z[index, weight - 1] = Math.Max(first, second);
-            return m_z[index, weight - 1];
+            return m_z[index, weight];
         }
     }
     public class DynamicProgramming : IExactAlgorithm
