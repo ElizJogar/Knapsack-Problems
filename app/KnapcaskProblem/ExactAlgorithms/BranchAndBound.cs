@@ -36,27 +36,30 @@ namespace Algorithm
     {
         private List<Item> m_items;
         private long m_capacity;
-        private IBound m_bound = new GreedyUpperBound();
+        private ITotalBound m_upperBound = new U3Bound();
+        private IBound m_lowerBound = new GreedyLowerBound();
         private IFS m_fs = new DFS();
 
         public BranchAndBound(IData data)
         {
             Init(data);
         }
-        public BranchAndBound(IData data, IBound bound)
+        public BranchAndBound(IData data, ITotalBound upBound, IBound lowBound)
         {
             Init(data);
-            m_bound = bound;
+            m_upperBound = upBound;
+            m_lowerBound = lowBound;
         }
         public BranchAndBound(IData data, IFS fs)
         {
             Init(data);
             m_fs = fs;
         }
-        public BranchAndBound(IData data, IBound bound, IFS fs)
+        public BranchAndBound(IData data, ITotalBound upBound, IBound lowBound, IFS fs)
         {
             Init(data);
-            m_bound = bound;
+            m_upperBound = upBound;
+            m_lowerBound = lowBound;
             m_fs = fs;
         }
         public long Run()
@@ -71,7 +74,9 @@ namespace Algorithm
 
             container.Add(first);
 
-            long maxCost = 0;
+            long lowerBound = 0;
+            long upperBound = m_upperBound.Calculate(m_items, m_capacity);
+
             while (container.Count() != 0)
             {
                 var current = container.Peek();
@@ -84,30 +89,29 @@ namespace Algorithm
 
                 if (current.level == m_items.Count - 1) continue;
 
-                next.weight = current.weight + m_items[next.level].weight;
-                next.cost = current.cost + m_items[next.level].cost;
-
-                if (next.weight <= m_capacity && next.cost > maxCost)
+                for (var count = m_items[next.level].maxCount; count >= 0; --count)
                 {
-                    maxCost = next.cost;
+                    next.weight = current.weight + m_items[next.level].weight * count;
+                    next.cost = current.cost + m_items[next.level].cost * count;
+
+                    if (next.weight <= m_capacity && next.cost > lowerBound)
+                    {
+                        lowerBound = next.cost;
+                    }
+
+                    next.bound = m_lowerBound.Calculate(next, m_items, m_capacity);
+                    if (next.cost == upperBound)
+                    {
+                        return next.cost;
+                    }
+                    else if (next.bound > lowerBound)
+                    {
+                        container.Add(next);
+                    }
                 }
-
-                next.bound = m_bound.Calculate(next, m_items, m_capacity);
-
-                // branch with taking next item
-                if (next.bound > maxCost) container.Add(next);
-
-                next.weight = current.weight;
-                next.cost = current.cost;
-                next.bound = m_bound.Calculate(next, m_items, m_capacity);
-
-                // branch with not taking next item
-                if (next.bound > maxCost) container.Add(next);
-
             }
-            return maxCost;
+            return lowerBound;
         }
-
         private void Init(IData data)
         {
             m_items = Helpers.GetItems(data);

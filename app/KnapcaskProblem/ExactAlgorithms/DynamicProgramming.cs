@@ -81,13 +81,13 @@ namespace Algorithm
 
         public DynamicProgramming(IData data)
         {
-            m_items = Helpers.GetItems(data);
+            m_items = Helpers.GetItems(Helpers.ExtendData(data));
             m_capacity = data.Capacity;
         }
         public DynamicProgramming(IData data, IDPApproach approach)
         {
             m_approach = approach;
-            m_items = Helpers.GetItems(data);
+            m_items = Helpers.GetItems(Helpers.ExtendData(data));
             m_capacity = data.Capacity;
         }
 

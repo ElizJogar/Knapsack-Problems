@@ -8,23 +8,22 @@ namespace Algorithm
     {
         public long cost;
         public long weight;
-        public Item(long cost, long weight)
+        public int maxCount;
+        public Item(long cost, long weight, int maxCount = 1)
         {
             this.cost = cost;
             this.weight = weight;
+            this.maxCount = maxCount;
         }
     }
     class Helpers
     {
         public static List<Item> GetItems(IData data)
         {
-            data = ExtendData(data);
             var items = new List<Item>();
-            var specificCosts = new Dictionary<int, double>();
             for (int i = 0; i < data.Cost.Length; ++i)
             {
-                items.Add(new Item(data.Cost[i], data.Weight[i]));
-                specificCosts.Add(i, (double)data.Cost[i] / data.Weight[i]);
+                items.Add(new Item(data.Cost[i], data.Weight[i], data.Cost.Length == data.ItemMaxCounts.Length ? data.ItemMaxCounts[i] : 1));
             }
             items.Sort((a, b) =>
             {
@@ -34,7 +33,7 @@ namespace Algorithm
             });
             return items;
         }
-        private static IData ExtendData(IData data)
+        public static IData ExtendData(IData data)
         {
             var itemsCount = 0;
             var indices = new List<int> { 0 };

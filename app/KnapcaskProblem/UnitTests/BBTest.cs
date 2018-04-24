@@ -12,7 +12,10 @@ namespace UnitTests
             var data = new TestData();
             var alg = new BranchAndBound(new KPTask().Create(data));
             Assert.AreEqual(data.Gold(), alg.Run());
-            //TODO: find test data to check
+
+            var data1 = new TestData1();
+            alg = new BranchAndBound(new UKPTask().Create(data1));
+            Assert.AreEqual(data1.UKPGold(), alg.Run());
         }
 
         [TestMethod]
@@ -21,6 +24,10 @@ namespace UnitTests
             var data = new TestData();
             var alg = new BranchAndBound(new KPTask().Create(data), new BFS());
             Assert.AreEqual(data.Gold(), alg.Run());
+
+            var data1 = new TestData1();
+            alg = new BranchAndBound(new UKPTask().Create(data1), new BFS());
+            Assert.AreEqual(data1.UKPGold(), alg.Run());
         }
     }
 }
