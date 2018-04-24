@@ -18,18 +18,25 @@ namespace Algorithm
     }
     class Helpers
     {
-        public static List<Item> GetItems(IData data)
+        public delegate int Callback(Item a, Item b);
+        public static List<Item> GetItems(IData data, Callback sort = null)
         {
             var items = new List<Item>();
             for (int i = 0; i < data.Cost.Length; ++i)
             {
-                items.Add(new Item(data.Cost[i], data.Weight[i], data.Cost.Length == data.ItemMaxCounts.Length ? data.ItemMaxCounts[i] : 1));
+                items.Add(new Item(data.Cost[i], data.Weight[i], 
+                    data.Cost.Length == data.ItemMaxCounts.Length ? data.ItemMaxCounts[i] : 1));
             }
-            items.Sort((a, b) =>
+            sort = sort ?? ((a, b) =>
             {
                 double first = (double)a.cost / a.weight;
                 double second = (double)b.cost / b.weight;
                 return second.CompareTo(first);
+            });
+
+            items.Sort((a, b) =>
+            {
+                return sort(a, b);
             });
             return items;
         }

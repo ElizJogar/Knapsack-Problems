@@ -29,5 +29,21 @@ namespace UnitTests
             alg = new DynamicProgramming(new UKPTask().Create(data1));
             Assert.AreEqual(data1.UKPGold(), alg.Run());
         }
+
+        [TestMethod]
+        public void CheckDP_ClassicalUKP()
+        {
+            var data = new TestData1();
+            var alg = new DynamicProgramming(new UKPTask().Create(data), new ClassicalUKPApproach());
+            Assert.AreEqual(data.UKPGold(), alg.Run());
+        }
+
+        [TestMethod]
+        public void CheckDP_EDUK_EX()
+        {
+            var data = new TestData1();
+            var alg = new DynamicProgramming(new UKPTask().Create(data), new EDUK_EX(5, 5));
+            Assert.AreEqual(data.UKPGold(), alg.Run());
+        }
     }
 }

@@ -6,12 +6,13 @@ namespace Algorithm
 {
     public interface IDPApproach
     {
-        long Run(List<Item> items, long capacity);
+        long Run(IData data, long capacity);
     }
     public class DirectApproach : IDPApproach
     {
-        public long Run(List<Item> items, long capacity)
+        public long Run(IData data, long capacity)
         {
+            var items = Helpers.GetItems(Helpers.ExtendData(data));
             var itemsCount = items.Count;
             long[,] Z = new long[itemsCount + 1, capacity + 1];
 
@@ -41,19 +42,19 @@ namespace Algorithm
     {
         private long[,] m_z;
         private List<Item> m_items;
-        public long Run(List<Item> items, long capacity)
+        public long Run(IData data, long capacity)
         {
-            m_items = items;
+            m_items = Helpers.GetItems(Helpers.ExtendData(data));
 
-            m_z = new long[items.Count + 1, capacity + 1];
-            for (var i = 0; i <= items.Count; ++i)
+            m_z = new long[m_items.Count + 1, capacity + 1];
+            for (var i = 0; i <= m_items.Count; ++i)
             {
                 for (var j = 0; j <= capacity; ++j)
                 {
                     m_z[i, j] = -1;
                 }
             }
-            return CalculateZ(items.Count, capacity);
+            return CalculateZ(m_items.Count, capacity);
         }
         private long CalculateZ(int index, long weight)
         {
@@ -73,27 +74,134 @@ namespace Algorithm
             return m_z[index, weight];
         }
     }
+
+    public class ClassicalUKPApproach : IDPApproach
+    {
+        public long Run(IData data, long capacity)
+        {
+            var items = Helpers.GetItems(data);
+            long[] Z = new long[capacity + 1];
+
+            for (int c = 1; c <= capacity; ++c)
+            {
+                Z[c] = Z[c - 1];
+                for (int i = 0; i < items.Count; ++i)
+                {
+                    if (items[i].weight <= c)
+                    {
+                        Z[c] = Math.Max(items[i].cost + Z[c - items[i].weight], Z[c]);
+                    }
+                }
+            }
+
+            return Z[capacity];
+        }
+    }
+    public class EDUK_EX : IDPApproach
+    {
+        private int m_itemSlices = 1;
+        private int m_capacitySlices = 1;
+        public EDUK_EX(int itemSlices, int capacitySlices)
+        {
+            m_itemSlices = itemSlices;
+            m_capacitySlices = capacitySlices;
+        }
+        public long Run(IData data, long capacity)
+        {
+            var items = Helpers.GetItems(data, (a, b) => a.weight.CompareTo(b.weight));
+            long[] Z = new long[capacity + 1];
+            // undominated items
+            var F = new List<int>();
+            // last capacity in which item was the most efficient item in an optimal solution
+            long[] L = new long[capacity + 1];
+            int j = 0;
+            // Reduction Phase
+            for (var i = 0; i < m_itemSlices; ++i)
+            {
+                int count = i < m_itemSlices - 1 ? (items.Count / m_itemSlices) + j : items.Count;
+                for (; j < count; ++j)
+                {
+                    var c = j > 0 ? items[j - 1].weight + 1 : 1;
+                    for (; c <= items[j].weight; ++c)
+                    {
+                        Z[c] = 0;
+                        foreach (var f in F)
+                        {
+                            if (Z[c - items[f].weight] + items[f].cost > Z[c])
+                            {
+                                L[f] = c;
+                                Z[c] = Z[c - items[f].weight] + items[f].cost;
+                            }
+                        }
+                    }
+                    // j is not dominated by F
+                    if (Z[items[j].weight] <= items[j].cost)
+                    {
+                        Z[items[j].weight] = items[j].cost;
+                        F.Add(j);
+                    }
+                }
+                CheckThresholdDominance(L[F[F.Count - 1]], F, L, items);
+            }
+            long w = 0;
+            // Standard Phase
+            for (var i = 0; i < m_capacitySlices; ++i)
+            {
+                if (F.Count == 1)
+                {
+                    // periodicity achivied
+                    var index = F[0];
+                    Z[capacity] = Z[L[index]] + (1 + (capacity - L[index]) / items[index].weight) * items[index].cost;
+                    return Z[capacity];
+                }
+                long count = i < m_capacitySlices - 1 ? (capacity / m_capacitySlices) + w : capacity;
+                for (; w <= count; ++w)
+                {
+                    Z[w] = 0;
+                    foreach (var f in F)
+                    {
+                        if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost > Z[w])
+                        {
+                            L[f] = w;
+                            Z[w] = Z[w - items[f].weight] + items[f].cost;
+                        }
+                    }
+                }
+                CheckThresholdDominance(w, F, L, items);
+            }
+            return Z[capacity];
+        }
+
+        private void CheckThresholdDominance(long capacity, List<int> F, long[] L, List<Item> items)
+        {
+            F.RemoveAll(f =>
+           {
+               return L[f] < capacity - items[f].weight;
+           });
+        }
+    }
+
     public class DynamicProgramming : IExactAlgorithm
     {
         private IDPApproach m_approach = new RecurrentApproach();
-        private List<Item> m_items;
+        private IData m_data;
         long m_capacity;
 
         public DynamicProgramming(IData data)
         {
-            m_items = Helpers.GetItems(Helpers.ExtendData(data));
+            m_data = data;
             m_capacity = data.Capacity;
         }
         public DynamicProgramming(IData data, IDPApproach approach)
         {
             m_approach = approach;
-            m_items = Helpers.GetItems(Helpers.ExtendData(data));
+            m_data = data;
             m_capacity = data.Capacity;
         }
 
         public long Run()
         {
-            return m_approach.Run(m_items, m_capacity);
+            return m_approach.Run(m_data, m_capacity);
         }
     }
 }
