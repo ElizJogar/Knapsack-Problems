@@ -64,8 +64,7 @@ namespace Algorithm
             }
             else if (weight >= m_items[index - 1].weight)
             {
-                m_z[index, weight] = Math.Max(CalculateZ(index - 1, weight), 
-                                              CalculateZ(index - 1, weight - m_items[index - 1].weight) + m_items[index - 1].cost);
+                m_z[index, weight] = Math.Max(CalculateZ(index - 1, weight), CalculateZ(index - 1, weight - m_items[index - 1].weight) + m_items[index - 1].cost);
             }
             else
             {
