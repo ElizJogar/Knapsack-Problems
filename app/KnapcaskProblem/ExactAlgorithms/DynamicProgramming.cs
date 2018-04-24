@@ -109,6 +109,7 @@ namespace Algorithm
         public long Run(IData data, long capacity)
         {
             var items = Helpers.GetItems(data, (a, b) => a.weight.CompareTo(b.weight));
+            // cost table for current problem
             long[] Z = new long[capacity + 1];
             // undominated items
             var F = new List<int>();
@@ -151,7 +152,7 @@ namespace Algorithm
                 {
                     // periodicity achivied
                     var index = F[0];
-                    Z[capacity] = Z[L[index]] + (1 + (capacity - L[index]) / items[index].weight) * items[index].cost;
+                    Z[capacity] = Z[L[index]] + (int)Math.Round((0.5 + (capacity - L[index]) / items[index].weight), 0) * items[index].cost;
                     return Z[capacity];
                 }
                 long count = i < m_capacitySlices - 1 ? (capacity / m_capacitySlices) + w : capacity;
