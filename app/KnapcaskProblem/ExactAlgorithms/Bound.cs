@@ -16,8 +16,6 @@ namespace Algorithm
     {
         public long Calculate(List<Item> items, long capacity)
         {
-            // TODO: move to high level
-            // Calculating upper bound
             long c0 = capacity % items[0].weight;
             long c1 = c0 % items[1].weight;
             long z = capacity / items[0].weight * items[0].cost + c0 / items[1].weight * items[1].cost;
@@ -28,7 +26,6 @@ namespace Algorithm
             return Math.Max(U0, U1);
         }
     }
-
 
     public class GreedyLowerBound : IBound
     {
