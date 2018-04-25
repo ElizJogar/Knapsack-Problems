@@ -101,7 +101,6 @@ namespace ExcelReport
                     var taskData = m_task.Create(data[dataIndex]);
                     
                     long upperBound = new U3Bound().Calculate(Helpers.GetItems(taskData), taskData.Capacity);
-                    //new DynamicProgramming(taskData).Run();
 
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
@@ -124,7 +123,7 @@ namespace ExcelReport
                                     for (int g = 0; g < selection.Length; g++)
                                     {
                                         ++count;
-                                        var alg = new GeneticAlgorithm(taskData, initialPopulation[i], crossover[j], mutation[k], selection[g]);
+                                        var alg = new GeneticAlgorithm(initialPopulation[i], crossover[j], mutation[k], selection[g], taskData);
 
                                         m_individs = alg.Init(m_populationCount);
                                         for (int x = 0; x < m_iterationCount; x++)

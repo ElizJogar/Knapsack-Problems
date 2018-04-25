@@ -115,6 +115,7 @@ namespace Algorithm
             var F = new List<int>();
             // last capacity in which item was the most efficient item in an optimal solution
             long[] L = new long[capacity + 1];
+            long lastCapacity = 0;
             int j = 0;
             // Reduction Phase
             for (var i = 0; i < m_itemSlices; ++i)
@@ -122,6 +123,14 @@ namespace Algorithm
                 int count = i < m_itemSlices - 1 ? (items.Count / m_itemSlices) + j : items.Count;
                 for (; j < count; ++j)
                 {
+                    // tmp, may be remove in future
+                    //F.Sort((a, b) =>
+                    //{
+                    //    double first = (double)items[a].cost / items[a].weight;
+                    //    double second = (double)items[b].cost / items[b].weight;
+                    //    return second.CompareTo(first);
+                    //});
+                    //
                     var c = j > 0 ? items[j - 1].weight + 1 : 1;
                     for (; c <= items[j].weight; ++c)
                     {
@@ -131,6 +140,7 @@ namespace Algorithm
                             if (Z[c - items[f].weight] + items[f].cost > Z[c])
                             {
                                 L[f] = c;
+                                lastCapacity = c;
                                 Z[c] = Z[c - items[f].weight] + items[f].cost;
                             }
                         }
@@ -142,7 +152,7 @@ namespace Algorithm
                         F.Add(j);
                     }
                 }
-                CheckThresholdDominance(L[F[F.Count - 1]], F, L, items);
+                CheckThresholdDominance(lastCapacity, F, L, items);
             }
             long w = 0;
             // Standard Phase
@@ -152,10 +162,25 @@ namespace Algorithm
                 {
                     // periodicity achivied
                     var index = F[0];
-                    Z[capacity] = Z[L[index]] + (int)Math.Round((0.5 + (capacity - L[index]) / items[index].weight), 0) * items[index].cost;
+                    var l = L[index];
+                    var bestItemCount = (capacity - l) / items[index].weight; //(int)Math.Round((0.5 + (capacity - L[index]) / items[index].weight), 0);
+                    Z[capacity] = Z[l] + bestItemCount * items[index].cost;
+                    var remainderCapacity = capacity - l - items[index].weight * bestItemCount;
+                    if (items[index].weight <= remainderCapacity)
+                    {
+                        Z[capacity] += items[index].cost;
+                    }
                     return Z[capacity];
                 }
                 long count = i < m_capacitySlices - 1 ? (capacity / m_capacitySlices) + w : capacity;
+                // tmp, may be remove in future
+                //F.Sort((a, b) =>
+                //{
+                //    double first = (double)items[a].cost / items[a].weight;
+                //    double second = (double)items[b].cost / items[b].weight;
+                //    return second.CompareTo(first);
+                //});
+                //
                 for (; w <= count; ++w)
                 {
                     Z[w] = 0;
@@ -164,11 +189,12 @@ namespace Algorithm
                         if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost > Z[w])
                         {
                             L[f] = w;
+                            lastCapacity = w;
                             Z[w] = Z[w - items[f].weight] + items[f].cost;
                         }
                     }
                 }
-                CheckThresholdDominance(w, F, L, items);
+                CheckThresholdDominance(lastCapacity, F, L, items);
             }
             return Z[capacity];
         }
@@ -185,24 +211,18 @@ namespace Algorithm
     public class DynamicProgramming : IExactAlgorithm
     {
         private IDPApproach m_approach = new RecurrentApproach();
-        private IData m_data;
-        long m_capacity;
 
-        public DynamicProgramming(IData data)
+        public DynamicProgramming()
         {
-            m_data = data;
-            m_capacity = data.Capacity;
         }
-        public DynamicProgramming(IData data, IDPApproach approach)
+        public DynamicProgramming(IDPApproach approach)
         {
             m_approach = approach;
-            m_data = data;
-            m_capacity = data.Capacity;
         }
 
-        public long Run()
+        public long Run(IData data)
         {
-            return m_approach.Run(m_data, m_capacity);
+            return m_approach.Run(data, data.Capacity);
         }
     }
 }

@@ -19,9 +19,13 @@ namespace Algorithm
             long c0 = capacity % items[0].weight;
             long c1 = c0 % items[1].weight;
             long z = capacity / items[0].weight * items[0].cost + c0 / items[1].weight * items[1].cost;
-            long U0 = z + c1 / items[2].weight * items[2].cost;
+
             long U1 = z + (c1 + ((items[1].weight - c1) / items[0].weight) * items[0].weight)
                 * items[1].cost / items[1].weight - ((items[1].weight - c1) / items[0].weight) * items[1].cost;
+
+            if (items.Count == 2) return U1;
+
+            long U0 = z + c1 / items[2].weight * items[2].cost;
 
             return Math.Max(U0, U1);
         }

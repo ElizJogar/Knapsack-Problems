@@ -1,8 +1,9 @@
-﻿
+﻿using KnapsackProblem;
+
 namespace Algorithm
 {
-    interface IExactAlgorithm
+    public interface IExactAlgorithm
     {
-        long Run();
+        long Run(IData data);
     }
 }

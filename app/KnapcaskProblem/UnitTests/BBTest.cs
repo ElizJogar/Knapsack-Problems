@@ -10,30 +10,24 @@ namespace UnitTests
         public void CheckBB_DFS()
         {
             var data = new TestData();
-            var alg = new BranchAndBound(new KPTask().Create(data));
-            Assert.AreEqual(data.Gold(), alg.Run());
-
-            alg = new BranchAndBound(new UKPTask().Create(data));
-            Assert.AreEqual(data.UKPGold(), alg.Run());
+            var alg = new BranchAndBound();
+            Assert.AreEqual(data.Gold(), alg.Run(new KPTask().Create(data)));
+            Assert.AreEqual(data.UKPGold(), alg.Run(new UKPTask().Create(data)));
 
             var data1 = new TestData1();
-            alg = new BranchAndBound(new UKPTask().Create(data1));
-            Assert.AreEqual(data1.UKPGold(), alg.Run());
+            Assert.AreEqual(data1.UKPGold(), alg.Run(new UKPTask().Create(data1)));
         }
 
         [TestMethod]
         public void CheckBB_BFS()
         {
             var data = new TestData();
-            var alg = new BranchAndBound(new KPTask().Create(data), new BFS());
-            Assert.AreEqual(data.Gold(), alg.Run());
-
-            alg = new BranchAndBound(new UKPTask().Create(data), new BFS());
-            Assert.AreEqual(data.UKPGold(), alg.Run());
+            var alg = new BranchAndBound(new BFS());
+            Assert.AreEqual(data.Gold(), alg.Run(new KPTask().Create(data)));
+            Assert.AreEqual(data.UKPGold(), alg.Run(new UKPTask().Create(data)));
 
             var data1 = new TestData1();
-            alg = new BranchAndBound(new UKPTask().Create(data1), new BFS());
-            Assert.AreEqual(data1.UKPGold(), alg.Run());
+            Assert.AreEqual(data1.UKPGold(), alg.Run(new UKPTask().Create(data1)));
         }
     }
 }

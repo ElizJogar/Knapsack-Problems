@@ -14,20 +14,20 @@ namespace UnitTests
             const int OFFSET = 10;
 
             var data = new TestData();  
-            var alg = new GeneticAlgorithm(new KPTask().Create(data),
-            new DantzigAlgorithm(),
-            new SinglePointCrossover(),
-            new PointMutation(),
-            new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
+            var alg = new GeneticAlgorithm(new DantzigAlgorithm(),
+                                            new SinglePointCrossover(),
+                                            new PointMutation(),
+                                            new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()),
+                                            new KPTask().Create(data));
             Assert.IsTrue(data.Gold() - OFFSET <= alg.Run(15, 15));
 
             const int UKP_OFFSET = 12000;
             var data1 = new TestData1();
-            alg = new GeneticAlgorithm(new UKPTask().Create(data1),
-            new DantzigAlgorithm(),
-            new SinglePointCrossover(),
-            new PointMutation(),
-            new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
+            alg = new GeneticAlgorithm(new DantzigAlgorithm(),
+                                        new SinglePointCrossover(),
+                                        new PointMutation(),
+                                        new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator()));
+            alg.SetData(new UKPTask().Create(data1));
 
             Assert.IsTrue(data1.UKPGold() - UKP_OFFSET <= alg.Run(30, 15));
         }

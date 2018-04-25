@@ -22,7 +22,6 @@ namespace Algorithm
             return new DFSContainer<T>();
         }
     }
-
     public class BFS : IFS
     {
         public IContainer<T> CreateContainer<T>()
@@ -34,36 +33,33 @@ namespace Algorithm
 
     public class BranchAndBound : IExactAlgorithm
     {
-        private List<Item> m_items;
-        private long m_capacity;
         private ITotalBound m_upperBound = new U3Bound();
         private IBound m_lowerBound = new GreedyLowerBound();
         private IFS m_fs = new DFS();
 
-        public BranchAndBound(IData data)
+        public BranchAndBound()
         {
-            Init(data);
         }
-        public BranchAndBound(IData data, ITotalBound upBound, IBound lowBound)
+        public BranchAndBound(ITotalBound upBound, IBound lowBound)
         {
-            Init(data);
             m_upperBound = upBound;
             m_lowerBound = lowBound;
         }
-        public BranchAndBound(IData data, IFS fs)
+        public BranchAndBound(IFS fs)
         {
-            Init(data);
             m_fs = fs;
         }
         public BranchAndBound(IData data, ITotalBound upBound, IBound lowBound, IFS fs)
         {
-            Init(data);
             m_upperBound = upBound;
             m_lowerBound = lowBound;
             m_fs = fs;
         }
-        public long Run()
+        public long Run(IData data)
         {
+            var items = Helpers.GetItems(data);
+            var capacity = data.Capacity;
+
             var container = m_fs.CreateContainer<Node>();
             var first = new Node()
             {
@@ -75,7 +71,7 @@ namespace Algorithm
             container.Add(first);
 
             long lowerBound = 0;
-            long upperBound = m_upperBound.Calculate(m_items, m_capacity);
+            long upperBound = m_upperBound.Calculate(items, capacity);
 
             while (container.Count() != 0)
             {
@@ -87,19 +83,21 @@ namespace Algorithm
                     level = current.level + 1
                 };
 
-                if (current.level == m_items.Count - 1) continue;
+                if (current.level == items.Count - 1) continue;
 
-                for (var count = m_items[next.level].maxCount; count >= 0; --count)
+                for (var count = items[next.level].maxCount; count >= 0; --count)
                 {
-                    next.weight = current.weight + m_items[next.level].weight * count;
-                    next.cost = current.cost + m_items[next.level].cost * count;
+                    next.weight = current.weight + items[next.level].weight * count;
+                    next.cost = current.cost + items[next.level].cost * count;
 
-                    if (next.weight <= m_capacity && next.cost > lowerBound)
+                    if (next.weight > capacity) continue;
+
+                    if (next.cost > lowerBound)
                     {
                         lowerBound = next.cost;
                     }
 
-                    next.bound = m_lowerBound.Calculate(next, m_items, m_capacity);
+                    next.bound = m_lowerBound.Calculate(next, items, capacity);
                     if (next.cost == upperBound)
                     {
                         return next.cost;
@@ -111,11 +109,6 @@ namespace Algorithm
                 }
             }
             return lowerBound;
-        }
-        private void Init(IData data)
-        {
-            m_items = Helpers.GetItems(data);
-            m_capacity = data.Capacity;
         }
     }
 }
