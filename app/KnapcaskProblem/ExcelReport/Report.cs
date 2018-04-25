@@ -30,7 +30,7 @@ namespace ExcelReport
         {
             return m_dir;
         }
-        public DataAnalysisReport(ITask task = null, int iterationCount = 1, int populationCount = 1, int betta = 1, int startCount = 1, int dataSize = 15, int instancesCount = 1)
+        public CombinationsCompareReport(ITask task = null, int iterationCount = 1, int populationCount = 1, int betta = 1, int startCount = 1, int dataSize = 15, int instancesCount = 1)
         {
             m_task = task;
             m_iterationCount = iterationCount;
