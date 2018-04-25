@@ -16,7 +16,7 @@ namespace Algorithm
             this.maxCount = maxCount;
         }
     }
-    class Helpers
+    public class Helpers
     {
         public delegate int Callback(Item a, Item b);
         public static List<Item> GetItems(IData data, Callback sort = null)
