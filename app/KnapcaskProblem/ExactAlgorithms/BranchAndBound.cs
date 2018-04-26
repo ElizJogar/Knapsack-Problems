@@ -37,13 +37,13 @@ namespace Algorithm
 
         public BranchAndBound(ITotalBound upBound = null, IBound lowBound = null)
         {
-            m_upperBound = upBound ?? new FakeBound();
+            m_upperBound = upBound ?? new FakeTotalBound();
             m_lowerBound = lowBound ?? new GreedyLowerBound();
         }
         public BranchAndBound(IFS fs, ITotalBound upBound = null, IBound lowBound = null)
         {
             m_fs = fs;
-            m_upperBound = upBound ?? new FakeBound();
+            m_upperBound = upBound ?? new FakeTotalBound();
             m_lowerBound = lowBound ?? new GreedyLowerBound();
         }
         public long Run(IData data)

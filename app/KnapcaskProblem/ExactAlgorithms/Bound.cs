@@ -31,7 +31,7 @@ namespace Algorithm
             return Math.Max(U0, U1);
         }
     }
-    public class FakeBound : ITotalBound
+    public class FakeTotalBound : ITotalBound
     {
         public long Calculate(List<Item> items, long capacity)
         { 
