@@ -186,13 +186,6 @@ namespace Algorithm
 
         private void CheckThresholdDominance(long capacity, List<int> F, long[] L, List<Item> items)
         {
-            //// tmp, may be remove in future
-            // F.Sort((a, b) =>
-            // {
-            //     double first = (double)items[a].cost / items[a].weight;
-            //     double second = (double)items[b].cost / items[b].weight;
-            //     return second.CompareTo(first);
-            // });
             F.RemoveAll(f =>
            {
                return L[f] < capacity - items[f].weight;
