@@ -15,6 +15,7 @@ namespace UnitTests
             Assert.AreEqual(data.UKPGold(), alg.Run(new UKPTask().Create(data)));
 
             var data1 = new TestData1();
+            alg = new BranchAndBound(new U3Bound());
             Assert.AreEqual(data1.UKPGold(), alg.Run(new UKPTask().Create(data1)));
         }
 
@@ -27,6 +28,7 @@ namespace UnitTests
             Assert.AreEqual(data.UKPGold(), alg.Run(new UKPTask().Create(data)));
 
             var data1 = new TestData1();
+            alg = new BranchAndBound(new BFS(), new U3Bound());
             Assert.AreEqual(data1.UKPGold(), alg.Run(new UKPTask().Create(data1)));
         }
     }

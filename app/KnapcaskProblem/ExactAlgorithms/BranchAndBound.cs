@@ -29,31 +29,22 @@ namespace Algorithm
             return new BFSContainer<T>();
         }
     }
-
-
     public class BranchAndBound : IExactAlgorithm
     {
-        private ITotalBound m_upperBound = new U3Bound();
-        private IBound m_lowerBound = new GreedyLowerBound();
+        private ITotalBound m_upperBound;
+        private IBound m_lowerBound;
         private IFS m_fs = new DFS();
 
-        public BranchAndBound()
+        public BranchAndBound(ITotalBound upBound = null, IBound lowBound = null)
         {
+            m_upperBound = upBound ?? new FakeBound();
+            m_lowerBound = lowBound ?? new GreedyLowerBound();
         }
-        public BranchAndBound(ITotalBound upBound, IBound lowBound)
-        {
-            m_upperBound = upBound;
-            m_lowerBound = lowBound;
-        }
-        public BranchAndBound(IFS fs)
+        public BranchAndBound(IFS fs, ITotalBound upBound = null, IBound lowBound = null)
         {
             m_fs = fs;
-        }
-        public BranchAndBound(IData data, ITotalBound upBound, IBound lowBound, IFS fs)
-        {
-            m_upperBound = upBound;
-            m_lowerBound = lowBound;
-            m_fs = fs;
+            m_upperBound = upBound ?? new FakeBound();
+            m_lowerBound = lowBound ?? new GreedyLowerBound();
         }
         public long Run(IData data)
         {

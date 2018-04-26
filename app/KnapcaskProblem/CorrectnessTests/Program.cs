@@ -12,8 +12,8 @@ namespace CorrectnessTests
             var tests = Parser.ParseUKP();
 
             Console.WriteLine("BranchAndBound algorithm");
-            CheckExactAlgorithm(new BranchAndBound(), tests);
-            CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
+            CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
+            CheckExactAlgorithm(new BranchAndBound(new BFS(), new U3Bound()), tests);
 
             Console.WriteLine("DynamicProgramming EDUK_EX(2, 2) algorithm");
             CheckExactAlgorithm(new DynamicProgramming(new EDUK_EX(2, 2)), tests);
