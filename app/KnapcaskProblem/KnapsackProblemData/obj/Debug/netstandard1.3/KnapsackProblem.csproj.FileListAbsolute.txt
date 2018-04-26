@@ -1,4 +1,0 @@
-C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard1.3\KnapsackProblem.csprojResolveAssemblyReference.cache
-C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard1.3\KnapsackProblem.csproj.CoreCompileInputs.cache
-C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard1.3\KnapsackProblem.AssemblyInfoInputs.cache
-C:\university\diploma\diplom\app\KnapcaskProblem\KnapsackProblemData\obj\Debug\netstandard1.3\KnapsackProblem.AssemblyInfo.cs

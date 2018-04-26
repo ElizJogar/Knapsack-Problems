@@ -1,4 +1,0 @@
-C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard1.3\ExhaustiveSearchAlgorithm.csprojResolveAssemblyReference.cache
-C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard1.3\ExhaustiveSearchAlgorithm.csproj.CoreCompileInputs.cache
-C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard1.3\ExhaustiveSearchAlgorithm.AssemblyInfoInputs.cache
-C:\university\diploma\diplom\app\KnapcaskProblem\ExhaustiveSearchAlgorithm\obj\Debug\netstandard1.3\ExhaustiveSearchAlgorithm.AssemblyInfo.cs
