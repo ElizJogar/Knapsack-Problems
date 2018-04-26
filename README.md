@@ -9,4 +9,4 @@ This project includes:
   2.3. Branch And Bound for UKP with U3 Total Upper Bound  
   2.4. Classical Dynamic Programming for UKP  
   2.4. Efficient Dynamic Programming algorithm for UKP with Threshold Dominance and Periodicity  
-3. Excel Report with comparing Genetic Algorithm combinations in order to select the best  
+3. Excel Report with comparison Genetic Algorithm combinations in order to select the best  

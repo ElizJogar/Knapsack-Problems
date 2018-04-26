@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Algorithm;
-using KnapsackProblem;
 
 namespace CorrectnessTests
 {
@@ -13,19 +12,21 @@ namespace CorrectnessTests
             var tests = Parser.ParseUKP();
 
             Console.WriteLine("BranchAndBound algorithm");
-            CheckAlgorithm(new BranchAndBound(), tests);
-            CheckAlgorithm(new BranchAndBound(new BFS()), tests);
+            CheckExactAlgorithm(new BranchAndBound(), tests);
+            CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
 
             Console.WriteLine("DynamicProgramming EDUK_EX(2, 2) algorithm");
-            CheckAlgorithm(new DynamicProgramming(new EDUK_EX(2, 2)), tests);
+            CheckExactAlgorithm(new DynamicProgramming(new EDUK_EX(2, 2)), tests);
 
             Console.WriteLine("DynamicProgramming ClassicalUKP algorithm");
-            CheckAlgorithm(new DynamicProgramming(new ClassicalUKPApproach()), tests);
+            CheckExactAlgorithm(new DynamicProgramming(new ClassicalUKPApproach()), tests);
+
+            Console.WriteLine("Genetic Algorithm with default parameters");
+            CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
         }
 
-        static void CheckAlgorithm(IExactAlgorithm alg, List<ITest> tests)
+        static void CheckExactAlgorithm(IExactAlgorithm alg, List<ITest> tests)
         {
-            var pass = true;
             foreach (var test in tests)
             {
                 var result = alg.Run(test.Data());
@@ -33,14 +34,23 @@ namespace CorrectnessTests
 
                 if (result != gold)
                 {
-                    pass = false;
                     Console.WriteLine("FAIL on {0}. Expected: {1}, Actual: {2}.", test.Name(), gold, result);
                 }
             }
+        }
 
-            if(pass)
+        static void CheckHeuristicAlgorithm(IHeuristicAlgorithm alg, List<ITest> tests)
+        {
+            foreach (var test in tests)
             {
-                Console.WriteLine(" PASS");
+                alg.SetData(test.Data());
+                var result = alg.Run(30, 2);
+                var gold = test.Gold();
+                var error = gold - result;
+                if (error < 0 || error > Math.Pow(10, (int)Math.Log10(gold) - 1))
+                {
+                    Console.WriteLine(" {0}. Expected: {1}, Actual: {2}, Error: {3}", test.Name(), gold, result, error);
+                }
             }
         }
     }
