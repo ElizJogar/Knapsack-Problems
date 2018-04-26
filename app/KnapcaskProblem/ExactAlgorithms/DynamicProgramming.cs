@@ -108,7 +108,14 @@ namespace Algorithm
         }
         public long Run(IData data, long capacity)
         {
-            var items = Helpers.GetItems(data, (a, b) => a.weight.CompareTo(b.weight));
+            var items = Helpers.GetItems(data, (a, b) =>
+            {
+                if (a.weight == b.weight)
+                {
+                    return b.cost.CompareTo(a.cost);
+                }
+                return a.weight.CompareTo(b.weight);
+            });
             // cost table for current problem
             long[] Z = new long[capacity + 1];
             // undominated items
@@ -123,14 +130,6 @@ namespace Algorithm
                 int count = i < m_itemSlices - 1 ? (items.Count / m_itemSlices) + j : items.Count;
                 for (; j < count; ++j)
                 {
-                    // tmp, may be remove in future
-                    //F.Sort((a, b) =>
-                    //{
-                    //    double first = (double)items[a].cost / items[a].weight;
-                    //    double second = (double)items[b].cost / items[b].weight;
-                    //    return second.CompareTo(first);
-                    //});
-                    //
                     var c = j > 0 ? items[j - 1].weight + 1 : 1;
                     for (; c <= items[j].weight; ++c)
                     {
@@ -140,7 +139,7 @@ namespace Algorithm
                             if (Z[c - items[f].weight] + items[f].cost > Z[c])
                             {
                                 L[f] = c;
-                                lastCapacity = c;
+                                if (Z[c] > Z[c - 1]) lastCapacity = c;
                                 Z[c] = Z[c - items[f].weight] + items[f].cost;
                             }
                         }
@@ -162,25 +161,11 @@ namespace Algorithm
                 {
                     // periodicity achivied
                     var index = F[0];
-                    var l = L[index];
-                    var bestItemCount = (capacity - l) / items[index].weight; //(int)Math.Round((0.5 + (capacity - L[index]) / items[index].weight), 0);
-                    Z[capacity] = Z[l] + bestItemCount * items[index].cost;
-                    var remainderCapacity = capacity - l - items[index].weight * bestItemCount;
-                    if (items[index].weight <= remainderCapacity)
-                    {
-                        Z[capacity] += items[index].cost;
-                    }
+                    var l =  L[index];
+                    Z[capacity] = Z[l] + (capacity - l) / items[index].weight * items[index].cost;
                     return Z[capacity];
                 }
                 long count = i < m_capacitySlices - 1 ? (capacity / m_capacitySlices) + w : capacity;
-                // tmp, may be remove in future
-                //F.Sort((a, b) =>
-                //{
-                //    double first = (double)items[a].cost / items[a].weight;
-                //    double second = (double)items[b].cost / items[b].weight;
-                //    return second.CompareTo(first);
-                //});
-                //
                 for (; w <= count; ++w)
                 {
                     Z[w] = 0;
@@ -189,7 +174,7 @@ namespace Algorithm
                         if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost > Z[w])
                         {
                             L[f] = w;
-                            lastCapacity = w;
+                            if (Z[w] > Z[w - 1]) lastCapacity = w;
                             Z[w] = Z[w - items[f].weight] + items[f].cost;
                         }
                     }
@@ -201,6 +186,13 @@ namespace Algorithm
 
         private void CheckThresholdDominance(long capacity, List<int> F, long[] L, List<Item> items)
         {
+            //// tmp, may be remove in future
+            // F.Sort((a, b) =>
+            // {
+            //     double first = (double)items[a].cost / items[a].weight;
+            //     double second = (double)items[b].cost / items[b].weight;
+            //     return second.CompareTo(first);
+            // });
             F.RemoveAll(f =>
            {
                return L[f] < capacity - items[f].weight;

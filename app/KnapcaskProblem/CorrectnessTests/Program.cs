@@ -25,6 +25,7 @@ namespace CorrectnessTests
 
         static void CheckAlgorithm(IExactAlgorithm alg, List<ITest> tests)
         {
+            var pass = true;
             foreach (var test in tests)
             {
                 var result = alg.Run(test.Data());
@@ -32,8 +33,14 @@ namespace CorrectnessTests
 
                 if (result != gold)
                 {
+                    pass = false;
                     Console.WriteLine("FAIL on {0}. Expected: {1}, Actual: {2}.", test.Name(), gold, result);
                 }
+            }
+
+            if(pass)
+            {
+                Console.WriteLine(" PASS");
             }
         }
     }
