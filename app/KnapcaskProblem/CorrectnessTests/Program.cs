@@ -8,8 +8,24 @@ namespace CorrectnessTests
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Correctness tests for UKP are running...");
-            var tests = Parser.ParseUKP();
+            Console.WriteLine("Correctness tests for KP are running...");
+            var tests = Parser.Parse01KP();
+
+            Console.WriteLine("BranchAndBound algorithm");
+            CheckExactAlgorithm(new BranchAndBound(), tests);
+            CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
+
+            Console.WriteLine("DynamicProgramming DirectApproach algorithm");
+            CheckExactAlgorithm(new DynamicProgramming(new DirectApproach()), tests);
+
+            Console.WriteLine("DynamicProgramming RecurrentApproach algorithm");
+            CheckExactAlgorithm(new DynamicProgramming(new RecurrentApproach()), tests);
+
+            Console.WriteLine("Genetic Algorithm with default parameters");
+            CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
+
+            Console.WriteLine("\nCorrectness tests for UKP are running...");
+            tests = Parser.ParseUKP();
 
             Console.WriteLine("BranchAndBound algorithm");
             CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
