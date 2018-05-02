@@ -124,8 +124,7 @@ namespace Algorithm
             long[] L = new long[capacity + 1];
             long lastCapacity = 0;
             int j = 0;
-            // Reduction Phase
-            for (var i = 0; i < m_itemSlices; ++i)
+;            for (var i = 0; i < m_itemSlices; ++i)
             {
                 int count = i < m_itemSlices - 1 ? (items.Count / m_itemSlices) + j : items.Count;
                 for (; j < count; ++j)
@@ -154,7 +153,6 @@ namespace Algorithm
                 CheckThresholdDominance(lastCapacity, F, L, items);
             }
             long w = 0;
-            // Standard Phase
             for (var i = 0; i < m_capacitySlices; ++i)
             {
                 if (F.Count == 1)
@@ -162,7 +160,8 @@ namespace Algorithm
                     // periodicity achivied
                     var index = F[0];
                     var l =  L[index];
-                    Z[capacity] = Z[l] + (capacity - l) / items[index].weight * items[index].cost;
+                    var multiplier = (capacity - l) / items[index].weight;
+                    Z[capacity] = Z[l] + multiplier * items[index].cost;
                     return Z[capacity];
                 }
                 long count = i < m_capacitySlices - 1 ? (capacity / m_capacitySlices) + w : capacity;

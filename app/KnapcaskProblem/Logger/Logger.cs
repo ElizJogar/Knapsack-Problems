@@ -24,7 +24,7 @@ namespace CustomLogger
         private Logger()
         {
             m_culture = new CultureInfo("en-GB");
-            debug = true;
+            debug = false;
             m_localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc");

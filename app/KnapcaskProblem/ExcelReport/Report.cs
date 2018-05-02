@@ -87,7 +87,7 @@ namespace ExcelReport
                 new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
 
             int length = initialPopulation.Length * crossover.Length * mutation.Length * selection.Length;
-            for (int dataIndex = 0; dataIndex < 1; ++dataIndex)
+            for (int dataIndex = 4; dataIndex < data.Length; ++dataIndex)
             {
                 Excel.Workbook workbook;
                 Excel.Worksheet sheet;

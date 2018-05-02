@@ -196,7 +196,7 @@ namespace KnapsackProblem
 
         public override string Str()
         {
-            return "strongly_correled";
+            return "very_strongly_correled";
         }
     }
 }
