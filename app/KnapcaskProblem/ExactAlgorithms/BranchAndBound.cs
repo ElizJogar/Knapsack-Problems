@@ -50,7 +50,10 @@ namespace Algorithm
         {
             var items = Helpers.GetItems(data);
             var capacity = data.Capacity;
-
+            return Run(items, capacity);
+        }
+        public long Run(List<Item> items, long capacity)
+        {
             var container = m_fs.CreateContainer<Node>();
             var first = new Node()
             {

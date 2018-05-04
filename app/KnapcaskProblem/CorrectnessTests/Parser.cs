@@ -6,37 +6,20 @@ using KnapsackProblem;
 
 namespace CorrectnessTests
 {
-    class Parser
+    interface IExtParser
     {
-        static string KPTestsPath = @"../../../Datasets/01KP";
-        static string UKPTestsPath = @"../../../Datasets/UKP";
+        ITest Parse(string file);
+    }
 
-        public static List<ITest> Parse01KP()
+    class TxtParser: IExtParser
+    {
+        private ITask m_task;
+        public TxtParser(ITask task)
         {
-            var tests = new List<ITest>();
-            var files = GetTestFiles(KPTestsPath);
-            foreach (var file in files)
-            {
-                tests.Add(CreateTest(file, new KPTask()));
-            }
-            return tests;
+            m_task = task;
         }
-        public static List<ITest> ParseUKP()
-        {
-            var tests = new List<ITest>();
-            //var files = GetTestFiles(UKPTestsPath);
-            //foreach (var file in files)
-            //{
-            //    tests.Add(CreateTest(file, new UKPTask()));
-            //}
-            var files = GetTestFiles(UKPTestsPath, "*.ukp");
-            foreach (var file in files)
-            {
-                tests.Add(CreateTestUKP(file));
-            }
-            return tests;
-        }
-        private static ITest CreateTest(string file, ITask task)
+
+        public ITest Parse(string file)
         {
             var lines = File.ReadAllLines(file);
             var capacity = Convert.ToInt64(lines[0]);
@@ -44,10 +27,12 @@ namespace CorrectnessTests
             var weight = lines[2].Split(' ', ',', ';').Select(Int64.Parse).ToArray();
             var optimum = Convert.ToInt64(lines[3]);
 
-            return new Test(task, new TestData(new Range(0, 0), cost, weight, capacity), optimum, file);
+            return new Test(m_task, new TestData(new Range(0, 0), cost, weight, capacity), optimum, file);
         }
-
-        private static ITest CreateTestUKP(string file)
+    }
+    class UkpParser : IExtParser
+    {
+        public ITest Parse(string file)
         {
             var lines = File.ReadAllLines(file);
 
@@ -102,10 +87,44 @@ namespace CorrectnessTests
             }
             return new Test(new UKPTask(), new TestData(new Range(0, 0), cost, weight, capacity), optimum, file);
         }
-        private static long GetInt64(string str)
+        private long GetInt64(string str)
         {
-           var res = str.Split(" ").ToArray();
+            var res = str.Split(" ").ToArray();
             return Convert.ToInt64(res[1]);
+        }
+    }
+    class Parser
+    {
+        static string KPTestsPath = @"../../../Datasets/01KP";
+        static string UKPTestsPath = @"../../../Datasets/UKP";
+
+        public static List<ITest> Parse01KP()
+        {
+            var tests = new List<ITest>();
+            var files = GetTestFiles(KPTestsPath);
+            var parser = new TxtParser(new KPTask());
+            foreach (var file in files)
+            {
+                tests.Add(parser.Parse(file));
+            }
+            return tests;
+        }
+        public static List<ITest> ParseUKP()
+        {
+            var tests = new List<ITest>();
+            var files = GetTestFiles(UKPTestsPath);
+            IExtParser parser = new TxtParser(new UKPTask());
+            foreach (var file in files)
+            {
+                tests.Add(parser.Parse(file));
+            }
+            files = GetTestFiles(UKPTestsPath, "*.ukp");
+            parser = new UkpParser();
+            foreach (var file in files)
+            {
+                tests.Add(parser.Parse(file));
+            }
+            return tests;
         }
         private static string[] GetTestFiles(string path, string pattern = "*.txt")
         {

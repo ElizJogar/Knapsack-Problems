@@ -147,7 +147,14 @@ namespace Algorithm
                     if (Z[items[j].weight] <= items[j].cost)
                     {
                         Z[items[j].weight] = items[j].cost;
+
                         F.Add(j);
+                        F.Sort((a, b) =>
+                        {
+                            var eff1 = items[a].cost / items[a].weight;
+                            var eff2 = items[b].cost / items[b].weight;
+                            return eff1.CompareTo(eff2);
+                        });
                     }
                 }
                 CheckThresholdDominance(lastCapacity, F, L, items);

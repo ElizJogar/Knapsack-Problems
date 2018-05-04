@@ -8,37 +8,37 @@ namespace CorrectnessTests
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine("Correctness tests for KP are running...");
-            //var tests = Parser.Parse01KP();
+            Console.WriteLine("Correctness tests for KP are running...");
+            var tests = Parser.Parse01KP();
 
-            //Console.WriteLine("BranchAndBound algorithm");
-            //CheckExactAlgorithm(new BranchAndBound(), tests);
-            //CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
+            Console.WriteLine("BranchAndBound algorithm");
+            CheckExactAlgorithm(new BranchAndBound(), tests);
+            CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
 
-            //Console.WriteLine("DynamicProgramming DirectApproach algorithm");
-            //CheckExactAlgorithm(new DynamicProgramming(new DirectApproach()), tests);
+            Console.WriteLine("DynamicProgramming DirectApproach algorithm");
+            CheckExactAlgorithm(new DynamicProgramming(new DirectApproach()), tests);
 
-            //Console.WriteLine("DynamicProgramming RecurrentApproach algorithm");
-            //CheckExactAlgorithm(new DynamicProgramming(new RecurrentApproach()), tests);
+            Console.WriteLine("DynamicProgramming RecurrentApproach algorithm");
+            CheckExactAlgorithm(new DynamicProgramming(new RecurrentApproach()), tests);
 
-            //Console.WriteLine("Genetic Algorithm with default parameters");
-            //CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
+            Console.WriteLine("Genetic Algorithm with default parameters");
+            CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
 
             Console.WriteLine("\nCorrectness tests for UKP are running...");
-            var tests = Parser.ParseUKP();
-
-           // Console.WriteLine("BranchAndBound algorithm with U3 Total Upper Bound");
-           // CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
-           // CheckExactAlgorithm(new BranchAndBound(new BFS(), new U3Bound()), tests);
+            tests = Parser.ParseUKP();
 
             Console.WriteLine("DynamicProgramming EDUK_EX(2, 2) algorithm");
             CheckExactAlgorithm(new DynamicProgramming(new EDUK_EX(2, 2)), tests);
 
-           // Console.WriteLine("DynamicProgramming ClassicalUKP algorithm");
-           // CheckExactAlgorithm(new DynamicProgramming(new ClassicalUKPApproach()), tests);
+            Console.WriteLine("DynamicProgramming ClassicalUKP algorithm");
+            CheckExactAlgorithm(new DynamicProgramming(new ClassicalUKPApproach()), tests);
 
-           // Console.WriteLine("Genetic Algorithm with default parameters");
-           // CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
+            Console.WriteLine("BranchAndBound algorithm with U3 Total Upper Bound");
+            CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
+            CheckExactAlgorithm(new BranchAndBound(new BFS(), new U3Bound()), tests);
+
+            Console.WriteLine("Genetic Algorithm with default parameters");
+            CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
         }
 
         static void CheckExactAlgorithm(IExactAlgorithm alg, List<ITest> tests)
@@ -48,7 +48,7 @@ namespace CorrectnessTests
                 Console.WriteLine("{0}", test.Name());
                 var result = alg.Run(test.Data());
                 var gold = test.Gold();
-                
+
 
                 if (result != gold)
                 {
@@ -61,11 +61,12 @@ namespace CorrectnessTests
         {
             foreach (var test in tests)
             {
+                Console.WriteLine("{0}", test.Name());
                 alg.SetData(test.Data());
                 var result = alg.Run(30, 2);
                 var gold = test.Gold();
                 var error = gold - result;
-                if (error < 0 || error > Math.Pow(10, (int)Math.Log10(gold) - 1))
+                if (error != 0)
                 {
                     Console.WriteLine(" {0}. Expected: {1}, Actual: {2}, Error: {3}", test.Name(), gold, result, error);
                 }

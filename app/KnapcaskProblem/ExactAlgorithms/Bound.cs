@@ -16,6 +16,14 @@ namespace Algorithm
     {
         public long Calculate(List<Item> items, long capacity)
         {
+            items = new List<Item>(items);
+            items.Sort((a, b) =>
+            {
+                double first = (double)a.cost / a.weight;
+                double second = (double)b.cost / b.weight;
+                return second.CompareTo(first);
+            });
+
             long c0 = capacity % items[0].weight;
             long c1 = c0 % items[1].weight;
             long z = capacity / items[0].weight * items[0].cost + c0 / items[1].weight * items[1].cost;
