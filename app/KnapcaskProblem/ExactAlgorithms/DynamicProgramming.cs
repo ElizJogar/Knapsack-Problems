@@ -151,8 +151,8 @@ namespace Algorithm
                         F.Add(j);
                         F.Sort((a, b) =>
                         {
-                            var eff1 = items[a].cost / items[a].weight;
-                            var eff2 = items[b].cost / items[b].weight;
+                            double eff1 = (double)items[a].cost / items[a].weight;
+                            double eff2 = (double)items[b].cost / items[b].weight;
                             return eff1.CompareTo(eff2);
                         });
                     }
