@@ -29,11 +29,6 @@ namespace CorrectnessTests
             Console.WriteLine("\nCorrectness tests for UKP are running...");
             tests = Parser.ParseUKP();
 
-            Console.WriteLine("BranchAndBound algorithm with U3 Total Upper Bound");
-            CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
-
-            Console.WriteLine("GABBHybrid algorithm");
-            CheckExactAlgorithm(new GABBHybrid(), tests);
 
             Console.WriteLine("DynamicProgramming EDUK_EX(2, 2) algorithm");
             CheckExactAlgorithm(new DynamicProgramming(new EDUK_EX(2, 2)), tests);
@@ -43,6 +38,9 @@ namespace CorrectnessTests
 
             Console.WriteLine("Genetic Algorithm with default parameters");
             CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
+
+            Console.WriteLine("BranchAndBound algorithm with U3 Total Upper Bound");
+            CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
         }
 
         static void CheckExactAlgorithm(IExactAlgorithm alg, List<ITest> tests)
@@ -52,7 +50,7 @@ namespace CorrectnessTests
                 long result = -1;
                 Console.WriteLine("{0}", test.Name());
 
-                var executed = Helpers.ExecuteWithTimeLimit(TimeSpan.FromMinutes(5), () =>
+                var executed = Helpers.ExecuteWithTimeLimit(TimeSpan.FromMinutes(1), () =>
                 {
                     result = alg.Run(test.Data());
                 });
