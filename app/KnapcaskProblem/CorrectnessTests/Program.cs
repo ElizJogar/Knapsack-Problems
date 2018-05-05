@@ -57,7 +57,7 @@ namespace CorrectnessTests
                 });
                 if (!executed)
                 {
-                    Console.WriteLine("FAIL on {0}. Stopped by timer. Execution time exceeded 5 minutes.");
+                    Console.WriteLine("FAIL on {0}. Stopped by timer. Execution time exceeded 5 minutes.", test.Name());
                     continue;
                 }
                 var gold = test.Gold();
