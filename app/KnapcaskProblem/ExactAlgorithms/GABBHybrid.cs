@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Algorithm;
 using KnapsackProblem;
 
 namespace Algorithm
@@ -24,12 +22,12 @@ namespace Algorithm
             for (var i  = 0; i < winner.Size(); ++i)
             {
                 var gen = winner.GetGen(i);
-                var item = new Item(data.Cost[i], data.Weight[i], data.Cost.Length == data.ItemMaxCounts.Length ? data.ItemMaxCounts[i] : 1);
+                var item = new Item(data.Cost[i], data.Weight[i], data.Cost.Length == data.ItemMaxCounts.Length ? data.ItemMaxCounts[i] : 1, i);
                 result.Add(item, gen.ToInt());
             }
             var items = result.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value).Keys.ToList();
 
-            var bb = new BranchAndBound(new U3Bound());
+            var bb = new BranchAndBound(new U3Bound(true), new GreedyLowerBound(true));
             return bb.Run(items, capacity);
         }
     }

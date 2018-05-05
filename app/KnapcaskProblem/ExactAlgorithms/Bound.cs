@@ -14,15 +14,23 @@ namespace Algorithm
 
     public class U3Bound : ITotalBound
     {
+        private bool m_needSort;
+        public U3Bound(bool needSort = false)
+        {
+            m_needSort = needSort;
+        }
         public long Calculate(List<Item> items, long capacity)
         {
-            items = new List<Item>(items);
-            items.Sort((a, b) =>
+            if (m_needSort)
             {
-                double first = (double)a.cost / a.weight;
-                double second = (double)b.cost / b.weight;
-                return second.CompareTo(first);
-            });
+                items = new List<Item>(items);
+                items.Sort((a, b) =>
+                {
+                    double first = (double)a.cost / a.weight;
+                    double second = (double)b.cost / b.weight;
+                    return second.CompareTo(first);
+                });
+            }
 
             long c0 = capacity % items[0].weight;
             long c1 = c0 % items[1].weight;
@@ -42,21 +50,39 @@ namespace Algorithm
     public class FakeTotalBound : ITotalBound
     {
         public long Calculate(List<Item> items, long capacity)
-        { 
+        {
             return long.MaxValue;
         }
     }
 
     public class GreedyLowerBound : IBound
     {
+        private bool m_needSort;
+        public GreedyLowerBound(bool needSort = false)
+        {
+            m_needSort = needSort;
+        }
         public long Calculate(Node n, List<Item> items, long capacity)
         {
             if (n.weight > capacity) return 0;
 
             var totalWeight = n.weight;
             var costBound = n.cost;
-            int i = 0;
-            for (i = n.level + 1; i < items.Count && (totalWeight + items[i].weight) <= capacity; ++i)
+
+            var i = n.level + 1;
+            if (m_needSort)
+            {
+                i = 0;
+                items = items.GetRange(n.level + 1, items.Count - (n.level + 1));
+                items.Sort((a, b) =>
+                {
+                    double first = (double)a.cost / a.weight;
+                    double second = (double)b.cost / b.weight;
+                    return second.CompareTo(first);
+                });
+            }
+
+            for (; i < items.Count && (totalWeight + items[i].weight) <= capacity; ++i)
             {
                 var count = items[i].maxCount;
                 while (count-- > 0 && (totalWeight + items[i].weight) <= capacity)

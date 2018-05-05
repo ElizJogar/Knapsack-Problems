@@ -9,11 +9,14 @@ namespace Algorithm
         public long cost;
         public long weight;
         public int maxCount;
-        public Item(long cost, long weight, int maxCount = 1)
+        public int id;
+
+        public Item(long cost, long weight, int maxCount = 1, int id = -1)
         {
             this.cost = cost;
             this.weight = weight;
             this.maxCount = maxCount;
+            this.id = id;
         }
     }
     public class Helpers
