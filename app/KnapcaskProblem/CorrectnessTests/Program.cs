@@ -11,8 +11,10 @@ namespace CorrectnessTests
             Console.WriteLine("Correctness tests for KP are running...");
             var tests = Parser.Parse01KP();
 
-            Console.WriteLine("BranchAndBound algorithm");
+            Console.WriteLine("BranchAndBound algorithm with DFS");
             CheckExactAlgorithm(new BranchAndBound(), tests);
+
+            Console.WriteLine("BranchAndBound algorithm with BFS");
             CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
 
             Console.WriteLine("DynamicProgramming DirectApproach algorithm");
@@ -29,7 +31,6 @@ namespace CorrectnessTests
 
             Console.WriteLine("BranchAndBound algorithm with U3 Total Upper Bound");
             CheckExactAlgorithm(new BranchAndBound(new U3Bound()), tests);
-            CheckExactAlgorithm(new BranchAndBound(new BFS(), new U3Bound()), tests);
 
             Console.WriteLine("GABBHybrid algorithm");
             CheckExactAlgorithm(new GABBHybrid(), tests);
