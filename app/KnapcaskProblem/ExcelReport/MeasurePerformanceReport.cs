@@ -197,11 +197,5 @@ namespace ExcelReport
                 throw ae.InnerExceptions[0];
             }
         }
-
-        private static string GetAlgorithmName(Object ob)
-        {
-            string res = Convert.ToString(ob);
-            return res.Replace("Algorithm.", "");
-        }
     }
 }
