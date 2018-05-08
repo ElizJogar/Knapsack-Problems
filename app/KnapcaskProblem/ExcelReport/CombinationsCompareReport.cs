@@ -9,7 +9,7 @@ namespace ExcelReport
 {
     public class CombinationsCompareReport
     {
-        protected Excel.Application m_excel;
+        private Excel.Application m_excel;
         private ITask m_task;
         private List<Individ> m_individs;
         private int m_iterationCount;
@@ -42,7 +42,7 @@ namespace ExcelReport
 
             DateTime localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\reports_" + task.Str() + "_" 
+            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\cc_reports_" + task.Str() + "_" 
                 + localDate.ToShortDateString() + "-" + localDate.Hour 
                 + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
             m_dir.Create();
@@ -87,7 +87,7 @@ namespace ExcelReport
                 new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
 
             int length = initialPopulation.Length * crossover.Length * mutation.Length * selection.Length;
-            for (int dataIndex = 4; dataIndex < data.Length; ++dataIndex)
+            for (int dataIndex = 0; dataIndex < data.Length; ++dataIndex)
             {
                 Excel.Workbook workbook;
                 Excel.Worksheet sheet;

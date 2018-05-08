@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="BBTest.cs" />
     <Compile Include="DPTest.cs" />
-    <Compile Include="GABBHybridTest.cs" />
     <Compile Include="GATest.cs" />
     <Compile Include="GenTest.cs" />
     <Compile Include="IndividTest.cs" />
