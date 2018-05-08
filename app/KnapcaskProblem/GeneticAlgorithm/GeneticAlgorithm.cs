@@ -87,14 +87,22 @@ namespace Algorithm
         }
         public long Run(int iterationCount, int populationCount, params object[] args)
         {
+            long maxValue = 0;
+            Individ winner = null;
             if (m_data == null) return INVALID_RESULT;
 
             var individs = Init(populationCount);
-            for (var i = 0; i < iterationCount - 1; ++i)
+            for (var i = 0; i < iterationCount; ++i)
             {
-                Run(populationCount, ref individs, args);
+                var result = Run(populationCount, ref individs, args);
+                if (result >= maxValue)
+                {
+                    maxValue = result;
+                    winner = m_winner;
+                }
             }
-            return Run(populationCount, ref individs, args);
+            m_winner = winner;
+            return maxValue;
         }
         public Individ GetWinner()
         {
