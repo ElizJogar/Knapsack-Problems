@@ -48,12 +48,34 @@ namespace ExcelReport
                 new SubsetSumData(m_dataSize, new Range(1, 9999)),
                 new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
 
+            IExactAlgorithm dp = null;
+            IExactAlgorithm bb = null;
+            IHeuristicAlgorithm ga = null;
+            if (m_task as UKPTask != null)
+            {
+                dp = new DynamicProgramming(new EDUK_EX(2, 2));
+                bb = new BranchAndBound(new U3Bound());
+                ga = new GeneticAlgorithm(new RandomPopulation(),
+                new UniformCrossover(),
+                new PointMutation(),
+                new LinearRankSelection(new PenaltyFunction(), new RepairOperator()));
+            }
+            else if (m_task as KPTask != null)
+            {
+                dp = new DynamicProgramming(new RecurrentApproach());
+                bb = new BranchAndBound();
+                ga = new GeneticAlgorithm(new RandomPopulation(),
+                new UniformCrossover(),
+                new Saltation(),
+                new LinearRankSelection(new PenaltyFunction(), new RepairOperator()));
+            }
+
             for (int dataIndex = 0; dataIndex < data.Length; ++dataIndex)
             {
                 var workbook = m_excel.Workbooks.Add(Type.Missing);
                 m_excel.SheetsInNewWorkbook = 1;
                 var sheet = workbook.Sheets[1];
-                sheet.Cells.ColumnWidth = 10;
+                sheet.Cells.ColumnWidth = 15;
 
                 sheet.Cells[1, 2] = "Elapsed Time (ms)";
                 sheet.Cells[2, 2] = "Dynamic Programming";
@@ -70,29 +92,6 @@ namespace ExcelReport
                 {
                     var taskData = m_task.Create(data[dataIndex]);
 
-                    IExactAlgorithm dp = null;
-                    IExactAlgorithm bb = null;
-                    IHeuristicAlgorithm ga = null;
-                    if (m_task as UKPTask != null)
-                    {
-                        dp = new DynamicProgramming(new EDUK_EX(2, 2));
-                        bb = new BranchAndBound(new U3Bound());
-                        ga = new GeneticAlgorithm(new RandomPopulation(),
-                        new UniformCrossover(),
-                        new PointMutation(),
-                        new LinearRankSelection(new PenaltyFunction(), new RepairOperator()),
-                        taskData);
-                    }
-                    else if (m_task as KPTask != null)
-                    {
-                        dp = new DynamicProgramming(new RecurrentApproach());
-                        bb = new BranchAndBound();
-                        ga = new GeneticAlgorithm(new RandomPopulation(),
-                        new UniformCrossover(),
-                        new Saltation(),
-                        new LinearRankSelection(new PenaltyFunction(), new RepairOperator()),
-                        taskData);
-                    }
                     long gaResult = 0, dpResult = 0, bbResult = 0;
                     double gaElapsedTime = 0, dpElapsedTime = 0, bbElapsedTime = 0;
                     for (int s = 0; s < m_runsCount; s++)
@@ -109,6 +108,7 @@ namespace ExcelReport
 
                         gaElapsedTime += Measure(() =>
                         {
+                            ga.SetData(taskData);
                             gaResult += ga.Run(m_iterationCount, m_populationCount);
                         }, TimeSpan.FromMinutes(30));
 
@@ -122,9 +122,11 @@ namespace ExcelReport
                     dpElapsedTime /= m_runsCount;
                     bbElapsedTime /= m_runsCount;
 
-                    Logger.Get().Info(data[dataIndex].Str() + ", instance: " + instIndex);
-                    Logger.Get().Info("Cost: " + string.Join(", ", data[dataIndex].Cost));
-                    Logger.Get().Info("Weight: " + string.Join(", ", data[dataIndex].Weight));
+                    var currData = data[dataIndex];
+                    Logger.Get().Info(currData.Str() + ", instance: " + instIndex);
+                    Logger.Get().Info("Cost: " + string.Join(", ", currData.Cost));
+                    Logger.Get().Info("Weight: " + string.Join(", ", currData.Weight));
+                    Logger.Get().Info("Capacity: " + currData.Capacity);
 
                     sheet.Cells[instIndex + 3, 2] = dpElapsedTime;
                     sheet.Cells[instIndex + 3, 3] = bbElapsedTime;
