@@ -122,7 +122,6 @@ namespace Algorithm
             var F = new List<int>();
             // last capacity in which item was the most efficient item in an optimal solution
             long[] L = new long[capacity + 1];
-            long lastCapacity = 0;
             int j = 0;
 ;            for (var i = 0; i < m_itemSlices; ++i)
             {
@@ -138,7 +137,6 @@ namespace Algorithm
                             if (Z[c - items[f].weight] + items[f].cost > Z[c])
                             {
                                 L[f] = c;
-                                if (Z[c] > Z[c - 1]) lastCapacity = c;
                                 Z[c] = Z[c - items[f].weight] + items[f].cost;
                             }
                         }
@@ -147,8 +145,8 @@ namespace Algorithm
                     if (Z[items[j].weight] <= items[j].cost)
                     {
                         Z[items[j].weight] = items[j].cost;
-
                         F.Add(j);
+
                         F.Sort((a, b) =>
                         {
                             double eff1 = (double)items[a].cost / items[a].weight;
@@ -157,9 +155,9 @@ namespace Algorithm
                         });
                     }
                 }
-                CheckThresholdDominance(lastCapacity, F, L, items);
+                CheckThresholdDominance(items[j - 1].weight, F, L, items);
             }
-            long w = 0;
+            long w = 1;
             for (var i = 0; i < m_capacitySlices; ++i)
             {
                 if (F.Count == 1)
@@ -167,7 +165,7 @@ namespace Algorithm
                     // periodicity achivied
                     var index = F[0];
                     var l =  L[index];
-                    var multiplier = (capacity - l) / items[index].weight;
+                    var multiplier = (int)Math.Ceiling((double)(capacity - l) / items[index].weight);
                     Z[capacity] = Z[l] + multiplier * items[index].cost;
                     return Z[capacity];
                 }
@@ -180,12 +178,11 @@ namespace Algorithm
                         if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost > Z[w])
                         {
                             L[f] = w;
-                            if (Z[w] > Z[w - 1]) lastCapacity = w;
                             Z[w] = Z[w - items[f].weight] + items[f].cost;
                         }
                     }
                 }
-                CheckThresholdDominance(lastCapacity, F, L, items);
+                CheckThresholdDominance(w - 1, F, L, items);
             }
             return Z[capacity];
         }
@@ -194,7 +191,7 @@ namespace Algorithm
         {
             F.RemoveAll(f =>
            {
-               return L[f] < capacity - items[f].weight;
+               return L[f] > 0 && L[f] < capacity - items[f].weight;
            });
         }
     }
