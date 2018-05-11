@@ -129,8 +129,7 @@ namespace Algorithm
                 for (; j < count; ++j)
                 {
                     var c = j > 0 ? items[j - 1].weight + 1 : 1;
-                    var endC = items[j].weight;
-                    for (; c <= endC; ++c)
+                    for (; c <= items[j].weight; ++c)
                     {
                         Z[c] = 0;
                         foreach (var f in F)
@@ -153,7 +152,11 @@ namespace Algorithm
                         {
                             double eff1 = (double)items[a].cost / items[a].weight;
                             double eff2 = (double)items[b].cost / items[b].weight;
-                            return eff1.CompareTo(eff2);
+                            if (eff1 == eff2)
+                            {
+                                return items[a].weight.CompareTo(items[b].weight);
+                            }
+                            return eff2.CompareTo(eff1);
                         });
                     }
                 }
@@ -176,7 +179,6 @@ namespace Algorithm
                 long count = i < m_capacitySlices - 1 ? (capacity / m_capacitySlices) + w : capacity;
                 for (; w <= count; ++w)
                 {
-                    Z[w] = 0;
                     foreach (var f in F)
                     {
                         if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost >= Z[w])

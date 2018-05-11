@@ -36,7 +36,7 @@ namespace Algorithm
                 double second = (double)b.cost / b.weight;
                 if (first == second)
                 {
-                    return a.cost.CompareTo(b.cost);
+                    return a.weight.CompareTo(b.weight);
                 }
                 return second.CompareTo(first);
             });
