@@ -31,7 +31,7 @@ namespace ExcelReport
 
             DateTime localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\mp_reports_" + task.Str() + "_"
+            m_dir = new DirectoryInfo(myDocPath + @"\knapsack_problems_doc\mp_reports_" + task.Str() + "_"
                 + localDate.ToShortDateString() + "-" + localDate.Hour
                 + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
             m_dir.Create();
@@ -65,11 +65,6 @@ namespace ExcelReport
                 names.Add("BB DFS U3");
                 bbs.Add(new BranchAndBound(new BFS(), new U3Bound()));
                 names.Add("BB BFS U3");
-                ga = new GeneticAlgorithm(new RandomPopulation(),
-                new UniformCrossover(),
-                new PointMutation(),
-                new LinearRankSelection(new PenaltyFunction(), new RepairOperator()));
-                names.Add("GA");
             }
             else if (m_task as KPTask != null)
             {
@@ -81,15 +76,19 @@ namespace ExcelReport
                 names.Add("BB DFS");
                 bbs.Add(new BranchAndBound(new BFS()));
                 names.Add("BB BFS");
-                ga = new GeneticAlgorithm(new RandomPopulation(),
-                new UniformCrossover(),
-                new Saltation(),
-                new LinearRankSelection(new PenaltyFunction(), new RepairOperator()));
-                names.Add("GA");
             }
+
+            names.Add("GA");
 
             for (int dataIndex = 0; dataIndex < data.Length; ++dataIndex)
             {
+                var factory = Factory.Create(m_task, data[dataIndex]);
+
+                ga = new GeneticAlgorithm(factory.GetInitialPopulation(),
+                                           factory.GetCrossover(),
+                                           factory.GetMutation(),
+                                           factory.GetSelection());
+
                 var workbook = m_excel.Workbooks.Add(Type.Missing);
                 m_excel.SheetsInNewWorkbook = 1;
                 var sheet = workbook.Sheets[1];
@@ -126,23 +125,45 @@ namespace ExcelReport
                         {
                             dpElapsedTime[i] += Measure(() =>
                             {
-                               dpResults[i] += dps[i].Run(taskData);
-                            }, TimeSpan.FromMinutes(30));
+                                try
+                                {
+                                    dpResults[i] += dps[i].Run(taskData);
+                                }
+                                catch (ArgumentException e)
+                                {
+                                    Logger.Get().Error("ERROR DP[" + i + "], e: " + e);
+                                }
+                            }, TimeSpan.FromMinutes(5));
                         }
 
                         for (var i = 0; i < bbs.Count; ++i)
                         {
                             bbElapsedTime[i] += Measure(() =>
                             {
-                               bbResults[i] += bbs[i].Run(taskData);
-                            }, TimeSpan.FromMinutes(30));
+                                try
+                                {
+                                    bbResults[i] += bbs[i].Run(taskData);
+                                }
+                                catch (ArgumentException e)
+                                {
+                                    Logger.Get().Error("ERROR BB[" + i + "], e: " + e);
+                                }
+                            }, TimeSpan.FromMinutes(5));
                         }
 
                         gaElapsedTime += Measure(() =>
                         {
                             ga.SetData(taskData);
-                            gaResult += ga.Run(m_iterationCount, m_populationCount);
-                        }, TimeSpan.FromMinutes(30));
+                            try
+                            {
+                                gaResult += ga.Run(m_iterationCount, m_populationCount, 2);
+
+                            }
+                            catch (ArgumentException e)
+                            {
+                                Logger.Get().Error("ERROR GA, e: " + e);
+                            }
+                        }, TimeSpan.FromMinutes(5));
 
                     }
 
@@ -153,10 +174,10 @@ namespace ExcelReport
                     Logger.Get().Info("Capacity: " + currData.Capacity);
 
                     double gold = 1;
-                    var resultDevations = new List<double>();
 
                     startIndexForElapsedTime = 2;
                     startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
+                    var startIndexForDeviation = startIndexForResult + dps.Count + bbs.Count + 1;
                     for (var i = 0; i < dps.Count; ++i)
                     {
                         sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = dpElapsedTime[i] / m_runsCount;
@@ -167,29 +188,26 @@ namespace ExcelReport
                         }
                         else
                         {
-                            resultDevations.Add(((gold - dpResults[i]) / m_runsCount) / gold);
+                            sheet.Cells[instIndex + 3, startIndexForDeviation + i] = ((gold - dpResults[i]) / m_runsCount) / gold;
                         }
                     }
 
                     startIndexForElapsedTime += dps.Count;
                     startIndexForResult += dps.Count;
+                    startIndexForDeviation += dps.Count;
                     for (var i = 0; i < bbs.Count; ++i)
                     {
                         sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = bbElapsedTime[i] / m_runsCount;
                         sheet.Cells[instIndex + 3, startIndexForResult + i] = bbResults[i] / m_runsCount;
-                        resultDevations.Add(((gold - bbResults[i]) / m_runsCount) / gold);
+                        sheet.Cells[instIndex + 3, startIndexForDeviation + i] = ((gold - bbResults[i]) / m_runsCount) / gold;
                     }
 
                     startIndexForElapsedTime += bbs.Count;
                     startIndexForResult += bbs.Count;
+                    startIndexForDeviation += bbs.Count;
                     sheet.Cells[instIndex + 3, startIndexForElapsedTime] = gaElapsedTime / m_runsCount;
                     sheet.Cells[instIndex + 3, startIndexForResult] = gaResult / m_runsCount;
-                    resultDevations.Add(((gold - gaResult) / m_runsCount) / gold);
-
-                    for (var i = 1; i < names.Count; ++i)
-                    {
-                        sheet.Cells[instIndex + 3, startIndexForResult + i] = resultDevations[i - 1];
-                    }
+                    sheet.Cells[instIndex + 3, startIndexForDeviation] = ((gold - gaResult) / m_runsCount) / gold;
                 }
                 workbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + ".xlsx");
                 workbook.Close();

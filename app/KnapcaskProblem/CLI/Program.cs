@@ -10,7 +10,7 @@ namespace CLI
         static void Main(string[] args)
         {
             ArgParser parser = new ArgParser();
-            var dataSize = 20; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
+            var dataSize = 50; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
             var iterationCount = 20;// 40;
             var populationCount = 15;// 30;
             var betta = 14;

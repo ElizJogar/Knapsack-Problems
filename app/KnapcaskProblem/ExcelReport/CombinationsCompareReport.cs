@@ -42,7 +42,7 @@ namespace ExcelReport
 
             DateTime localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc\cc_reports_" + task.Str() + "_" 
+            m_dir = new DirectoryInfo(myDocPath + @"\knapsack_problems_doc\cc_reports_" + task.Str() + "_" 
                 + localDate.ToShortDateString() + "-" + localDate.Hour 
                 + "." + localDate.Minute + "." + localDate.Second + "." + localDate.Millisecond);
             m_dir.Create();
