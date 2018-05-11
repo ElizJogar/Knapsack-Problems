@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using KnapsackProblem;
+﻿using KnapsackProblem;
 using Algorithm;
-using CustomLogger;
 
 namespace ExcelReport
 {
@@ -90,7 +86,6 @@ namespace ExcelReport
             return new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());
         }
     }
-
     public class KPVeryVeryStronglyCorrDataFactory : IGAOperatorsFactory
     {
         public IInitialPopulation GetInitialPopulation()

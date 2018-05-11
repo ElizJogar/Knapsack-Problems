@@ -27,7 +27,7 @@ namespace CustomLogger
             debug = false;
             m_localDate = DateTime.Now;
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            m_dir = new DirectoryInfo(myDocPath + @"\gen_algorithm_doc");
+            m_dir = new DirectoryInfo(myDocPath + @"\knapsack_problems_doc");
             m_dir.Create();
             m_fileName = m_dir.FullName + @"\gen_algorithm_log_" + 
                 m_localDate.Hour + "." + m_localDate.Minute + "." + m_localDate.Second + "." + m_localDate.Millisecond +

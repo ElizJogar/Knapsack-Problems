@@ -10,12 +10,12 @@ namespace CLI
         static void Main(string[] args)
         {
             ArgParser parser = new ArgParser();
-            var dataSize = 50; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
-            var iterationCount = 20;// 40;
-            var populationCount = 15;// 30;
+            var dataSize = 100; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
+            var iterationCount = 30;// 40;
+            var populationCount = 30;// 30;
             var betta = 14;
-            var runsCount = 1;// 30; 
-            var instancesCount = 20;// 250;
+            var runsCount = 5;// 30; 
+            var instancesCount = 30;// 250;
             parser.AddArgument("g|generation=", "Generation count", g => iterationCount = Convert.ToInt32(g));
             parser.AddArgument("p|population=", "Individ count in population", p => populationCount = Convert.ToInt32(p));
             parser.AddArgument("b|betta=", "Betta value for Betta-Tournament Selection", b => betta = Convert.ToInt32(b));

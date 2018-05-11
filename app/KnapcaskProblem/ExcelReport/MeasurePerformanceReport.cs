@@ -129,7 +129,7 @@ namespace ExcelReport
                                 {
                                     dpResults[i] += dps[i].Run(taskData);
                                 }
-                                catch (ArgumentException e)
+                                catch (Exception e)
                                 {
                                     Logger.Get().Error("ERROR DP[" + i + "], e: " + e);
                                 }
@@ -144,7 +144,7 @@ namespace ExcelReport
                                 {
                                     bbResults[i] += bbs[i].Run(taskData);
                                 }
-                                catch (ArgumentException e)
+                                catch (Exception e)
                                 {
                                     Logger.Get().Error("ERROR BB[" + i + "], e: " + e);
                                 }
@@ -159,7 +159,7 @@ namespace ExcelReport
                                 gaResult += ga.Run(m_iterationCount, m_populationCount, 2);
 
                             }
-                            catch (ArgumentException e)
+                            catch (Exception e)
                             {
                                 Logger.Get().Error("ERROR GA, e: " + e);
                             }
@@ -177,7 +177,7 @@ namespace ExcelReport
 
                     startIndexForElapsedTime = 2;
                     startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
-                    var startIndexForDeviation = startIndexForResult + dps.Count + bbs.Count + 1;
+                    var startIndexForDeviation = startIndexForResult + dps.Count + bbs.Count;
                     for (var i = 0; i < dps.Count; ++i)
                     {
                         sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = dpElapsedTime[i] / m_runsCount;
