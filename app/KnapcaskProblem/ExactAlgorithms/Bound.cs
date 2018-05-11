@@ -37,12 +37,12 @@ namespace Algorithm
             long z = capacity / items[0].weight * items[0].cost + c0 / items[1].weight * items[1].cost;
 
             var multiplier = (int)Math.Ceiling((double)(items[1].weight - c1) / items[0].weight);
-            long U1 = z + (c1 + multiplier * items[0].weight)
-                * items[1].cost / items[1].weight - items[0].cost;
+            double term = (c1 + multiplier * items[0].weight) * (double)(items[1].cost) / items[1].weight - items[0].cost;
+            long U1 = z + (long)term;
 
             if (items.Count == 2) return U1;
 
-            long U0 = z + c1 / items[2].weight * items[2].cost;
+            long U0 = z + c1 * items[2].cost / items[2].weight;
 
             return Math.Max(U0, U1);
         }

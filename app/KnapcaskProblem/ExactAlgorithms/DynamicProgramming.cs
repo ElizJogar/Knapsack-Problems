@@ -121,7 +121,7 @@ namespace Algorithm
             // undominated items
             var F = new List<int>();
             // last capacity in which item was the most efficient item in an optimal solution
-            long[] L = new long[capacity + 1];
+            long[] L = new long[items.Count];
             int j = 0;
 ;            for (var i = 0; i < m_itemSlices; ++i)
             {
@@ -129,12 +129,13 @@ namespace Algorithm
                 for (; j < count; ++j)
                 {
                     var c = j > 0 ? items[j - 1].weight + 1 : 1;
-                    for (; c <= items[j].weight; ++c)
+                    var endC = items[j].weight;
+                    for (; c <= endC; ++c)
                     {
                         Z[c] = 0;
                         foreach (var f in F)
                         {
-                            if (Z[c - items[f].weight] + items[f].cost > Z[c])
+                            if (Z[c - items[f].weight] + items[f].cost >= Z[c])
                             {
                                 L[f] = c;
                                 Z[c] = Z[c - items[f].weight] + items[f].cost;
@@ -142,9 +143,10 @@ namespace Algorithm
                         }
                     }
                     // j is not dominated by F
-                    if (Z[items[j].weight] <= items[j].cost)
+                    if (items[j].cost > 0 && Z[items[j].weight] <= items[j].cost)
                     {
                         Z[items[j].weight] = items[j].cost;
+
                         F.Add(j);
 
                         F.Sort((a, b) =>
@@ -164,8 +166,10 @@ namespace Algorithm
                 {
                     // periodicity achivied
                     var index = F[0];
-                    var l =  L[index];
-                    var multiplier = (int)Math.Ceiling((double)(capacity - l) / items[index].weight);
+                    var l = L[index];
+                    var z = Z[l];
+                    while (l - 1 >= 0 && Z[l - 1] == z) --l;
+                    var multiplier = (capacity - l) / items[index].weight;
                     Z[capacity] = Z[l] + multiplier * items[index].cost;
                     return Z[capacity];
                 }
@@ -175,7 +179,7 @@ namespace Algorithm
                     Z[w] = 0;
                     foreach (var f in F)
                     {
-                        if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost > Z[w])
+                        if (w - items[f].weight >= 0 && Z[w - items[f].weight] + items[f].cost >= Z[w])
                         {
                             L[f] = w;
                             Z[w] = Z[w - items[f].weight] + items[f].cost;
@@ -191,7 +195,7 @@ namespace Algorithm
         {
             F.RemoveAll(f =>
            {
-               return L[f] > 0 && L[f] < capacity - items[f].weight;
+               return L[f] < capacity - items[f].weight;
            });
         }
     }

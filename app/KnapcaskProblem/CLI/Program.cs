@@ -14,7 +14,7 @@ namespace CLI
             var iterationCount = 20;// 40;
             var populationCount = 7;// 30;
             var betta = 14;
-            var runsCount = 2;// 30; 
+            var runsCount = 1;// 30; 
             var instancesCount = 20;// 250;
             parser.AddArgument("g|generation=", "Generation count", g => iterationCount = Convert.ToInt32(g));
             parser.AddArgument("p|population=", "Individ count in population", p => populationCount = Convert.ToInt32(p));

@@ -79,6 +79,8 @@ namespace Algorithm
 
                 if (current.level == items.Count - 1) continue;
 
+                if (items[next.level].cost == 0) continue;
+
                 for (var count = items[next.level].maxCount; count >= 0; --count)
                 {
                     next.weight = current.weight + items[next.level].weight * count;

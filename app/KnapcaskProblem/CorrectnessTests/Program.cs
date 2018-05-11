@@ -11,24 +11,23 @@ namespace CorrectnessTests
             Console.WriteLine("Correctness tests for KP are running...");
             var tests = Parser.Parse01KP();
 
-            Console.WriteLine("BranchAndBound algorithm with DFS");
-            CheckExactAlgorithm(new BranchAndBound(), tests);
+            //Console.WriteLine("BranchAndBound algorithm with DFS");
+            //CheckExactAlgorithm(new BranchAndBound(), tests);
 
-            Console.WriteLine("BranchAndBound algorithm with BFS");
-            CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
+            //Console.WriteLine("BranchAndBound algorithm with BFS");
+            //CheckExactAlgorithm(new BranchAndBound(new BFS()), tests);
 
-            Console.WriteLine("DynamicProgramming DirectApproach algorithm");
-            CheckExactAlgorithm(new DynamicProgramming(new DirectApproach()), tests);
+            //Console.WriteLine("DynamicProgramming DirectApproach algorithm");
+            //CheckExactAlgorithm(new DynamicProgramming(new DirectApproach()), tests);
 
-            Console.WriteLine("DynamicProgramming RecurrentApproach algorithm");
-            CheckExactAlgorithm(new DynamicProgramming(new RecurrentApproach()), tests);
+            //Console.WriteLine("DynamicProgramming RecurrentApproach algorithm");
+            //CheckExactAlgorithm(new DynamicProgramming(new RecurrentApproach()), tests);
 
-            Console.WriteLine("Genetic Algorithm with default parameters");
-            CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
+            //Console.WriteLine("Genetic Algorithm with default parameters");
+            //CheckHeuristicAlgorithm(new GeneticAlgorithm(), tests);
 
             Console.WriteLine("\nCorrectness tests for UKP are running...");
             tests = Parser.ParseUKP();
-
 
             Console.WriteLine("DynamicProgramming EDUK_EX(2, 2) algorithm");
             CheckExactAlgorithm(new DynamicProgramming(new EDUK_EX(2, 2)), tests);
@@ -50,7 +49,7 @@ namespace CorrectnessTests
                 long result = -1;
                 Console.WriteLine("{0}", test.Name());
 
-                var executed = Helpers.ExecuteWithTimeLimit(TimeSpan.FromMinutes(1), () =>
+                var executed = Helpers.ExecuteWithTimeLimit(TimeSpan.FromMinutes(20), () =>
                 {
                     result = alg.Run(test.Data());
                 });

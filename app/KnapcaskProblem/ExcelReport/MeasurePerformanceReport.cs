@@ -57,10 +57,10 @@ namespace ExcelReport
 
             if (m_task as UKPTask != null)
             {
-                dps.Add(new DynamicProgramming(new EDUK_EX(2, 2)));
-                names.Add("EDUK");
                 dps.Add(new DynamicProgramming(new ClassicalUKPApproach()));
                 names.Add("DP");
+                dps.Add(new DynamicProgramming(new EDUK_EX(2, 2)));
+                names.Add("EDUK");
                 bbs.Add(new BranchAndBound(new DFS(), new U3Bound()));
                 names.Add("BB DFS U3");
                 bbs.Add(new BranchAndBound(new BFS(), new U3Bound()));
@@ -73,10 +73,10 @@ namespace ExcelReport
             }
             else if (m_task as KPTask != null)
             {
-                dps.Add(new DynamicProgramming(new RecurrentApproach()));
-                names.Add("DP Recurrent");
                 dps.Add(new DynamicProgramming(new DirectApproach()));
                 names.Add("DP Direct");
+                dps.Add(new DynamicProgramming(new RecurrentApproach()));
+                names.Add("DP Recurrent");
                 bbs.Add(new BranchAndBound(new DFS()));
                 names.Add("BB DFS");
                 bbs.Add(new BranchAndBound(new BFS()));
@@ -103,8 +103,11 @@ namespace ExcelReport
                 {
                     sheet.Cells[2, startIndexForElapsedTime + i] = names[i];
                     sheet.Cells[2, startIndexForResult + i] = names[i];
-                }       
-                sheet.Cells[2, startIndexForResult + names.Count] = "GA deviation %";
+                }
+                for (var i = 0; i < names.Count - 1; ++i)
+                {
+                    sheet.Cells[2, startIndexForResult + names.Count + i] = names[i + 1] + " deviation %";
+                }
 
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
@@ -149,12 +152,23 @@ namespace ExcelReport
                     Logger.Get().Info("Weight: " + string.Join(", ", currData.Weight));
                     Logger.Get().Info("Capacity: " + currData.Capacity);
 
+                    double gold = 1;
+                    var resultDevations = new List<double>();
+
                     startIndexForElapsedTime = 2;
                     startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
                     for (var i = 0; i < dps.Count; ++i)
                     {
                         sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = dpElapsedTime[i] / m_runsCount;
                         sheet.Cells[instIndex + 3, startIndexForResult + i] = dpResults[i] / m_runsCount;
+                        if (i == 0)
+                        {
+                            gold = dpResults[i];
+                        }
+                        else
+                        {
+                            resultDevations.Add(((gold - dpResults[i]) / m_runsCount) / gold);
+                        }
                     }
 
                     startIndexForElapsedTime += dps.Count;
@@ -163,13 +177,19 @@ namespace ExcelReport
                     {
                         sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = bbElapsedTime[i] / m_runsCount;
                         sheet.Cells[instIndex + 3, startIndexForResult + i] = bbResults[i] / m_runsCount;
+                        resultDevations.Add(((gold - bbResults[i]) / m_runsCount) / gold);
                     }
 
                     startIndexForElapsedTime += bbs.Count;
                     startIndexForResult += bbs.Count;
                     sheet.Cells[instIndex + 3, startIndexForElapsedTime] = gaElapsedTime / m_runsCount;
                     sheet.Cells[instIndex + 3, startIndexForResult] = gaResult / m_runsCount;
-                    sheet.Cells[instIndex + 3, startIndexForResult + 1] = ((double)(bbResults[0] - gaResult) / m_runsCount) / bbResults[0];
+                    resultDevations.Add(((gold - gaResult) / m_runsCount) / gold);
+
+                    for (var i = 1; i < names.Count; ++i)
+                    {
+                        sheet.Cells[instIndex + 3, startIndexForResult + i] = resultDevations[i - 1];
+                    }
                 }
                 workbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + ".xlsx");
                 workbook.Close();
