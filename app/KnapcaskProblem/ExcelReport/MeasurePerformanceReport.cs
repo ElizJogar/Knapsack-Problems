@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
+using System.Linq;
 using KnapsackProblem;
 using Algorithm;
 using CustomLogger;
@@ -97,7 +98,7 @@ namespace ExcelReport
                 sheet.Cells[1, 2] = "Elapsed Time (ms)";
 
                 var startIndexForElapsedTime = 2;
-                var startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
+                var startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 4;
                 for (var i = 0; i < names.Count; ++i)
                 {
                     sheet.Cells[2, startIndexForElapsedTime + i] = names[i];
@@ -108,21 +109,15 @@ namespace ExcelReport
                     sheet.Cells[2, startIndexForResult + names.Count + i] = names[i + 1] + " deviation %";
                 }
 
-                for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
+                for (int instIndex = 0; instIndex < m_instancesCount; ++instIndex)
                 {
                     var taskData = m_task.Create(data[dataIndex]);
 
                     var results = new List<long>[dps.Count + bbs.Count + 1];
                     var elapsedTime = new List<double>[dps.Count + bbs.Count + 1];
+                    var elapsedTimeMedians = new List<double>();
 
-                    var gaResult = new List<long>();
-                    var dpResults = new List<long>[dps.Count];
-                    var bbResults = new List<long>[bbs.Count];
-                    var gaElapsedTime = new List<double>();
-                    var dpElapsedTime = new List<double>[dps.Count];
-                    var bbElapsedTime = new List<double>[bbs.Count];
-
-                    for (int s = 0; s < m_runsCount; s++)
+                    for (int s = 0; s < m_runsCount; ++s)
                     {
                         for (var i = 0; i < dps.Count; ++i)
                         {
@@ -186,13 +181,15 @@ namespace ExcelReport
                     double gold = 1;
 
                     startIndexForElapsedTime = 2;
-                    startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
+                    startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 4;
                     var startIndexForDeviation = startIndexForResult + dps.Count + bbs.Count;
                     for (var i = 0; i < results.Length; ++i)
                     {
                         var avg = GetAvg(results[i]);
-                        sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = GetMedian(elapsedTime[i]);
+                        var median = GetMedian(elapsedTime[i]);
+                        sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = median;
                         sheet.Cells[instIndex + 3, startIndexForResult + i] = avg;
+                        elapsedTimeMedians.Add(median);
                         if (i == 0)
                         {
                             gold = avg;
@@ -202,6 +199,7 @@ namespace ExcelReport
                             sheet.Cells[instIndex + 3, startIndexForDeviation + i] = (gold - avg) / gold;
                         }
                     }
+                    sheet.Cells[instIndex + 3, startIndexForElapsedTime + results.Length] = names[elapsedTimeMedians.IndexOf(elapsedTimeMedians.Min())];
                 }
                 workbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + ".xlsx");
                 workbook.Close();
@@ -249,21 +247,6 @@ namespace ExcelReport
             if (count % 2 != 0) return items[count / 2];
 
             return (items[(count - 1) / 2] + items[count / 2]) / 2.0;
-        }
-
-        private int GetIndexOfMin(List<double>[] time, int iteration)
-        {
-            double min = time[0][iteration];
-            int index = 0;
-            for (var i = 0; i < time.Length; ++i)
-            {
-                if (min > time[i][iteration])
-                {
-                    index = i;
-                    min = time[i][iteration];
-                }
-            }
-            return index;
         }
     }
 }

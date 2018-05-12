@@ -10,3 +10,4 @@ This project includes:
   2.4. Classical Dynamic Programming for UKP  
   2.4. Efficient Dynamic Programming algorithm for UKP with Threshold Dominance and Periodicity  
 3. Excel Report with comparison Genetic Algorithm combinations in order to select the best  
+4. Excel Report with measuring the performance and quality check of algorithms above  
