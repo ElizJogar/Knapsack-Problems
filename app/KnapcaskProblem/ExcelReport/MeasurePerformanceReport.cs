@@ -112,6 +112,9 @@ namespace ExcelReport
                 {
                     var taskData = m_task.Create(data[dataIndex]);
 
+                    var results = new List<long>[dps.Count + bbs.Count + 1];
+                    var elapsedTime = new List<double>[dps.Count + bbs.Count + 1];
+
                     var gaResult = new List<long>();
                     var dpResults = new List<long>[dps.Count];
                     var bbResults = new List<long>[bbs.Count];
@@ -123,13 +126,13 @@ namespace ExcelReport
                     {
                         for (var i = 0; i < dps.Count; ++i)
                         {
-                            if (dpElapsedTime[i] == null) dpElapsedTime[i] = new List<double>();
-                            dpElapsedTime[i].Add(Measure(() =>
+                            if (elapsedTime[i] == null) elapsedTime[i] = new List<double>();
+                            elapsedTime[i].Add(Measure(() =>
                             {
                                 try
                                 {
-                                    if (dpResults[i] == null) dpResults[i] = new List<long>();
-                                    dpResults[i].Add(dps[i].Run(taskData));
+                                    if (results[i] == null) results[i] = new List<long>();
+                                    results[i].Add(dps[i].Run(taskData));
                                 }
                                 catch (Exception e)
                                 {
@@ -138,15 +141,15 @@ namespace ExcelReport
                             }, TimeSpan.FromMinutes(5)));
                         }
 
-                        for (var i = 0; i < bbs.Count; ++i)
+                        for (var i = dps.Count; i < dps.Count + bbs.Count; ++i)
                         {
-                            if (bbElapsedTime[i] == null) bbElapsedTime[i] = new List<double>();
-                            bbElapsedTime[i].Add(Measure(() =>
+                            if (elapsedTime[i] == null) elapsedTime[i] = new List<double>();
+                            elapsedTime[i].Add(Measure(() =>
                             {
                                 try
                                 {
-                                    if (bbResults[i] == null) bbResults[i] = new List<long>();
-                                    bbResults[i].Add(bbs[i].Run(taskData));
+                                    if (results[i] == null) results[i] = new List<long>();
+                                    results[i].Add(bbs[i].Run(taskData));
                                 }
                                 catch (Exception e)
                                 {
@@ -155,14 +158,15 @@ namespace ExcelReport
                             }, TimeSpan.FromMinutes(5)));
                         }
 
-                        if (gaElapsedTime == null) gaElapsedTime = new List<double>();
-                        gaElapsedTime.Add(Measure(() =>
+                        var lastIndex = elapsedTime.Length - 1;
+                        if (elapsedTime[lastIndex] == null) elapsedTime[lastIndex] = new List<double>();
+                        elapsedTime[lastIndex].Add(Measure(() =>
                         {
                             ga.SetData(taskData);
                             try
                             {
-                                if (gaResult == null) gaResult = new List<long>();
-                                gaResult.Add(ga.Run(m_iterationCount, m_populationCount, 2));
+                                if (results[lastIndex] == null) results[lastIndex] = new List<long>();
+                                results[lastIndex].Add(ga.Run(m_iterationCount, m_populationCount, 2));
 
                             }
                             catch (Exception e)
@@ -184,10 +188,10 @@ namespace ExcelReport
                     startIndexForElapsedTime = 2;
                     startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
                     var startIndexForDeviation = startIndexForResult + dps.Count + bbs.Count;
-                    for (var i = 0; i < dps.Count; ++i)
+                    for (var i = 0; i < results.Length; ++i)
                     {
-                        var avg = GetAvg(dpResults[i]);
-                        sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = GetMedian(dpElapsedTime[i]);
+                        var avg = GetAvg(results[i]);
+                        sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = GetMedian(elapsedTime[i]);
                         sheet.Cells[instIndex + 3, startIndexForResult + i] = avg;
                         if (i == 0)
                         {
@@ -198,26 +202,6 @@ namespace ExcelReport
                             sheet.Cells[instIndex + 3, startIndexForDeviation + i] = (gold - avg) / gold;
                         }
                     }
-
-                    startIndexForElapsedTime += dps.Count;
-                    startIndexForResult += dps.Count;
-                    startIndexForDeviation += dps.Count;
-                    for (var i = 0; i < bbs.Count; ++i)
-                    {
-                        var avg = GetAvg(bbResults[i]);
-                        sheet.Cells[instIndex + 3, startIndexForElapsedTime + i] = GetMedian(bbElapsedTime[i]);
-                        sheet.Cells[instIndex + 3, startIndexForResult + i] = avg;
-                        sheet.Cells[instIndex + 3, startIndexForDeviation + i] = (gold - avg) / gold;
-                    }
-
-                    startIndexForElapsedTime += bbs.Count;
-                    startIndexForResult += bbs.Count;
-                    startIndexForDeviation += bbs.Count;
-
-                    var gaAvg = GetAvg(gaResult);
-                    sheet.Cells[instIndex + 3, startIndexForElapsedTime] = GetMedian(gaElapsedTime);
-                    sheet.Cells[instIndex + 3, startIndexForResult] = gaAvg;
-                    sheet.Cells[instIndex + 3, startIndexForDeviation] = (gold - gaAvg) / gold;
                 }
                 workbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + ".xlsx");
                 workbook.Close();
@@ -265,6 +249,21 @@ namespace ExcelReport
             if (count % 2 != 0) return items[count / 2];
 
             return (items[(count - 1) / 2] + items[count / 2]) / 2.0;
+        }
+
+        private int GetIndexOfMin(List<double>[] time, int iteration)
+        {
+            double min = time[0][iteration];
+            int index = 0;
+            for (var i = 0; i < time.Length; ++i)
+            {
+                if (min > time[i][iteration])
+                {
+                    index = i;
+                    min = time[i][iteration];
+                }
+            }
+            return index;
         }
     }
 }
