@@ -16,17 +16,19 @@ namespace ExcelReport
         private int m_iterationCount;
         private int m_populationCount;
         private int m_runsCount;
+        private int m_betta;
         private int m_dataSize;
         private int m_instancesCount;
         private DirectoryInfo m_dir;
 
         public MeasurePerformanceReport(ITask task = null,
-            int iterationCount = 1, int populationCount = 1, int startCount = 1, int dataSize = 15, int instancesCount = 1)
+            int iterationCount = 1, int populationCount = 1, int startCount = 1, int betta = 2, int dataSize = 15, int instancesCount = 1)
         {
             m_task = task;
             m_iterationCount = iterationCount;
             m_populationCount = populationCount;
             m_runsCount = startCount;
+            m_betta = betta;
             m_dataSize = dataSize;
             m_instancesCount = instancesCount;
 
@@ -98,7 +100,7 @@ namespace ExcelReport
                 sheet.Cells[1, 2] = "Elapsed Time (ms)";
 
                 var startIndexForElapsedTime = 2;
-                var startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 4;
+                var startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
                 for (var i = 0; i < names.Count; ++i)
                 {
                     sheet.Cells[2, startIndexForElapsedTime + i] = names[i];
@@ -144,7 +146,7 @@ namespace ExcelReport
                                 try
                                 {
                                     if (results[i] == null) results[i] = new List<long>();
-                                    results[i].Add(bbs[i].Run(taskData));
+                                    results[i].Add(bbs[i - dps.Count].Run(taskData));
                                 }
                                 catch (Exception e)
                                 {
@@ -161,7 +163,7 @@ namespace ExcelReport
                             try
                             {
                                 if (results[lastIndex] == null) results[lastIndex] = new List<long>();
-                                results[lastIndex].Add(ga.Run(m_iterationCount, m_populationCount, 2));
+                                results[lastIndex].Add(ga.Run(m_iterationCount, m_populationCount, m_betta));
 
                             }
                             catch (Exception e)
@@ -181,7 +183,7 @@ namespace ExcelReport
                     double gold = 1;
 
                     startIndexForElapsedTime = 2;
-                    startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 4;
+                    startIndexForResult = startIndexForElapsedTime + dps.Count + bbs.Count + 2;
                     var startIndexForDeviation = startIndexForResult + dps.Count + bbs.Count;
                     for (var i = 0; i < results.Length; ++i)
                     {
