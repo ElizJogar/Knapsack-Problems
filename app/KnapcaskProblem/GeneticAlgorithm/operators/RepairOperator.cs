@@ -54,7 +54,7 @@ namespace Algorithm
             foreach (var individ in permissibleIndivids)
             {
                 var weight = individ.GetWeight();
-                while (weight > data.Capacity)
+                if (weight > data.Capacity)
                 {
                     foreach (var item in specificCosts)
                     {
