@@ -7,7 +7,7 @@ using Algorithm;
 
 namespace ExcelReport
 {
-    public class CombinationsCompareReport
+    public class CombinationsCompareReport : IReport
     {
         private Excel.Application m_excel;
         private ITask m_task;

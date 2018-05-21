@@ -9,7 +9,7 @@ using Algorithm;
 using CustomLogger;
 namespace ExcelReport
 {
-    public class MeasurePerformanceReport
+    public class MeasurePerformanceReport : IReport
     {
         private Excel.Application m_excel;
         private ITask m_task;

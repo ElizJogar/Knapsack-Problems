@@ -114,7 +114,7 @@ namespace Algorithm
         }
     }
 
-    public class CustomIndivid
+    public class CustomIndivid: Individ
     {
         private long m_cost;
         private long m_weight;
