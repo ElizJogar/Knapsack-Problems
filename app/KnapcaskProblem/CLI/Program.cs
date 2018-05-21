@@ -11,10 +11,10 @@ namespace CLI
             var parser = new ArgParser();
             var reportType = "cc";
             var dataSize = 15; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
-            var iterationCount = 30;
-            var populationCount = 40;
+            var iterationCount = 2;// 30;
+            var populationCount = 2;// 40;
             var betta = 14;
-            var runsCount = 30;// 30;
+            var runsCount = 30;
             var instancesCount = 5;// 250;
             parser.AddArgument("rt|report=", "Type of report. 'cc' is a compinations compare report, 'mp' - is a measure performance report", rt => reportType = rt);
             parser.AddArgument("g|generation=", "Generation count", g => iterationCount = Convert.ToInt32(g));

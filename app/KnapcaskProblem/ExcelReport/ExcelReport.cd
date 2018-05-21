@@ -6,6 +6,7 @@
       <HashCode>AAYAAAABAAAAAMAABAAASIAEAAAABEAAAAAAAAAgBAI=</HashCode>
       <FileName>CombinationsCompareReport.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="1.898" />
   </Class>
   <Class Name="ExcelReport.KPUncorrDataFactory" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="8.5" Y="3.75" Width="1.75" />
@@ -77,12 +78,20 @@
       <HashCode>gAIAAAAAAAAAAEAABAAASIAEAABAAEAAAIAAAAAgBAI=</HashCode>
       <FileName>MeasurePerformanceReport.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="ExcelReport.IGAOperatorsFactory" Collapsed="true">
     <Position X="9.75" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAABAAAAAEAA=</HashCode>
       <FileName>GAOperatorsFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ExcelReport.IReport" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAgAAA=</HashCode>
+      <FileName>IReport.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />
