@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Algorithm.U3Bound" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\Bound.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.GreedyLowerBound" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\Bound.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.69" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.DFS" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\BranchAndBound.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.231" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.BFS" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\BranchAndBound.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.BranchAndBound" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAIAAAAAAAAAAAAACI=</HashCode>
+      <FileName>BranchAndBound\BranchAndBound.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.DirectApproach" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DynamicProgramming\DynamicProgramming.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.179" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.RecurrentApproach" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DynamicProgramming\DynamicProgramming.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.273" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.ClassicalUKPApproach" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DynamicProgramming\DynamicProgramming.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.153" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.EDUK_EX" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAM=</HashCode>
+      <FileName>DynamicProgramming\DynamicProgramming.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.164" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.DynamicProgramming" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DynamicProgramming\DynamicProgramming.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.648" Collapsed="true" />
+  </Class>
+  <Interface Name="Algorithm.ITotalBound" Collapsed="true">
+    <Position X="13" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\Bound.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IBound" Collapsed="true">
+    <Position X="11" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\Bound.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IFS" Collapsed="true">
+    <Position X="11.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>BranchAndBound\BranchAndBound.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IDPApproach" Collapsed="true">
+    <Position X="7.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DynamicProgramming\DynamicProgramming.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IExactAlgorithm" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>IExactAlgorithm.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

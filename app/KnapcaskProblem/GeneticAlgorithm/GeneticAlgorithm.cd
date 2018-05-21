@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical" MembersFormat="FullSignature">
+  <Class Name="Algorithm.PenaltyFunction" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\ConstraintProcessing.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.SinglePointCrossover" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Crossover.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.3" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.TwoPointCrossover" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Crossover.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.678" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.UniformCrossover" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Crossover.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.DantzigAlgorithm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\InitialPopulation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.22" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.RandomPopulation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\InitialPopulation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.187" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.PointMutation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Mutation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.22" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.Inversion" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Mutation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.Translocation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Mutation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.3" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.Saltation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Mutation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.181" Collapsed="true" />
+  </Class>
+  <Class Name="Algorithm.ARepairOperator" Collapsed="true">
+    <Position X="18.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\RepairOperator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.213" />
+  </Class>
+  <Class Name="Algorithm.RepairOperator" Collapsed="true">
+    <Position X="19.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\RepairOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Algorithm.EfficientRepairOperator" Collapsed="true">
+    <Position X="17" Y="7.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\RepairOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Algorithm.ASelection" Collapsed="true">
+    <Position X="15.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Selection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Algorithm.BettaTournament" Collapsed="true">
+    <Position X="14.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Selection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Algorithm.LinearRankSelection" Collapsed="true">
+    <Position X="16.25" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Selection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Algorithm.GeneticAlgorithm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAABAAAAAYAAAIAAAAAAAAAgAAAAAAQCQAAAACI=</HashCode>
+      <FileName>GeneticAlgorithm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Algorithm.IConstraintProcessing" Collapsed="true">
+    <Position X="13.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\ConstraintProcessing.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.ICrossover" Collapsed="true">
+    <Position X="9.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Crossover.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IInitialPopulation" Collapsed="true">
+    <Position X="8" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\InitialPopulation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IOperator" Collapsed="true">
+    <Position X="13.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>operators\IOperator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IMutation" Collapsed="true">
+    <Position X="12.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Mutation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IRepairOperator" Collapsed="true">
+    <Position X="18.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\RepairOperator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.ISelection" Collapsed="true">
+    <Position X="15.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>operators\Selection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Algorithm.IHeuristicAlgorithm" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>GeneticAlgorithm.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

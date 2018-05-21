@@ -99,8 +99,8 @@ namespace ExcelReport
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
                     var taskData = m_task.Create(data[dataIndex]);
-                    
-                    long upperBound = new U3Bound().Calculate(Helpers.GetItems(taskData), taskData.Capacity);
+
+                    long upperBound = new DynamicProgramming(new ClassicalUKPApproach()).Run(taskData);//new U3Bound().Calculate(Helpers.GetItems(taskData), taskData.Capacity);
 
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
