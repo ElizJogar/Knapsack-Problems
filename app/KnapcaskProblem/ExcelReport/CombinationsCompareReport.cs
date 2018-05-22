@@ -99,8 +99,16 @@ namespace ExcelReport
                 for (int instIndex = 0; instIndex < m_instancesCount; instIndex++)
                 {
                     var taskData = m_task.Create(data[dataIndex]);
-
-                    long upperBound = new DynamicProgramming(new ClassicalUKPApproach()).Run(taskData);//new U3Bound().Calculate(Helpers.GetItems(taskData), taskData.Capacity);
+                    IDPApproach approach = null;
+                    if (taskData as KPTask != null)
+                    {
+                        approach = new DirectApproach();
+                    }
+                    else if (taskData as UKPTask != null)
+                    {
+                        approach = new ClassicalUKPApproach();
+                    }
+                    var optimum = new DynamicProgramming(approach).Run(taskData);
 
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
@@ -207,13 +215,13 @@ namespace ExcelReport
                     sheet.Columns.ColumnWidth = 10;
                     sheet.Name = "Sheet" + (instIndex + 3);
                     sheet.Cells[20, 1] = "Percentage data:";
-                    sheet.Cells[20, 4] = "UpperBound: " + upperBound;
+                    sheet.Cells[20, 4] = "optimum: " + optimum;
                     sheet.Cells[21, 1] = "deviation%";
                     sheet.Cells[22, 1] = "probabil.%";
                     sheet.Cells[23, 1] = "i(avg) %";
                     for (int i = 2; i < length + 2; i++)
                     {
-                        sheet.Cells[21, i] = 100 - Math.Round((double)(sheet.Cells[2, i].Value * 100 / upperBound), 2);
+                        sheet.Cells[21, i] = 100 - Math.Round((double)(sheet.Cells[2, i].Value * 100 / optimum), 2);
                         sheet.Cells[22, i] = Math.Round(sheet.Cells[3, i].Value * 100, 2);
                         sheet.Cells[23, i] = Math.Round((double)(sheet.Cells[4, i].Value * 100 / m_iterationCount), 2);
                     }
