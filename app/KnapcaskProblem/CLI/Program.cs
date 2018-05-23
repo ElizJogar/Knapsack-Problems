@@ -11,8 +11,8 @@ namespace CLI
             var parser = new ArgParser();
             var reportType = "cc";
             var dataSize = 15; //50, 100, 500, 1000, 5000, 10000, 20000, 30000, 40000 and 50000
-            var iterationCount = 2;// 30;
-            var populationCount = 2;// 40;
+            var iterationCount = 30;
+            var populationCount = 40;
             var betta = 14;
             var runsCount = 30;
             var instancesCount = 5;// 250;
@@ -27,11 +27,11 @@ namespace CLI
             IReport report = null;
             if (reportType == "cc")
             {
-                report = new CombinationsCompareReport(new UKPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
+                report = new CombinationsCompareReport(new KPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
             }
             else if (reportType == "mp")
             {
-                report = new MeasurePerformanceReport(new UKPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
+                report = new MeasurePerformanceReport(new KPTask(), iterationCount, populationCount, betta, runsCount, dataSize, instancesCount);
             }
             report.Create();
             Console.WriteLine("Report created successfully! You can see reports here: {0}", report.GetDir());

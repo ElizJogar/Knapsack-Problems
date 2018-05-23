@@ -100,11 +100,11 @@ namespace ExcelReport
                 {
                     var taskData = m_task.Create(data[dataIndex]);
                     IDPApproach approach = null;
-                    if (taskData as KPTask != null)
+                    if (m_task as KPTask != null)
                     {
                         approach = new DirectApproach();
                     }
-                    else if (taskData as UKPTask != null)
+                    else if (m_task as UKPTask != null)
                     {
                         approach = new ClassicalUKPApproach();
                     }
