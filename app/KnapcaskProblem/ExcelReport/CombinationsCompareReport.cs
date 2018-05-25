@@ -113,7 +113,7 @@ namespace ExcelReport
                     m_excel.SheetsInNewWorkbook = m_runsCount + 1;
                     m_excel.Workbooks.Add(Type.Missing);
                     workbook = m_excel.Workbooks[2];
-                    for (int s = 0; s < m_runsCount; s++)
+                    for (var s = 0; s < m_runsCount; ++s)
                     {
                         int count = 1;
                         sheet = workbook.Worksheets.get_Item(s + 1);

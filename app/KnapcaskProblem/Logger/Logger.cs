@@ -29,7 +29,7 @@ namespace CustomLogger
             string myDocPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             m_dir = new DirectoryInfo(myDocPath + @"\knapsack_problems_doc");
             m_dir.Create();
-            m_fileName = m_dir.FullName + @"\gen_algorithm_log_" + 
+            m_fileName = m_dir.FullName + @"\log_" + 
                 m_localDate.Hour + "." + m_localDate.Minute + "." + m_localDate.Second + "." + m_localDate.Millisecond +
                 ".log";
             using (m_writeFile = new StreamWriter(m_fileName, false))

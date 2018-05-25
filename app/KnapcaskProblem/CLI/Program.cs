@@ -14,7 +14,7 @@ namespace CLI
             var iterationCount = 30;
             var populationCount = 40;
             var betta = 14;
-            var runsCount = 30;
+            var runsCount = 10;
             var instancesCount = 5;// 250;
             parser.AddArgument("rt|report=", "Type of report. 'cc' is a compinations compare report, 'mp' - is a measure performance report", rt => reportType = rt);
             parser.AddArgument("g|generation=", "Generation count", g => iterationCount = Convert.ToInt32(g));

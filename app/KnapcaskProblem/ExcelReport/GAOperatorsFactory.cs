@@ -18,7 +18,7 @@ namespace ExcelReport
         }
         public ICrossover GetCrossover()
         {
-            return new UniformCrossover();
+            return new SinglePointCrossover();
         }
         public IMutation GetMutation()
         {
@@ -33,11 +33,11 @@ namespace ExcelReport
     {
         public IInitialPopulation GetInitialPopulation()
         {
-            return new RandomPopulation();
+            return new DantzigAlgorithm();
         }
         public ICrossover GetCrossover()
         {
-            return new UniformCrossover();
+            return new SinglePointCrossover();
         }
         public IMutation GetMutation()
         {
@@ -56,6 +56,25 @@ namespace ExcelReport
         }
         public ICrossover GetCrossover()
         {
+            return new UniformCrossover();
+        }
+        public IMutation GetMutation()
+        {
+            return new Inversion();
+        }
+        public ISelection GetSelection()
+        {
+            return new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator());
+        }
+    }
+    public class KPSubsetSumDataFactory : IGAOperatorsFactory
+    {
+        public IInitialPopulation GetInitialPopulation()
+        {
+            return new RandomPopulation();
+        }
+        public ICrossover GetCrossover()
+        {
             return new TwoPointCrossover();
         }
         public IMutation GetMutation()
@@ -67,7 +86,29 @@ namespace ExcelReport
             return new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());
         }
     }
-    public class KPSubsetSumDataFactory : IGAOperatorsFactory
+    public class KPVeryVeryStronglyCorrDataFactory : IGAOperatorsFactory
+    {
+        public IInitialPopulation GetInitialPopulation()
+        {
+            return new DantzigAlgorithm();
+        }
+        public ICrossover GetCrossover()
+        {
+            return new UniformCrossover();
+        }
+        public IMutation GetMutation()
+        {
+            return new Inversion();
+        }
+        public ISelection GetSelection()
+        {
+            return new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator());
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public class UKPUncorrDataFactory : IGAOperatorsFactory
     {
         public IInitialPopulation GetInitialPopulation()
         {
@@ -86,7 +127,7 @@ namespace ExcelReport
             return new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());
         }
     }
-    public class KPVeryVeryStronglyCorrDataFactory : IGAOperatorsFactory
+    public class UKPWeaklyCorrDataFactory : IGAOperatorsFactory
     {
         public IInitialPopulation GetInitialPopulation()
         {
@@ -94,7 +135,7 @@ namespace ExcelReport
         }
         public ICrossover GetCrossover()
         {
-            return new TwoPointCrossover();
+            return new UniformCrossover();
         }
         public IMutation GetMutation()
         {
@@ -105,53 +146,15 @@ namespace ExcelReport
             return new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());
         }
     }
-    public class UKPUncorrDataFactory : IGAOperatorsFactory
-    {
-        public IInitialPopulation GetInitialPopulation()
-        {
-            return new RandomPopulation();
-        }
-        public ICrossover GetCrossover()
-        {
-            return new SinglePointCrossover();
-        }
-        public IMutation GetMutation()
-        {
-            return new Saltation();
-        }
-        public ISelection GetSelection()
-        {
-            return new LinearRankSelection(new PenaltyFunction(), new EfficientRepairOperator());
-        }
-    }
-    public class UKPWeaklyCorrDataFactory : IGAOperatorsFactory
-    {
-        public IInitialPopulation GetInitialPopulation()
-        {
-            return new RandomPopulation();
-        }
-        public ICrossover GetCrossover()
-        {
-            return new SinglePointCrossover();
-        }
-        public IMutation GetMutation()
-        {
-            return new PointMutation();
-        }
-        public ISelection GetSelection()
-        {
-            return new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator());
-        }
-    }
     public class UKPStronglyCorrDataFactory : IGAOperatorsFactory
     {
         public IInitialPopulation GetInitialPopulation()
         {
-            return new RandomPopulation();
+            return new DantzigAlgorithm();
         }
         public ICrossover GetCrossover()
         {
-            return new SinglePointCrossover();
+            return new UniformCrossover();
         }
         public IMutation GetMutation()
         {
@@ -174,7 +177,7 @@ namespace ExcelReport
         }
         public IMutation GetMutation()
         {
-            return new Saltation();
+            return new PointMutation();
         }
         public ISelection GetSelection()
         {
@@ -185,11 +188,11 @@ namespace ExcelReport
     {
         public IInitialPopulation GetInitialPopulation()
         {
-            return new RandomPopulation();
+            return new DantzigAlgorithm();
         }
         public ICrossover GetCrossover()
         {
-            return new SinglePointCrossover();
+            return new UniformCrossover();
         }
         public IMutation GetMutation()
         {
