@@ -105,9 +105,6 @@ namespace ExcelReport
             return new BettaTournament(new PenaltyFunction(), new EfficientRepairOperator());
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
     public class UKPUncorrDataFactory : IGAOperatorsFactory
     {
         public IInitialPopulation GetInitialPopulation()

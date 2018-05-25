@@ -46,11 +46,12 @@ namespace ExcelReport
         }
         public void Create()
         {
-            IData[] data = { new UncorrData(m_dataSize, new Range(10, 9999)),
+            IData[] data = {
+                new UncorrData(m_dataSize, new Range(10, 9999)),
                 new WeaklyCorrData(m_dataSize, new Range(10, 9999)),
                 new StronglyCorrData(m_dataSize, new Range(10, 9999)),
                 new SubsetSumData(m_dataSize, new Range(1, 9999)),
-                //     new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
+                new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))
             };
 
             var dps = new List<IExactAlgorithm>();
@@ -84,7 +85,7 @@ namespace ExcelReport
 
             names.Add("GA");
 
-            for (int dataIndex = 0; dataIndex < 1; ++dataIndex) // data.Length
+            for (int dataIndex = 0; dataIndex < data.Length - 1; ++dataIndex)
             {
                 var factory = Factory.Create(m_task, data[dataIndex]);
 
