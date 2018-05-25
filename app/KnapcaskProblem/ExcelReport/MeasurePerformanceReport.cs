@@ -50,7 +50,8 @@ namespace ExcelReport
                 new WeaklyCorrData(m_dataSize, new Range(10, 9999)),
                 new StronglyCorrData(m_dataSize, new Range(10, 9999)),
                 new SubsetSumData(m_dataSize, new Range(1, 9999)),
-                new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
+                //     new VeryVeryStronglyCorrData(m_dataSize, new Range(1, 9999))};
+            };
 
             var dps = new List<IExactAlgorithm>();
             var bbs = new List<IExactAlgorithm>();
@@ -83,7 +84,7 @@ namespace ExcelReport
 
             names.Add("GA");
 
-            for (int dataIndex = 0; dataIndex < data.Length; ++dataIndex)
+            for (int dataIndex = 0; dataIndex < 1; ++dataIndex) // data.Length
             {
                 var factory = Factory.Create(m_task, data[dataIndex]);
 
@@ -118,60 +119,55 @@ namespace ExcelReport
                     var results = new List<long>[dps.Count + bbs.Count + 1];
                     var elapsedTime = new List<double>[dps.Count + bbs.Count + 1];
                     var elapsedTimeMedians = new List<double>();
-
+                    long time = 0;
+                    long result = 0;
                     for (int s = 0; s < m_runsCount; ++s)
                     {
-                        for (var i = 0; i < dps.Count; ++i)
+                        for (var i = 0; i < dps.Count + bbs.Count; ++i)
                         {
-                            if (elapsedTime[i] == null) elapsedTime[i] = new List<double>();
-                            elapsedTime[i].Add(Measure(() =>
+                            time = Measure(() =>
                             {
                                 try
                                 {
-                                    if (results[i] == null) results[i] = new List<long>();
-                                    results[i].Add(dps[i].Run(taskData));
+                                    IExactAlgorithm alg = i < dps.Count ? dps[i] : bbs[i - dps.Count];
+                                    result = alg.Run(taskData);
                                 }
                                 catch (Exception e)
                                 {
-                                    Logger.Get().Error("ERROR DP[" + i + "], e: " + e);
+                                    Logger.Get().Error("ERROR ALG[" + i + "], e: " + e);
                                 }
-                            }, TimeSpan.FromMinutes(5)));
-                        }
+                            }, TimeSpan.FromMinutes(25));
+                            if (time != -1)
+                            {
+                                if (elapsedTime[i] == null) elapsedTime[i] = new List<double>();
+                                if (results[i] == null) results[i] = new List<long>();
 
-                        for (var i = dps.Count; i < dps.Count + bbs.Count; ++i)
-                        {
-                            if (elapsedTime[i] == null) elapsedTime[i] = new List<double>();
-                            elapsedTime[i].Add(Measure(() =>
-                            {
-                                try
-                                {
-                                    if (results[i] == null) results[i] = new List<long>();
-                                    results[i].Add(bbs[i - dps.Count].Run(taskData));
-                                }
-                                catch (Exception e)
-                                {
-                                    Logger.Get().Error("ERROR BB[" + i + "], e: " + e);
-                                }
-                            }, TimeSpan.FromMinutes(5)));
+                                elapsedTime[i].Add(time);
+                                results[i].Add(result);
+                            }
                         }
 
                         var lastIndex = elapsedTime.Length - 1;
-                        if (elapsedTime[lastIndex] == null) elapsedTime[lastIndex] = new List<double>();
-                        elapsedTime[lastIndex].Add(Measure(() =>
+                        time = Measure(() =>
                         {
                             ga.SetData(taskData);
                             try
                             {
-                                if (results[lastIndex] == null) results[lastIndex] = new List<long>();
-                                results[lastIndex].Add(ga.Run(m_iterationCount, m_populationCount, m_betta));
-
+                                result = ga.Run(m_iterationCount, m_populationCount, m_betta);
                             }
                             catch (Exception e)
                             {
                                 Logger.Get().Error("ERROR GA, e: " + e);
                             }
-                        }, TimeSpan.FromMinutes(5)));
+                        }, TimeSpan.FromMinutes(25));
+                        if (time != -1)
+                        {
+                            if (elapsedTime[lastIndex] == null) elapsedTime[lastIndex] = new List<double>();
+                            if (results[lastIndex] == null) results[lastIndex] = new List<long>();
 
+                            elapsedTime[lastIndex].Add(time);
+                            results[lastIndex].Add(result);
+                        }
                     }
 
                     var currData = data[dataIndex];
@@ -213,7 +209,7 @@ namespace ExcelReport
         {
             try
             {
-                long elapsedMs = timeSpan.Milliseconds;
+                long elapsedMs = -1;
                 Task task = Task.Factory.StartNew(() =>
                 {
                     var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -238,13 +234,15 @@ namespace ExcelReport
                 if (item == 0) --count;
                 result += item;
             }
-            return  (double)result / count;
+            return (double)result / count;
         }
 
         private static double GetMedian(List<double> items)
         {
             items.Sort();
             var count = items.Count;
+
+            if (count == 0) return -1;
 
             if (count % 2 != 0) return items[count / 2];
 

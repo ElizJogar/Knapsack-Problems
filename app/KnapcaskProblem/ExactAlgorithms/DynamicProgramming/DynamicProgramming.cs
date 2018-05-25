@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KnapsackProblem;
+using CustomLogger;
 
 namespace Algorithm
 {
@@ -167,6 +168,7 @@ namespace Algorithm
             {
                 if (F.Count == 1)
                 {
+                    Logger.Get().Info("Periodicity achieved. ");
                     // periodicity achivied
                     var index = F[0];
                     var l = L[index];

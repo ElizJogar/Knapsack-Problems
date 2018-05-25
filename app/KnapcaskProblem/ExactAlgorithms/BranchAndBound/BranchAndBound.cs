@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KnapsackProblem;
+using CustomLogger;
 
 namespace Algorithm
 {
@@ -96,6 +97,7 @@ namespace Algorithm
                     next.bound = m_lowerBound.Calculate(next, items, capacity);
                     if (next.cost == upperBound)
                     {
+                        Logger.Get().Info("Upper Bound achieved. ");
                         return next.cost;
                     }
                     else if (next.bound > lowerBound)
