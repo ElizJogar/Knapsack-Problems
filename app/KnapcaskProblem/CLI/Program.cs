@@ -16,7 +16,7 @@ namespace CLI
             var populationCount = 40;
             var betta = 14;
             var runsCount = 30;
-            var instancesCount = 5;// 250;
+            var instancesCount = 30;// 250;
             parser.AddArgument("rt|report=", "Type of report. 'cc' is a compinations compare report, 'mp' - is a measure performance report", rt => reportType = rt);
             parser.AddArgument("tt|task=", "Type of task. 'kp' is a 0-1 knapsack problem, 'ukp' - is a unbounded knapsack problem", tt => taskType = tt);
             parser.AddArgument("g|generation=", "Generation count", g => iterationCount = Convert.ToInt32(g));
@@ -26,6 +26,8 @@ namespace CLI
             parser.AddArgument("ds|data_size=", "data size", ds => dataSize = Convert.ToInt32(ds));
             parser.AddArgument("inst|instances=", "Instances count for each data type", inst => instancesCount = Convert.ToInt32(inst));
 
+            parser.ParseArguments(args);
+ 
             IReport report = null;
             ITask task = null;
 
