@@ -85,7 +85,7 @@ namespace ExcelReport
 
             names.Add("GA");
 
-            for (int dataIndex = 0; dataIndex < data.Length - 1; ++dataIndex)
+            for (int dataIndex = 2; dataIndex < data.Length - 1; ++dataIndex)
             {
                 var factory = Factory.Create(m_task, data[dataIndex]);
 
@@ -146,6 +146,10 @@ namespace ExcelReport
                                 elapsedTime[i].Add(time);
                                 results[i].Add(result);
                             }
+                            else
+                            {
+                                Logger.Get().Info("Stopped by timer");
+                            }
                         }
 
                         var lastIndex = elapsedTime.Length - 1;
@@ -168,6 +172,10 @@ namespace ExcelReport
 
                             elapsedTime[lastIndex].Add(time);
                             results[lastIndex].Add(result);
+                        }
+                        else
+                        {
+                            Logger.Get().Info("Stopped by timer");
                         }
                     }
 
@@ -198,7 +206,16 @@ namespace ExcelReport
                             sheet.Cells[instIndex + 3, startIndexForDeviation + i] = (gold - avg) / gold;
                         }
                     }
-                    sheet.Cells[instIndex + 3, startIndexForElapsedTime + results.Length] = names[elapsedTimeMedians.IndexOf(elapsedTimeMedians.Min())];
+                    var min = elapsedTimeMedians.Min();
+                    var algorithmsStr = "";
+                    for (var j = 0; j < elapsedTimeMedians.Count; ++j)
+                    {
+                        if (elapsedTimeMedians[j] == min)
+                        {
+                            algorithmsStr += names[j] + '\n';
+                        }
+                    }
+                    sheet.Cells[instIndex + 3, startIndexForElapsedTime + results.Length] = algorithmsStr;
                 }
                 workbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + ".xlsx");
                 workbook.Close();
@@ -228,10 +245,13 @@ namespace ExcelReport
         }
         private static double GetAvg(List<long> items)
         {
+            if (items == null || items.Count == 0)
+            {
+                return -1;
+            }
+
             long result = 0;
             var count = items.Count;
-
-            if (count == 0) return -1;
 
             foreach (var item in items)
             {
@@ -243,10 +263,13 @@ namespace ExcelReport
 
         private static double GetMedian(List<double> items)
         {
+            if (items == null || items.Count == 0)
+            {
+                return -1;
+            }
+
             items.Sort();
             var count = items.Count;
-
-            if (count == 0) return -1;
 
             if (count % 2 != 0) return items[count / 2];
 
