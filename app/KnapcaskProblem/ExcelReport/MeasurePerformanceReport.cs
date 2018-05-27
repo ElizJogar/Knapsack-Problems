@@ -146,6 +146,10 @@ namespace ExcelReport
                                 elapsedTime[i].Add(time);
                                 results[i].Add(result);
                             }
+                            else
+                            {
+                                Logger.Get().Info("Stopped by timer");
+                            }
                         }
 
                         var lastIndex = elapsedTime.Length - 1;
@@ -168,6 +172,10 @@ namespace ExcelReport
 
                             elapsedTime[lastIndex].Add(time);
                             results[lastIndex].Add(result);
+                        }
+                        else
+                        {
+                            Logger.Get().Info("Stopped by timer");
                         }
                     }
 
@@ -228,8 +236,14 @@ namespace ExcelReport
         }
         private static double GetAvg(List<long> items)
         {
+            if (items == null || items.Count == 0)
+            {
+                return -1;
+            }
+
             long result = 0;
             var count = items.Count;
+
             foreach (var item in items)
             {
                 if (item == 0) --count;
@@ -240,10 +254,13 @@ namespace ExcelReport
 
         private static double GetMedian(List<double> items)
         {
+            if (items == null || items.Count == 0)
+            {
+                return -1;
+            }
+
             items.Sort();
             var count = items.Count;
-
-            if (count == 0) return -1;
 
             if (count % 2 != 0) return items[count / 2];
 
