@@ -85,7 +85,7 @@ namespace ExcelReport
 
             names.Add("GA");
 
-            for (int dataIndex = 0; dataIndex < data.Length - 1; ++dataIndex)
+            for (int dataIndex = 2; dataIndex < data.Length - 1; ++dataIndex)
             {
                 var factory = Factory.Create(m_task, data[dataIndex]);
 
@@ -206,7 +206,16 @@ namespace ExcelReport
                             sheet.Cells[instIndex + 3, startIndexForDeviation + i] = (gold - avg) / gold;
                         }
                     }
-                    sheet.Cells[instIndex + 3, startIndexForElapsedTime + results.Length] = names[elapsedTimeMedians.IndexOf(elapsedTimeMedians.Min())];
+                    var min = elapsedTimeMedians.Min();
+                    var algorithmsStr = "";
+                    for (var j = 0; j < elapsedTimeMedians.Count; ++j)
+                    {
+                        if (elapsedTimeMedians[j] == min)
+                        {
+                            algorithmsStr += names[j] + '\n';
+                        }
+                    }
+                    sheet.Cells[instIndex + 3, startIndexForElapsedTime + results.Length] = algorithmsStr;
                 }
                 workbook.SaveAs(m_dir + @"\" + data[dataIndex].Str() + ".xlsx");
                 workbook.Close();
