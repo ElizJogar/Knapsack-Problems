@@ -230,6 +230,9 @@ namespace ExcelReport
         {
             long result = 0;
             var count = items.Count;
+
+            if (count == 0) return -1;
+
             foreach (var item in items)
             {
                 if (item == 0) --count;
