@@ -4,7 +4,7 @@ This is research work about Knapsack Problems (0-1 Knapsack Problem, Unbounded K
 ## Project structure
 1. app/ - is a folder containing libs of algorithms and a console application for creating reports 
 2. results/ - is a folder containing reports as Excel spreadsheets with the results of experiments
-3. doc/ - is a folder containing the theory of research work 
+3. docs/ - is a folder containing the theory of research work 
 
 ## Knapsack-Problems application
 You can use the following algorithms from the list below in the form of api calls from ExactAlgorithms / GeneticAlgorithm lib
@@ -25,4 +25,8 @@ You can use the following algorithms from the list below in the form of api call
  #### Example of use
 ```cmd
 CLI.exe --report=mp --data_size=100 --task=ukp --runs=20 --instances=200
+```
+For more information, use:
+```cmd
+CLI.exe --help
 ```
