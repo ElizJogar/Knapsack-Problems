@@ -7,6 +7,8 @@ This is research work about Knapsack Problems (0-1 Knapsack Problem, Unbounded K
 3. docs/ - is a folder containing the theory of research work 
 
 ## Knapsack-Problems application
+This application provides the user with several algorithms for solving the 0-1 knapsack problem  and unbounded knapsack problem and 2 experiments for collecting information about algorithms
+
 You can use the following algorithms from the list below in the form of api calls from ExactAlgorithms / GeneticAlgorithm lib
 ### Implemented algorithms  
 1. Genetic algorithm with different combinations  
