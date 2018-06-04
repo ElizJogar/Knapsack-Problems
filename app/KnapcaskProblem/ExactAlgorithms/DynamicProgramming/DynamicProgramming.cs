@@ -7,19 +7,19 @@ namespace Algorithm
 {
     public interface IDPApproach
     {
-        long Run(IData data, long capacity);
+        long Run(IData data);
     }
     public class DirectApproach : IDPApproach
     {
-        public long Run(IData data, long capacity)
+        public long Run(IData data)
         {
             var items = Helpers.GetItems(Helpers.ExtendData(data));
             var itemsCount = items.Count;
-            long[,] Z = new long[itemsCount + 1, capacity + 1];
+            long[,] Z = new long[itemsCount + 1, data.Capacity + 1];
 
             for (int i = 0; i <= itemsCount; ++i)
             {
-                for (int w = 0; w <= capacity; ++w)
+                for (int w = 0; w <= data.Capacity; ++w)
                 {
                     if (i == 0 || w == 0)
                     {
@@ -36,26 +36,25 @@ namespace Algorithm
                 }
             }
 
-            return Z[itemsCount, capacity];
+            return Z[itemsCount, data.Capacity];
         }
     }
     public class RecurrentApproach : IDPApproach
     {
         private long[,] m_z;
         private List<Item> m_items;
-        public long Run(IData data, long capacity)
+        public long Run(IData data)
         {
             m_items = Helpers.GetItems(Helpers.ExtendData(data));
-
-            m_z = new long[m_items.Count + 1, capacity + 1];
+            m_z = new long[m_items.Count + 1, data.Capacity + 1];
             for (var i = 0; i <= m_items.Count; ++i)
             {
-                for (var j = 0; j <= capacity; ++j)
+                for (var j = 0; j <= data.Capacity; ++j)
                 {
                     m_z[i, j] = -1;
                 }
             }
-            return CalculateZ(m_items.Count, capacity);
+            return CalculateZ(m_items.Count, data.Capacity);
         }
         private long CalculateZ(int index, long weight)
         {
@@ -78,12 +77,12 @@ namespace Algorithm
 
     public class ClassicalUKPApproach : IDPApproach
     {
-        public long Run(IData data, long capacity)
+        public long Run(IData data)
         {
             var items = Helpers.GetItems(data);
-            long[] Z = new long[capacity + 1];
+            long[] Z = new long[data.Capacity + 1];
 
-            for (int c = 1; c <= capacity; ++c)
+            for (int c = 1; c <= data.Capacity; ++c)
             {
                 Z[c] = Z[c - 1];
                 for (int i = 0; i < items.Count; ++i)
@@ -95,7 +94,7 @@ namespace Algorithm
                 }
             }
 
-            return Z[capacity];
+            return Z[data.Capacity];
         }
     }
     public class EDUK_EX : IDPApproach
@@ -107,7 +106,7 @@ namespace Algorithm
             m_itemSlices = itemSlices;
             m_capacitySlices = capacitySlices;
         }
-        public long Run(IData data, long capacity)
+        public long Run(IData data)
         {
             var items = Helpers.GetItems(data, (a, b) =>
             {
@@ -117,6 +116,7 @@ namespace Algorithm
                 }
                 return a.weight.CompareTo(b.weight);
             });
+            var capacity = data.Capacity;
             // cost table for current problem
             long[] Z = new long[capacity + 1];
             // undominated items
@@ -218,7 +218,7 @@ namespace Algorithm
 
         public long Run(IData data)
         {
-            return m_approach.Run(data, data.Capacity);
+            return m_approach.Run(data);
         }
     }
 }
